@@ -1,9 +1,9 @@
 Package: covr2md
-Title: Tools Extending covr
+Title: Tools to Convert covr Output to Markdown
 Version: 0.0.0.9000
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Description: Convert covr code coverage reports into Markdown.
 License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2md
 BugReports: https://github.com/dragosmg/covr2md/issues
