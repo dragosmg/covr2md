@@ -1,12 +1,12 @@
 Package: covrxtra
-Title: What the Package Does (One Line, Title Case)
+Title: Tools Extending covr
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
+URL: https://github.com/dragosmg/covrxtra
+BugReports: https://github.com/dragosmg/covrxtra/issues
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-URL: https://github.com/dragosmg/covrxtra
-BugReports: https://github.com/dragosmg/covrxtra/issues
