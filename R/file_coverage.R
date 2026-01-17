@@ -1,4 +1,19 @@
-calculate_file_coverage <- function(x) {
+#' Calculate file coverage
+#'
+#' @param x `<coverage>` object, defaults to [covr::package_coverage()].
+#'
+#' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising the
+#'   coverage at file level.
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' library(covr)
+#'
+#' covr::package_coverage("myawesomepkg") |>
+#'   calculate_file_coverage()
+#' }
+calculate_file_coverage <- function(x = covr::package_coverage()) {
   if (!inherits(x, "coverage")) {
     rlang::abort(
       "`x` must be a coverage object"

@@ -1,3 +1,3 @@
 # covr2md (development version)
 
-* Initial CRAN submission.
+* Added `calculate_file_coverage()` to summarise coverage at file level from the output of `covr::package_coverage()`.
