@@ -3,14 +3,14 @@ Title: Tools to Convert covr Output to Markdown
 Version: 0.0.0.9000
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
-Description: Convert covr code coverage reports into Markdown.
+Description: Convert covr code coverage output into Markdown and use it in GitHub.
 License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2md
 BugReports: https://github.com/dragosmg/covr2md/issues
 Depends:
-    covr,
     R (>= 4.1.0)
 Imports:
+    covr,
     dplyr,
     glue,
     knitr,
