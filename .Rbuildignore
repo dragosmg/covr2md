@@ -1,3 +1,5 @@
 ^covr2md\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^[.]?air[.]toml$
+^\.vscode$
