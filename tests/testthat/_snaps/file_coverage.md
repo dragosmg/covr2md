@@ -1,7 +1,7 @@
-# calculate_file_coverage() works
+# digest_coverage() works
 
     Code
-      calculate_file_coverage(cov)
+      digest_coverage(cov)
     Output
       # A tibble: 5 x 2
         File              Coverage
