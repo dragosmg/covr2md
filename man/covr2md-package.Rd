@@ -6,7 +6,7 @@
 \alias{covr2md-package}
 \title{covr2md: Tools to Convert covr Output to Markdown}
 \description{
-Convert covr code coverage output into Markdown and use it in GitHub.
+Convert covr code coverage output into Markdown in preparation for use with GitHub comments.
 }
 \seealso{
 Useful links:
