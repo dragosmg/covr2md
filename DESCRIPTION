@@ -12,6 +12,7 @@ Depends:
 Imports:
     covr,
     dplyr,
+    glue,
     knitr,
     purrr,
     rlang,
