@@ -51,6 +51,8 @@ derive_badge_colour <- function(percentage) {
     )
   }
 
+  # these are the shields.io named colours
+  # https://github.com/badges/shields/tree/master/badge-maker#colors
   colour <- dplyr::case_when(
     percentage >= 90 ~ "brightgreen",
     percentage >= 80 ~ "green",
