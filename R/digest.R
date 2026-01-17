@@ -2,8 +2,8 @@
 #'
 #' @param x `<coverage>` object, defaults to [covr::package_coverage()].
 #'
-#' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising the
-#'   coverage at file level.
+#' @returns a `tibble` with 2 columns (`File` and `Coverage`) summarising
+#'   testing coverage at file level.
 #'
 #' @export
 #' @examples
