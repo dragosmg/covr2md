@@ -3,3 +3,4 @@
 ^LICENSE\.md$
 ^[.]?air[.]toml$
 ^\.vscode$
+^README\.Rmd$
