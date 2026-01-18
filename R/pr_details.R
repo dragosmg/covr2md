@@ -21,8 +21,30 @@
 get_pr_details <- function(
   owner = character(),
   repo = character(),
-  pr_number = integer()
+  pr_number = integer(),
+  call = rlang::caller_env()
 ) {
+  if (!rlang::is_scalar_character(owner)) {
+    cli::cli_abort(
+      "`owner` must be a character scalar.",
+      call = call
+    )
+  }
+
+  if (!rlang::is_scalar_character(repo)) {
+    cli::cli_abort(
+      "`repo` must be a character scalar.",
+      call = call
+    )
+  }
+
+  if (!rlang::is_scalar_integerish(pr_number)) {
+    cli::cli_abort(
+      "`pr_number` must be an integer-like scalar.",
+      call = call
+    )
+  }
+
   pr_api_url <- glue::glue(
     "https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
   )
@@ -39,11 +61,47 @@ get_pr_details <- function(
   )
 }
 
+#' Get changed files
+#'
+#' Sends a GET request to the GitHub API and retrieves the relevant files
+#' involved in the PR. It only includes files that are under `R/` or `src/`.
+#'
+#' @inheritParams get_pr_details
+#'
+#' @returns a character vector containing the names of the changed files.
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' get_changed_files("dragosmg", "covr2mddemo", 2)
+#' }
 get_changed_files <- function(
   owner = character(),
   repo = character(),
-  pr_number = integer()
+  pr_number = integer(),
+  call = rlang::caller_env()
 ) {
+  if (!rlang::is_scalar_character(owner)) {
+    cli::cli_abort(
+      "`owner` must be a character scalar.",
+      call = call
+    )
+  }
+
+  if (!rlang::is_scalar_character(repo)) {
+    cli::cli_abort(
+      "`repo` must be a character scalar.",
+      call = call
+    )
+  }
+
+  if (!rlang::is_scalar_integerish(pr_number)) {
+    cli::cli_abort(
+      "`pr_number` must be an integer-like scalar.",
+      call = call
+    )
+  }
+
   files_api_url <- glue::glue(
     "https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/files"
   )

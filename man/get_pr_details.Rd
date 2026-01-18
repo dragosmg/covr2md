@@ -4,7 +4,12 @@
 \alias{get_pr_details}
 \title{Get pull request details}
 \usage{
-get_pr_details(owner = character(), repo = character(), pr_number = integer())
+get_pr_details(
+  owner = character(),
+  repo = character(),
+  pr_number = integer(),
+  call = rlang::caller_env()
+)
 }
 \arguments{
 \item{owner}{(character) the repo owner.}
