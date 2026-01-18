@@ -38,11 +38,5 @@ get_changed_files <- function(
     pattern = "^R/|^src"
   )
 
-  list(
-    head_name = pr_info$head$ref,
-    head_sha = pr_info$head$sha,
-    base_name = pr_info$base$ref,
-    base_sha = pr_info$base$sha,
-    pr_html_url = pr_info$html_url
-  )
+  relevant_files_changed
 }
