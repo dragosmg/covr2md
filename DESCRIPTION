@@ -11,6 +11,7 @@ BugReports: https://github.com/dragosmg/covr2md/issues
 Depends:
     R (>= 4.1.0)
 Imports:
+    cli,
     covr,
     dplyr,
     gh,
