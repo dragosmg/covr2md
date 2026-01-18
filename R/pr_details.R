@@ -1,3 +1,23 @@
+#' Get pull request details
+#'
+#' Sends a GET request to the GitHub API and outputs details about the PR.
+#'
+#' @param owner (character) the repo owner.
+#' @param repo (character) the repo name
+#' @param pr_number (integer) the PR number
+#'
+#' @returns a list with the following elements:
+#'   * `head_name`: name of the current branch
+#'   * `head_sha`: the sha of the last commit in the current branch
+#'   * `base_name`: the name of the destination branch
+#'   * `base_sha`: the sha of most recent commit on the destination branch
+#'   * `pr_html_url`: the URL to the PR HTML branch
+#'
+#' @export
+#' @examples
+#' \dontrun{
+#' get_pr_details("dragosmg", "covr2mddemo", "2")
+#' }
 get_pr_details <- function(
   owner = character(),
   repo = character(),

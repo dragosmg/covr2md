@@ -2,4 +2,5 @@
 
 export(build_badge_url)
 export(digest_coverage)
+export(get_pr_details)
 importFrom(rlang,.data)
