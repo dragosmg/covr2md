@@ -17,6 +17,9 @@ get_changed_files(
 \item{repo}{(character) the repo name}
 
 \item{pr_number}{(integer) the PR number}
+
+\item{call}{the execution environment to surface the error message from.
+Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 }
 \value{
 a character vector containing the names of the changed files.

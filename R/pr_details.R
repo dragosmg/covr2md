@@ -5,6 +5,8 @@
 #' @param owner (character) the repo owner.
 #' @param repo (character) the repo name
 #' @param pr_number (integer) the PR number
+#' @param call the execution environment to surface the error message from.
+#'   Defaults to [rlang::caller_env()].
 #'
 #' @returns a list with the following elements:
 #'   * `head_name`: name of the current branch
