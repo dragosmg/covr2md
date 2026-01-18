@@ -55,6 +55,7 @@ get_pr_details <- function(
     gh::gh()
 
   list(
+    pr_number = pr_number,
     head_name = pr_info$head$ref,
     head_sha = pr_info$head$sha,
     base_name = pr_info$base$ref,
