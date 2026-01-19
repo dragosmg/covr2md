@@ -75,7 +75,7 @@ get_comment_id <- function(
 #'
 #' @inheritParams get_pr_details
 #' @param body (character scalar) the content of the body of the message.
-#' @param comment_id (numeric) the ID for the issue comment to update. If `NULL`
+#' @param comment_id (numeric) the ID of the issue comment to update. If `NULL`
 #'   (the default), a new comment will be posted.
 #' @inheritParams compose_comment
 #'
@@ -138,7 +138,20 @@ post_comment <- function(
   response
 }
 
-# delete comment
+#' Delete a comment
+#'
+#' Thin wrapper for making a `DELETE` request to the GitHub API.
+#'
+#' @inheritParams get_pr_details
+#' @param comment_id (numeric) the ID of the issue comment to delete.
+#'
+#' @returns a `gh_response` object
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' delete_comment("dragosmg", "this-is-my-repo", 4553)
+#' }
 delete_comment <- function(
   owner,
   repo,
