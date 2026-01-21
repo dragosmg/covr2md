@@ -29,10 +29,3 @@
     Output
       [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
 
-# get_pr_comment() works
-
-    Code
-      get_pr_comment_id(owner = "dragosmg", repo = "covr2mddemo", pr_number = 3)
-    Output
-      [1] 3767770706
-
