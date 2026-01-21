@@ -8,7 +8,8 @@
 #' @param call the execution environment to surface the error message from.
 #'   Defaults to [rlang::caller_env()].
 #'
-#' @returns a list with the following elements:
+#' @returns an object of class `<pr_details>` - a list with the following
+#' elements:
 #'   * `head_name`: name of the current branch
 #'   * `head_sha`: the sha of the last commit in the current branch
 #'   * `base_name`: the name of the destination branch
@@ -54,13 +55,16 @@ get_pr_details <- function(
   pr_info <- glue::glue("GET {pr_api_url}") |>
     gh::gh()
 
-  list(
-    pr_number = pr_number,
-    head_name = pr_info$head$ref,
-    head_sha = pr_info$head$sha,
-    base_name = pr_info$base$ref,
-    base_sha = pr_info$base$sha,
-    pr_html_url = pr_info$html_url
+  structure(
+    list(
+      pr_number = pr_number,
+      head_name = pr_info$head$ref,
+      head_sha = pr_info$head$sha,
+      base_name = pr_info$base$ref,
+      base_sha = pr_info$base$sha,
+      pr_html_url = pr_info$html_url
+    ),
+    class = "pr_details"
   )
 }
 
