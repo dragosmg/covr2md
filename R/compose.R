@@ -102,7 +102,7 @@ compose_comment <- function(
 
   coverage_summary <- compose_coverage_summary(pr_details, delta_total_coverage)
 
-  # TODO update URL
+  # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
     "<sup>Created on {Sys.Date()} with \\
     [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"

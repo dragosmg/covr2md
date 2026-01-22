@@ -30,5 +30,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2md 0.0.0.9004](https://reprex.tidyverse.org)</sup>
+      <sup>Created on <removed-date> with [covr2md 0.0.0.9005](https://reprex.tidyverse.org)</sup>
 
