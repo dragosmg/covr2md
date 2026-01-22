@@ -3,6 +3,7 @@
 export(build_badge_url)
 export(compose_comment)
 export(digest_coverage)
+export(get_comment_id)
 export(get_pr_details)
 export(post_comment)
 importFrom(rlang,.data)

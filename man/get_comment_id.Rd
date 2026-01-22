@@ -36,4 +36,3 @@ need the ID of the comment before updating it.
 get_comment_id("dragosmg/demo-repo", 3)
 }
 }
-\keyword{internal}

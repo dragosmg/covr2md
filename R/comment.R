@@ -10,7 +10,7 @@
 #'
 #' @returns a numeric scalar representing the comment id
 #'
-#' @keywords internal
+#' @export
 #' @examples
 #' \dontrun{
 #' get_comment_id("dragosmg/demo-repo", 3)
