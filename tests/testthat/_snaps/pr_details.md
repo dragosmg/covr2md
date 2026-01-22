@@ -21,6 +21,8 @@
       $pr_html_url
       [1] "https://github.com/dragosmg/covr2mddemo/pull/2"
       
+      attr(,"class")
+      [1] "pr_details"
 
 # get_changed_files() works
 

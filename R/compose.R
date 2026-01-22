@@ -127,7 +127,7 @@ compose_comment <- function(
 
     <details>
 
-    <summary>Changes in file coverage</summary>
+    <summary>Details on affected files</summary>
     <br>
 
     {diff_md_table}

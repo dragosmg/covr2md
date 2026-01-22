@@ -10,12 +10,12 @@
       
       ![badge](https://img.shields.io/badge/coverage-31.58%25-red.svg)
       
-      :white_check_mark: Merging this PR ([#3](https://github.com/dragosmg/covr2mddemo/pull/3) - da6f721f1cf4ee278b9cb5261b7db3a1ad0a496e) into _main_ (034a482f97b4b44551bcca2917314b9876430cde) - will **increase** coverage by 21.05 percentage points.
+      :white_check_mark: Merging this PR ([#3](https://github.com/dragosmg/covr2mddemo/pull/3) - <removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by 21.05 percentage points.
       
       
       <details>
       
-      <summary>Changes in file coverage</summary>
+      <summary>Details on affected files</summary>
       <br>
       
       |        File| Coverage head| Coverage base|       &Delta;       |
@@ -26,9 +26,9 @@
       </details>
       
       <br>
-      Results for commit: da6f721f1cf4ee278b9cb5261b7db3a1ad0a496e
+      Results for commit: <removed-commit-sha>
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on 2026-01-20 with [covr2md 0.0.0.9000](https://reprex.tidyverse.org)</sup>
+      <sup>Created on <removed-date> with [covr2md 0.0.0.9000](https://reprex.tidyverse.org)</sup>
 

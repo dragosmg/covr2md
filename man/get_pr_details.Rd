@@ -28,11 +28,11 @@ elements:
 }
 }
 \description{
-Sends a GET request to the GitHub API and outputs details about the PR.
+Sends a GET request to the GitHub API and fetches the PR details. The output
+contains a subset of these, needed for downstream use.
 }
 \examples{
 \dontrun{
-get_pr_details("dragosmg", "covr2mddemo", "2")
+get_pr_details("dragosmg", "covr2mddemo", 2)
 }
 }
-\keyword{internal}

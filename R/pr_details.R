@@ -1,6 +1,7 @@
 #' Get pull request details
 #'
-#' Sends a GET request to the GitHub API and outputs details about the PR.
+#' Sends a GET request to the GitHub API and fetches the PR details. The output
+#' contains a subset of these, needed for downstream use.
 #'
 #' @param owner (character) the repo owner.
 #' @param repo (character) the repo name
@@ -16,10 +17,10 @@
 #'   * `base_sha`: the sha of most recent commit on the destination branch
 #'   * `pr_html_url`: the URL to the PR HTML branch
 #'
-#' @keywords internal
+#' @export
 #' @examples
 #' \dontrun{
-#' get_pr_details("dragosmg", "covr2mddemo", "2")
+#' get_pr_details("dragosmg", "covr2mddemo", 2)
 #' }
 get_pr_details <- function(
   owner,
@@ -27,6 +28,7 @@ get_pr_details <- function(
   pr_number,
   call = rlang::caller_env()
 ) {
+  # TODO unite owner & repo into "owner/repo"
   if (!rlang::is_scalar_character(owner)) {
     cli::cli_abort(
       "`owner` must be a character scalar.",

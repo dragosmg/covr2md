@@ -19,7 +19,8 @@ test_that("compose_comment works", {
       owner = "dragosmg",
       repo = "covr2mddemo",
       pr_number = 3
-    )
+    ),
+    transform = remove_date_commit_sha
   )
 })
 
