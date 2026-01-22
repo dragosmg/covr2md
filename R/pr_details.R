@@ -1,14 +1,16 @@
 #' Get pull request details
 #'
-#' Sends a GET request to the GitHub API and outputs details about the PR.
+#' Sends a GET request to the GitHub API and fetches the PR details. The output
+#' contains a subset of these, needed for downstream use.
 #'
-#' @param owner (character) the repo owner.
-#' @param repo (character) the repo name
+#' @param repo (character) the repository name in the GitHub format
+#'   (`"OWNER/REPO"`).
 #' @param pr_number (integer) the PR number
 #' @param call the execution environment to surface the error message from.
 #'   Defaults to [rlang::caller_env()].
 #'
-#' @returns a list with the following elements:
+#' @returns an object of class `<pr_details>` - a list with the following
+#' elements:
 #'   * `head_name`: name of the current branch
 #'   * `head_sha`: the sha of the last commit in the current branch
 #'   * `base_name`: the name of the destination branch
@@ -18,21 +20,16 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' get_pr_details("dragosmg", "covr2mddemo", "2")
+#' get_pr_details("dragosmg/covr2mddemo", 2)
 #' }
 get_pr_details <- function(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
+  repo,
+  pr_number,
   call = rlang::caller_env()
 ) {
-  if (!rlang::is_scalar_character(owner)) {
-    cli::cli_abort(
-      "`owner` must be a character scalar.",
-      call = call
-    )
-  }
+  # TODO unite owner & repo into "owner/repo"
 
+  # TODO check for GitHub format (`OWNER/REPO`)
   if (!rlang::is_scalar_character(repo)) {
     cli::cli_abort(
       "`repo` must be a character scalar.",
@@ -48,19 +45,22 @@ get_pr_details <- function(
   }
 
   pr_api_url <- glue::glue(
-    "https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}"
+    "https://api.github.com/repos/{repo}/pulls/{pr_number}"
   )
 
   pr_info <- glue::glue("GET {pr_api_url}") |>
     gh::gh()
 
-  list(
-    pr_number = pr_number,
-    head_name = pr_info$head$ref,
-    head_sha = pr_info$head$sha,
-    base_name = pr_info$base$ref,
-    base_sha = pr_info$base$sha,
-    pr_html_url = pr_info$html_url
+  structure(
+    list(
+      pr_number = pr_number,
+      head_name = pr_info$head$ref,
+      head_sha = pr_info$head$sha,
+      base_name = pr_info$base$ref,
+      base_sha = pr_info$base$sha,
+      pr_html_url = pr_info$html_url
+    ),
+    class = "pr_details"
   )
 }
 
@@ -73,24 +73,16 @@ get_pr_details <- function(
 #'
 #' @returns a character vector containing the names of the changed files.
 #'
-#' @export
+#' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_changed_files("dragosmg", "covr2mddemo", 2)
+#' get_changed_files("dragosmg/covr2mddemo", 2)
 #' }
 get_changed_files <- function(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
+  repo,
+  pr_number,
   call = rlang::caller_env()
 ) {
-  if (!rlang::is_scalar_character(owner)) {
-    cli::cli_abort(
-      "`owner` must be a character scalar.",
-      call = call
-    )
-  }
-
   if (!rlang::is_scalar_character(repo)) {
     cli::cli_abort(
       "`repo` must be a character scalar.",
@@ -106,7 +98,7 @@ get_changed_files <- function(
   }
 
   files_api_url <- glue::glue(
-    "https://api.github.com/repos/{owner}/{repo}/pulls/{pr_number}/files"
+    "https://api.github.com/repos/{repo}/pulls/{pr_number}/files"
   )
 
   files_info <- glue::glue("GET {files_api_url}") |>

@@ -51,7 +51,7 @@ diff_df_to_md <- function(diff_df, align = "rrrc") {
       " "
     ) |>
     stringr::str_replace(
-      "Delta",
+      stringr::fixed("Delta"),
       "&Delta;"
     )
 

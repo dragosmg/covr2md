@@ -1,14 +1,40 @@
-test_that("compose_comment() works", {
-  head_coverage <- readRDS(test_path("fixtures", "head_coverage.RDS"))
-  base_coverage <- readRDS(test_path("fixtures", "base_coverage.RDS"))
-
-  expect_snapshot(
-    compose_comment(
-      head_coverage,
-      base_coverage,
-      owner = "dragosmg",
-      repo = "covr2mddemo",
-      pr_number = 3
+test_that("post_comment, get_comment_id & delete_comment work", {
+  skip_if_offline()
+  skip_on_ci()
+  expect_no_error(
+    a <- post_comment(
+      body = glue::glue("{Sys.Date()}: today's test :sweat_smile:"),
+      repo = "dragosmg/covr2mddemo", # nolint
+      pr_number = 3,
+      marker = "<!-- covr2md-test -->"
     )
   )
+
+  expect_s3_class(a, "gh_response")
+
+  expect_no_error(
+    get_comment_id(
+      repo = "dragosmg/covr2mddemo", # nolint
+      pr_number = 3,
+      marker = "<!-- covr2md-test -->"
+    )
+  )
+
+  expect_identical(
+    get_comment_id(
+      repo = "dragosmg/covr2mddemo", # nolint
+      pr_number = 3,
+      marker = "<!-- covr2md-code-coverage -->"
+    ),
+    3767770706
+  )
+
+  expect_no_error(
+    d <- delete_comment(
+      repo = "dragosmg/covr2mddemo", # nolint
+      comment_id = a$id
+    )
+  )
+
+  expect_s3_class(d, "gh_response")
 })

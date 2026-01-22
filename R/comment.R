@@ -1,164 +1,156 @@
-# the GitHub comment should contain:
-#   * the overall percentage (as badge) at the top
-#   * a topline summary statement:
-#     * "merging this PR (PR number & commit hash) into $destination_branch
-#     will **increase** / **decrease** / **not change** coverage. The change in
-#     coverage is."
-#     * it would be great to somehow capture if the added lines are covered by
-#     unit tests (or what percentage is)
-#   * the H2 (?) title - Summary (or something like Codecov - "Additional
-#   details and impacted files").
-#   * a summary table for the all files or just those modified by the PR
-#     * maybe just those modified by the PR as those would be more relevant.
-#     * table could have these columns File, This branch, Destination branch,
-#     delta + an indication at file level if coverage is increasing or
-#     decreasing
-#   * capture the commit hash somehow
-#   * maybe something about the target coverage figure
-#   * in the future something about direct vs indirect testing
-#   * a notice about the fact this is a "sticky" comment that will be updated
-#    by subsequent runs
-#
-# args:
-#   * head_coverage (coverage object)
-#   * base_coverage (coverage object)
-#   * z - pr number
-#
+# PRs are issues
+# All PRs are issues, but not all issues are PRs.
+#' Get the ID of the covr2md PR comment (if it exists)
+#'
+#' These are identified by the `"<!-- covr2md-code-coverage -->"` marker. We
+#' need the ID of the comment before updating it.
+#'
+#' @inheritParams get_pr_details
+#' @inheritParams compose_comment
+#'
+#' @returns a numeric scalar representing the comment id
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' get_comment_id("dragosmg/demo-repo", 3)
+#' }
+get_comment_id <- function(
+  repo,
+  pr_number,
+  marker = "<!-- covr2md-code-coverage -->",
+  call = rlang::caller_env()
+) {
+  if (!rlang::is_scalar_character(repo)) {
+    cli::cli_abort(
+      "`repo` must be a character scalar.",
+      call = call
+    )
+  }
 
-#' Compose a coverage GitHub comment
+  if (!rlang::is_scalar_integerish(pr_number)) {
+    cli::cli_abort(
+      "`pr_number` must be an integer-like scalar.",
+      call = call
+    )
+  }
+
+  if (!rlang::is_scalar_character(marker)) {
+    cli::cli_abort(
+      "`marker` must be a character scalar.",
+      call = call
+    )
+  }
+
+  api_url <- glue::glue(
+    "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+  )
+
+  comments_info <- glue::glue("GET {api_url}") |>
+    gh::gh()
+
+  # identify the comment that contains the marker we set
+  comment_index <- comments_info |>
+    # look in the body of the comment for the marker
+    purrr::map("body") |>
+    # detect_index identifies the position of the first match
+    purrr::detect_index(
+      \(x) stringr::str_detect(x, pattern = marker)
+    )
+
+  comments_info[[comment_index]]$id
+}
+
+# if a comment with the marker exists, update it, if it doesn't then post a
+# new one
+#' Post a new comment or update an existing one
 #'
-#' @param head_coverage (coverage) active / current branch (`HEAD`) coverage.
-#'   The output of [covr::package_coverage()] on the branch.
-#' @param base_coverage (coverage) base / target branch coverage (coverage for
-#'   the branch merging into). The output of [covr::package_coverage()] on the
-#'   branch.
-#' @param owner (character scalar) repo owner
-#' @param repo (character scalar) repo name
-#' @param pr_number (integerish) pull request number
+#' @inheritParams get_pr_details
+#' @param body (character scalar) the content of the body of the message.
+#' @param comment_id (numeric) the ID of the issue comment to update. If `NULL`
+#'   (the default), a new comment will be posted.
+#' @inheritParams compose_comment
 #'
-#' @returns a character scalar with the content of the GitHub comment
+#' @returns a `gh_response` object containing the API response
 #'
 #' @export
 #' @examples
 #' \dontrun{
-#' head_coverage <- covr::package_coverage()
-#' system2("git", c("checkout", "main"))
-#' base_coverage <- covr::package_coverage()
-#'
-#' compose_comment(
-#'   head_coverage = head_coverage,
-#'   base_coverage = base_coverage,
-#'   owner = "dragosmg",
-#'   repo = "covr2mddemo",
-#'   pr_number = 3
+#' post_comment(
+#'   "this is amazing",
+#'   repo = "dragosmg/my-test-repo",
+#'   pr_number = 3,
+#'   comment_id = 123456789,
+#'   marker = "<!-- I am a comment -->"
 #' )
 #' }
-compose_comment <- function(
-  head_coverage,
-  base_coverage,
-  owner,
+post_comment <- function(
+  body,
   repo,
-  pr_number
+  pr_number,
+  comment_id = NULL,
+  marker = "<!-- covr2md-code-coverage -->"
 ) {
-  changed_files <- get_changed_files(
-    owner = owner,
-    repo = repo,
-    pr_number = pr_number
+  # TODO add checks for
+  #  * body
+  #  * repo
+  #  * pr_number
+  #  * comment_id
+  #  * marker
+
+  # posting a new comment vs updating an existing one requires hitting a
+  # different endpoint
+
+  # post / create a new issue comment
+  api_url <- glue::glue(
+    "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
   )
 
-  diff_md_table <- compose_coverage_details(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files
-  )
+  if (!rlang::is_null(comment_id)) {
+    # update an existing issue comment
+    api_url <- glue::glue(
+      "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
+    )
+  }
 
-  pr_details <- get_pr_details(
-    owner = owner,
-    repo = repo,
-    pr_number = pr_number
-  )
-
-  total_head_coverage <- covr::percent_coverage(head_coverage)
-  total_base_coverage <- covr::percent_coverage(base_coverage)
-  delta_total_coverage <- round(total_head_coverage - total_base_coverage, 2)
-
-  badge_url <- build_badge_url(total_head_coverage)
-
-  coverage_summary <- compose_coverage_summary(pr_details, delta_total_coverage)
-
-  glue::glue(
+  body_with_marker <- glue::glue(
     "
-    # Coverage report
+    {marker}
 
-    ![badge]({badge_url})
-
-    ## Coverage summary
-
-    {coverage_summary}
-
-    ## Coverage details
-
-    {diff_md_table}
-
-    Results for commit: {pr_details$head_sha}
-
-    :recycle: Comment updated with the latest results.
+    {body}
     "
   )
+
+  response <- glue::glue("POST {api_url}") |>
+    gh::gh(body = body_with_marker)
+
+  response
 }
 
-# TODO look into logic invalidating the comment when the base_sha changes
-
-# pr_details = a subset of the data we need (the API response)
-#  * pr_number
-#  * pr_html_url
-#  * head_sha
-#  * base_name
-#  * base_sha
-#  * delta in coverage.
-compose_coverage_summary <- function(pr_details, delta) {
-  delta_translation <- dplyr::case_when(
-    delta > 0 ~ "increase",
-    delta < 0 ~ "decrease",
-    delta == 0 ~ "not change"
-  )
-
-  glue::glue(
-    "Merging this PR ([#{ pr_details$pr_number}]({pr_details$pr_html_url}) - \\
-    {pr_details$head_sha}) into _{pr_details$base_name}_ \\
-    ({pr_details$base_sha}) - will **{delta_translation}** coverage."
-  )
-}
-
-compose_coverage_details <- function(
-  head_coverage,
-  base_coverage,
-  changed_files
+#' Delete a comment
+#'
+#' Thin wrapper for making a `DELETE` request to the GitHub API.
+#'
+#' @inheritParams get_pr_details
+#' @param comment_id (numeric) the ID of the issue comment to delete.
+#'
+#' @returns a `gh_response` object
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' delete_comment("dragosmg/this-is-my-repo", 4553)
+#' }
+delete_comment <- function(
+  repo,
+  comment_id
 ) {
-  # TODO handle the case when there are no relevant changed files
-  # browser()
-  diff_df <- derive_diff_df(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files,
-    keep_all_files = FALSE
+  api_url <- glue::glue(
+    "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
   )
-  # head_coverage_digest <- digest_coverage(head_coverage)
 
-  # base_coverage_digest <- digest_coverage(base_coverage)
+  response <- glue::glue("DELETE {api_url}") |>
+    gh::gh()
 
-  # diff_df <- head_coverage_digest |>
-  #   dplyr::filter(
-  #     file %in% changed_files
-  #   ) |>
-  #   dplyr::left_join(
-  #     base_coverage_digest,
-  #     by = dplyr::join_by(file),
-  #     suffix = c("_head", "_base")
-  #   ) |>
-  #   dplyr::mutate(
-  #     delta = .data$coverage_head - .data$coverage_base
-  #   )
-
-  diff_df_to_md(diff_df)
+  response
 }

@@ -4,17 +4,11 @@
 \alias{get_pr_details}
 \title{Get pull request details}
 \usage{
-get_pr_details(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
-  call = rlang::caller_env()
-)
+get_pr_details(repo, pr_number, call = rlang::caller_env())
 }
 \arguments{
-\item{owner}{(character) the repo owner.}
-
-\item{repo}{(character) the repo name}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
 
@@ -22,7 +16,8 @@ get_pr_details(
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 }
 \value{
-a list with the following elements:
+an object of class \verb{<pr_details>} - a list with the following
+elements:
 \itemize{
 \item \code{head_name}: name of the current branch
 \item \code{head_sha}: the sha of the last commit in the current branch
@@ -32,10 +27,11 @@ a list with the following elements:
 }
 }
 \description{
-Sends a GET request to the GitHub API and outputs details about the PR.
+Sends a GET request to the GitHub API and fetches the PR details. The output
+contains a subset of these, needed for downstream use.
 }
 \examples{
 \dontrun{
-get_pr_details("dragosmg", "covr2mddemo", "2")
+get_pr_details("dragosmg/covr2mddemo", 2)
 }
 }

@@ -4,17 +4,11 @@
 \alias{get_changed_files}
 \title{Get changed files}
 \usage{
-get_changed_files(
-  owner = character(),
-  repo = character(),
-  pr_number = integer(),
-  call = rlang::caller_env()
-)
+get_changed_files(repo, pr_number, call = rlang::caller_env())
 }
 \arguments{
-\item{owner}{(character) the repo owner.}
-
-\item{repo}{(character) the repo name}
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
 
@@ -30,6 +24,7 @@ involved in the PR. It only includes files that are under \verb{R/} or \verb{src
 }
 \examples{
 \dontrun{
-get_changed_files("dragosmg", "covr2mddemo", 2)
+get_changed_files("dragosmg/covr2mddemo", 2)
 }
 }
+\keyword{internal}
