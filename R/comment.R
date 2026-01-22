@@ -45,7 +45,7 @@ get_comment_id <- function(
   api_url <- glue::glue(
     "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
   )
-  browser()
+
   # TODO add test to confirm everything works with a NULL
   comments_info <- tryCatch(
     glue::glue("GET {api_url}") |>
