@@ -66,6 +66,10 @@ get_comment_id <- function(
       \(x) stringr::str_detect(x, pattern = marker)
     )
 
+  if (rlang::is_empty(comment_index)) {
+    return(NULL)
+  }
+
   comments_info[[comment_index]]$id
 }
 
