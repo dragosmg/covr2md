@@ -3,7 +3,7 @@
 #' Get the ID of the covr2md comment
 #'
 #' Comments are identified by a specific comment, the "marker", by default
-#' `"<!-- covr2md-code-coverage -->"` marker. `get_comment_id()` looks for this
+#' `"<!-- covr2md-code-coverage -->"`. `get_comment_id()` looks for this
 #' marker. If it can find it, it returns the comment ID, otherwise it returns
 #' `NULL`.
 #'

@@ -29,7 +29,7 @@ a numeric scalar representing the comment id or \code{NULL}
 }
 \description{
 Comments are identified by a specific comment, the "marker", by default
-\code{"<!-- covr2md-code-coverage -->"} marker. \code{get_comment_id()} looks for this
+\code{"<!-- covr2md-code-coverage -->"}. \code{get_comment_id()} looks for this
 marker. If it can find it, it returns the comment ID, otherwise it returns
 \code{NULL}.
 }
