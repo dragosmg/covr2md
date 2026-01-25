@@ -1,6 +1,6 @@
 Package: covr2md
 Title: Tools to Convert covr Output to Markdown
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: Convert covr code coverage output into Markdown in preparation for

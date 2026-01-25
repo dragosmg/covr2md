@@ -16,7 +16,7 @@ get_pr_details(repo, pr_number, call = rlang::caller_env())
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 }
 \value{
-an object of class \verb{<pr_details>} - a list with the following
+an object of class \code{pr_details} - a list with the following
 elements:
 \itemize{
 \item \code{head_name}: name of the current branch
@@ -24,6 +24,7 @@ elements:
 \item \code{base_name}: the name of the destination branch
 \item \code{base_sha}: the sha of most recent commit on the destination branch
 \item \code{pr_html_url}: the URL to the PR HTML branch
+\item \code{diff_url}: the diff URL
 }
 }
 \description{

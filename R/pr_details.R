@@ -9,13 +9,14 @@
 #' @param call the execution environment to surface the error message from.
 #'   Defaults to [rlang::caller_env()].
 #'
-#' @returns an object of class `<pr_details>` - a list with the following
+#' @returns an object of class `pr_details` - a list with the following
 #' elements:
 #'   * `head_name`: name of the current branch
 #'   * `head_sha`: the sha of the last commit in the current branch
 #'   * `base_name`: the name of the destination branch
 #'   * `base_sha`: the sha of most recent commit on the destination branch
 #'   * `pr_html_url`: the URL to the PR HTML branch
+#'   * `diff_url`: the diff URL
 #'
 #' @export
 #' @examples
@@ -27,8 +28,6 @@ get_pr_details <- function(
   pr_number,
   call = rlang::caller_env()
 ) {
-  # TODO unite owner & repo into "owner/repo"
-
   # TODO check for GitHub format (`OWNER/REPO`)
   if (!rlang::is_scalar_character(repo)) {
     cli::cli_abort(
@@ -58,7 +57,8 @@ get_pr_details <- function(
       head_sha = pr_info$head$sha,
       base_name = pr_info$base$ref,
       base_sha = pr_info$base$sha,
-      pr_html_url = pr_info$html_url
+      pr_html_url = pr_info$html_url,
+      diff_url = pr_info$diff_url
     ),
     class = "pr_details"
   )

@@ -25,8 +25,8 @@ coverage_to_md <- function(x, align = "rr") {
 diff_df_to_md <- function(diff_df, align = "rrrc") {
   diff_df_prep <- diff_df |>
     dplyr::mutate(
-      # recode delta into arrows or equal sign
-      delta = dplyr::case_when(
+      # add a brief visual interpretation of the delta with arrows or equal sign
+      interpretation = dplyr::case_when(
         delta > 0 ~ ":arrow_up:",
         delta < 0 ~ ":arrow_down:",
         delta == 0 ~ ":heavy_equals_sign:"
@@ -53,6 +53,10 @@ diff_df_to_md <- function(diff_df, align = "rrrc") {
     stringr::str_replace(
       stringr::fixed("Delta"),
       "&Delta;"
+    ) |>
+    stringr::str_replace(
+      stringr::fixed("Interpretation"),
+      ""
     )
 
   names(diff_df_prep) <- diff_df_names

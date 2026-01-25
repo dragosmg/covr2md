@@ -23,7 +23,7 @@ digest_coverage <- function(x = covr::package_coverage()) {
     )
   }
 
-  output <- x |>
+  file_coverage_df <- x |>
     covr::coverage_to_list() |>
     purrr::pluck(
       "filecoverage"
@@ -32,6 +32,17 @@ digest_coverage <- function(x = covr::package_coverage()) {
       name = "file",
       value = "coverage"
     )
+
+  total <- x |>
+    covr::coverage_to_list() |>
+    purrr::pluck("totalcoverage")
+
+  total_coverage_df <- tibble::tibble(
+    file = "Total",
+    coverage = total
+  )
+
+  output <- dplyr::bind_rows(file_coverage_df, total_coverage_df)
 
   output
 }
@@ -53,7 +64,8 @@ derive_diff_df <- function(
   head_coverage,
   base_coverage,
   changed_files,
-  keep_all_files = FALSE
+  keep_all_files = FALSE,
+  keep_totals = TRUE
 ) {
   head_coverage_digest <- digest_coverage(head_coverage)
 
@@ -68,6 +80,10 @@ derive_diff_df <- function(
     dplyr::mutate(
       delta = .data$coverage_head - .data$coverage_base
     )
+
+  if (keep_totals) {
+    changed_files <- c(changed_files, "Total")
+  }
 
   if (!keep_all_files) {
     diff_df <- diff_df |>

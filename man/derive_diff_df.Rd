@@ -8,7 +8,8 @@ derive_diff_df(
   head_coverage,
   base_coverage,
   changed_files,
-  keep_all_files = FALSE
+  keep_all_files = FALSE,
+  keep_totals = TRUE
 )
 }
 \arguments{
