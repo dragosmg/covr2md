@@ -122,13 +122,13 @@ compose_comment <- function(
     <details>
 
     <summary>Details on affected files</summary>
-    <br>
+    <br/>
 
     {diff_md_table}
 
     </details>
 
-    <br>
+    <br/>
     Results for commit: {pr_details$head_sha}
 
     :recycle: Comment updated with the latest results.
