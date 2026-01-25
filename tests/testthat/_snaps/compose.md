@@ -12,11 +12,10 @@
       
       :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2mddemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by 21.05 percentage points.
       
-      
       <details>
       
-      <summary>Details on affected files</summary>
-      <br>
+      <summary>Details on impacted files</summary>
+      <br/>
       
       |        File| Coverage head| Coverage base|       &Delta;       |
       |-----------:|-------------:|-------------:|:-------------------:|
@@ -25,8 +24,8 @@
       
       </details>
       
-      <br>
-      Results for commit: <removed-commit-sha>
+      <br/>
+      
       
       :recycle: Comment updated with the latest results.
       
