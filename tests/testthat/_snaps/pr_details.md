@@ -21,6 +21,9 @@
       $pr_html_url
       [1] "https://github.com/dragosmg/covr2mddemo/pull/2"
       
+      $diff_url
+      [1] "https://github.com/dragosmg/covr2mddemo/pull/2.diff"
+      
       attr(,"class")
       [1] "pr_details"
 
