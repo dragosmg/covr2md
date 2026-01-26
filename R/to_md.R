@@ -103,13 +103,19 @@ line_coverage_to_md <- function(
     total_row
   ) |>
     dplyr::mutate(
-      coverage = round(lines_covered / lines_added, 2),
-      coverage = paste0(.data$coverage, "%")
+      coverage = round(
+        .data$lines_covered / .data$lines_added,
+        2
+      ),
+      coverage = paste0(
+        .data$coverage,
+        "%"
+      )
     ) |>
     dplyr::rename(
       File = file,
-      `Lines added` = lines_added,
-      `Lines tested` = lines_covered,
+      `Lines added` = .data$lines_added,
+      `Lines tested` = .data$lines_covered,
       Coverage = coverage
     )
 
