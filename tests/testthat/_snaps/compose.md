@@ -17,12 +17,12 @@
         <summary>Details on changes in file coverage</summary>
         <br/>
       
-        |          File| Coverage head| Coverage base| &Delta; |                    |
-      |-------------:|-------------:|-------------:|:-------:|-------------------:|
-      |   R/add_one.R|           40%|           40%|  0.00   | :heavy_equals_sign:|
-      | R/add_three.R|            0%|            0%|  0.00   | :heavy_equals_sign:|
-      |   R/add_two.R|        57.14%|            0%|  57.14  |          :arrow_up:|
-      |         Total|        31.58%|        10.53%|  21.05  |          :arrow_up:|
+        |          File| Coverage head| Coverage base| &Delta;|                     |
+      |-------------:|-------------:|-------------:|-------:|:-------------------:|
+      |   R/add_one.R|           40%|           40%|    0.00| :heavy_equals_sign: |
+      | R/add_three.R|            0%|            0%|    0.00| :heavy_equals_sign: |
+      |   R/add_two.R|        57.14%|            0%|   57.14|     :arrow_up:      |
+      |         Total|        31.58%|        10.53%|   21.05|     :arrow_up:      |
       </details>
       
       <details>
