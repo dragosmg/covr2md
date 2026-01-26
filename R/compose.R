@@ -36,8 +36,6 @@
 #' @param marker (character scalar) string used to identify an issue
 #'   comment generated with covr2md. Defaults to
 #'   `"<!-- covr2md-code-coverage -->"`.
-#' @param keep_all_files (logical) include all files in the diff coverage table
-#'   or just those modified by the PR.
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar with the content of the GitHub comment
@@ -62,24 +60,22 @@ compose_comment <- function(
   repo,
   pr_number,
   marker = "<!-- covr2md-code-coverage -->",
-  keep_all_files = FALSE,
   align = "rrrc"
 ) {
   # TODO add some checks on inputs
   # FIXME
 
-  if (isFALSE(keep_all_files)) {
-    changed_files <- get_changed_files(
-      repo = repo,
-      pr_number = pr_number
-    )
-  }
+  changed_files <- get_changed_files(
+    repo = repo,
+    pr_number = pr_number
+  )
 
   if (rlang::is_empty(changed_files)) {
     cli::cli_alert_info(
       "No coverage relevant files changed. Returning all files"
     )
-    keep_all_files <- TRUE
+    # TODO check this scenario
+    # keep_all_files <- TRUE
   }
 
   # TODO given that changed_files is kinda optional, make sure
@@ -90,11 +86,13 @@ compose_comment <- function(
   #   * we can have PRs which do not touch files under R/ or src/ but rather
   #   focus on adding more unit tests. These are currently note reported, but
   #   they should.
+  # or better we focus on both (either files that have changed and see what
+  # effects the change has had in terms of coverage)
+  #
   diff_md_table <- compose_coverage_details(
     head_coverage = head_coverage,
     base_coverage = base_coverage,
     changed_files = changed_files,
-    keep_all_files = keep_all_files,
     align = align
   )
 
@@ -113,7 +111,7 @@ compose_comment <- function(
     pr_details,
     delta_total_coverage
   )
-
+  browser()
   diff_line_coverage <- get_diff_line_coverage(
     repo = repo,
     pr_details = pr_details,
@@ -258,17 +256,15 @@ compose_coverage_details <- function(
   head_coverage,
   base_coverage,
   changed_files,
-  keep_all_files = FALSE,
   align = "rrrc"
 ) {
   # TODO handle the case when there are no relevant changed files
-  # TODO think about when we would want to return all the files
-  # (keep_all_files = TRUE), not just those touched by the PR
+  # TODO think about when we would want to return all the files, not just
+  # those touched or affected by the PR
   diff_df <- derive_diff_df(
     head_coverage = head_coverage,
     base_coverage = base_coverage,
-    changed_files = changed_files,
-    keep_all_files = keep_all_files
+    changed_files = changed_files
   )
 
   diff_df_to_md(
