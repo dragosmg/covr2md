@@ -10,6 +10,10 @@ coverage_to_md <- function(x, align = "rr") {
 # y = base coverage
 #
 # align = markdown column alignment
+
+# TODO needs a better name. this is file level. needs to be distinguishable from
+# line-level
+
 #' Transform the diff df into markdown
 #'
 #' Makes the column names and the contents of the `delta` column more readable.
@@ -68,4 +72,15 @@ diff_df_to_md <- function(diff_df, align = "rrrc") {
     )
 
   diff_md_table
+}
+
+line_coverage_to_md <- function(diff_line_coverage) {
+  diff_coverage <- diff_line_coverage |>
+    dplyr::summarise(
+      total_lines_added = sum(lines_added),
+      total_lines_covered = sum(lines_covered)
+    )
+
+  percentage_line_coverage <- diff_coverage$total_lines_covered /
+    diff_coverage$total_lines_added
 }
