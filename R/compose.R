@@ -59,8 +59,7 @@ compose_comment <- function(
   base_coverage,
   repo,
   pr_number,
-  marker = "<!-- covr2md-code-coverage -->",
-  align = "rrrc"
+  marker = "<!-- covr2md-code-coverage -->"
 ) {
   # TODO add some checks on inputs
   # FIXME
@@ -78,13 +77,6 @@ compose_comment <- function(
     # keep_all_files <- TRUE
   }
 
-  diff_md_table <- compose_file_cov_details(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files,
-    align = align
-  )
-
   pr_details <- get_pr_details(
     repo = repo,
     pr_number = pr_number
@@ -101,11 +93,25 @@ compose_comment <- function(
     delta_total_coverage
   )
 
+  # file_cov_md_table <- compose_file_cov_details(
+  #   head_coverage = head_coverage,
+  #   base_coverage = base_coverage,
+  #   changed_files = changed_files,
+  #   align = align
+  # )
+
+  file_cov_md_table <- derive_file_cov_df(
+    head_coverage = head_coverage,
+    base_coverage = base_coverage,
+    changed_files = changed_files
+  ) |>
+    file_cov_df_to_md()
+
   diff_line_coverage <- get_diff_line_coverage(
-    repo = repo,
-    pr_details = pr_details,
+    head_coverage = head_coverage,
     changed_files = changed_files,
-    head_coverage = head_coverage
+    repo = repo,
+    pr_details = pr_details
   )
 
   diff_coverage_summary <- compose_diff_coverage_summary(
@@ -138,7 +144,7 @@ compose_comment <- function(
       <summary>Details on changes in file coverage</summary>
       <br/>
 
-      {diff_md_table}
+      {file_cov_md_table}
     </details>
 
     <details>
@@ -245,7 +251,7 @@ compose_file_cov_details <- function(
   head_coverage,
   base_coverage,
   changed_files,
-  align = "rrrc"
+  align = "rrrrc"
 ) {
   # TODO handle the case when there are no relevant changed files
   # TODO think about when we would want to return all the files, not just

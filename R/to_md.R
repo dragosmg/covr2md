@@ -61,15 +61,13 @@ file_cov_df_to_md <- function(diff_df, align = "rrrrc") {
 
   names(diff_df_prep) <- diff_df_names
 
-  diff_md_table <- diff_df_prep |>
+  diff_df_prep |>
     knitr::kable(
       align = align
     ) |>
     glue::glue_collapse(
       sep = "\n"
     )
-
-  diff_md_table
 }
 
 line_coverage_to_md <- function(
