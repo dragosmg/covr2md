@@ -34,12 +34,12 @@
       <summary>Details on line coverage change</summary>
       <br/>
       
-      |          File| Coverage head| Coverage base| &Delta; |                    |
-      |-------------:|-------------:|-------------:|:-------:|-------------------:|
-      |   R/add_one.R|           40%|           40%|  0.00   | :heavy_equals_sign:|
-      | R/add_three.R|            0%|            0%|  0.00   | :heavy_equals_sign:|
-      |   R/add_two.R|        57.14%|            0%|  57.14  |          :arrow_up:|
-      |         Total|        31.58%|        10.53%|  21.05  |          :arrow_up:|
+      |          File| Lines added| Lines tested| Coverage|
+      |-------------:|-----------:|------------:|--------:|
+      |   R/add_one.R|           3|            0|       0%|
+      | R/add_three.R|           3|            0|       0%|
+      |   R/add_two.R|           1|            0|       0%|
+      |         Total|           7|            0|       0%|
       
       </details>
       
