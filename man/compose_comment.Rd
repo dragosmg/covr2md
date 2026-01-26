@@ -9,9 +9,7 @@ compose_comment(
   base_coverage,
   repo,
   pr_number,
-  marker = "<!-- covr2md-code-coverage -->",
-  keep_all_files = FALSE,
-  align = "rrrc"
+  marker = "<!-- covr2md-code-coverage -->"
 )
 }
 \arguments{
@@ -30,16 +28,6 @@ branch.}
 \item{marker}{(character scalar) string used to identify an issue
 comment generated with covr2md. Defaults to
 \code{"<!-- covr2md-code-coverage -->"}.}
-
-\item{keep_all_files}{(logical) include all files in the diff coverage table
-or just those modified by the PR.}
-
-\item{align}{Column alignment: a character vector consisting of \code{'l'}
-(left), \code{'c'} (center) and/or \code{'r'} (right). By default or if
-\code{align = NULL}, numeric columns are right-aligned, and other columns
-are left-aligned. If \code{length(align) == 1L}, the string will be
-expanded to a vector of individual letters, e.g. \code{'clc'} becomes
-\code{c('c', 'l', 'c')}, unless the output format is LaTeX.}
 }
 \value{
 a character scalar with the content of the GitHub comment
@@ -50,7 +38,7 @@ Compose a coverage comment
 \examples{
 \dontrun{
 head_coverage <- covr::package_coverage()
-system2("git", c("checkout", "main"))
+system("git checkout main")
 base_coverage <- covr::package_coverage()
 
 compose_comment(

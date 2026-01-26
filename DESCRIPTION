@@ -1,6 +1,6 @@
 Package: covr2md
 Title: Tools to Convert covr Output to Markdown
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: Convert covr code coverage output into Markdown in preparation for
@@ -9,18 +9,20 @@ License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2md
 BugReports: https://github.com/dragosmg/covr2md/issues
 Depends:
-    R (>= 4.1.0)
+    R (>= 4.2.0)
 Imports:
     cli,
     covr,
     dplyr,
     gh,
     glue,
+    htmltools,
     knitr,
     purrr,
     rlang (>= 1.1.0),
     stringr,
-    tibble
+    tibble,
+    tidyr
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

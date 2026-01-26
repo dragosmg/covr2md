@@ -42,7 +42,10 @@ digest_coverage <- function(x = covr::package_coverage()) {
     coverage = total
   )
 
-  output <- dplyr::bind_rows(file_coverage_df, total_coverage_df)
+  output <- dplyr::bind_rows(
+    file_coverage_df,
+    total_coverage_df
+  )
 
   output
 }
@@ -50,8 +53,6 @@ digest_coverage <- function(x = covr::package_coverage()) {
 #' Derive a coverage tibble for the changed files
 #'
 #' @inheritParams compose_comment
-#' @param keep_all_files (logical) indicates whether to subset only for the
-#'   relevant (i.e. under `R/` or `src/`) changed files. Defaults to `FALSE`.
 #'
 #' @returns a`tibble` with 4 columns:
 #'   * `file`: file name
@@ -60,12 +61,10 @@ digest_coverage <- function(x = covr::package_coverage()) {
 #'   * `delta`: difference in coverage between head and base.
 #'
 #' @keywords internal
-derive_diff_df <- function(
+derive_file_cov_df <- function(
   head_coverage,
   base_coverage,
-  changed_files,
-  keep_all_files = FALSE,
-  keep_totals = TRUE
+  changed_files
 ) {
   head_coverage_digest <- digest_coverage(head_coverage)
 
@@ -74,23 +73,39 @@ derive_diff_df <- function(
   diff_df <- head_coverage_digest |>
     dplyr::left_join(
       base_coverage_digest,
-      by = dplyr::join_by(file),
-      suffix = c("_head", "_base")
+      by = dplyr::join_by(
+        file
+      ),
+      suffix = c(
+        "_head",
+        "_base"
+      )
     ) |>
     dplyr::mutate(
       delta = .data$coverage_head - .data$coverage_base
     )
 
-  if (keep_totals) {
-    changed_files <- c(changed_files, "Total")
-  }
+  # keep any files with changes in content (`changed_files`) or in coverage
+  cov_change_files <- diff_df |>
+    dplyr::filter(
+      .data$delta != 0
+    ) |>
+    dplyr::pull(
+      file
+    )
 
-  if (!keep_all_files) {
-    diff_df <- diff_df |>
-      dplyr::filter(
-        file %in% changed_files
-      )
-  }
+  impacted_files <- c(
+    union(
+      changed_files,
+      cov_change_files
+    ),
+    "Total"
+  )
+
+  diff_df <- diff_df |>
+    dplyr::filter(
+      file %in% impacted_files
+    )
 
   diff_df
 }

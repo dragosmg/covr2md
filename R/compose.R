@@ -36,8 +36,6 @@
 #' @param marker (character scalar) string used to identify an issue
 #'   comment generated with covr2md. Defaults to
 #'   `"<!-- covr2md-code-coverage -->"`.
-#' @param keep_all_files (logical) include all files in the diff coverage table
-#'   or just those modified by the PR.
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar with the content of the GitHub comment
@@ -46,7 +44,7 @@
 #' @examples
 #' \dontrun{
 #' head_coverage <- covr::package_coverage()
-#' system2("git", c("checkout", "main"))
+#' system("git checkout main")
 #' base_coverage <- covr::package_coverage()
 #'
 #' compose_comment(
@@ -61,33 +59,23 @@ compose_comment <- function(
   base_coverage,
   repo,
   pr_number,
-  marker = "<!-- covr2md-code-coverage -->",
-  keep_all_files = FALSE,
-  align = "rrrc"
+  marker = "<!-- covr2md-code-coverage -->"
 ) {
   # TODO add some checks on inputs
+  # FIXME
 
-  if (isFALSE(keep_all_files)) {
-    changed_files <- get_changed_files(
-      repo = repo,
-      pr_number = pr_number
-    )
-  }
+  changed_files <- get_changed_files(
+    repo = repo,
+    pr_number = pr_number
+  )
 
   if (rlang::is_empty(changed_files)) {
     cli::cli_alert_info(
       "No coverage relevant files changed. Returning all files"
     )
-    keep_all_files <- TRUE
+    # TODO check this scenario
+    # keep_all_files <- TRUE
   }
-
-  diff_md_table <- compose_coverage_details(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files,
-    keep_all_files = keep_all_files,
-    align = align
-  )
 
   pr_details <- get_pr_details(
     repo = repo,
@@ -100,7 +88,36 @@ compose_comment <- function(
 
   badge_url <- build_badge_url(total_head_coverage)
 
-  coverage_summary <- compose_coverage_summary(pr_details, delta_total_coverage)
+  coverage_summary <- compose_coverage_summary(
+    pr_details,
+    delta_total_coverage
+  )
+
+  # TODO handle the case when there are no relevant changed files
+  # TODO think about when we would want to return all the files, not just
+  # those touched or affected by the PR
+
+  file_cov_md_table <- derive_file_cov_df(
+    head_coverage = head_coverage,
+    base_coverage = base_coverage,
+    changed_files = changed_files
+  ) |>
+    file_cov_df_to_md()
+
+  diff_line_coverage <- get_diff_line_coverage(
+    head_coverage = head_coverage,
+    changed_files = changed_files,
+    repo = repo,
+    pr_details = pr_details
+  )
+
+  diff_coverage_summary <- compose_diff_coverage_summary(
+    diff_line_coverage
+  )
+
+  diff_line_md_table <- line_cov_to_md(
+    diff_line_coverage
+  )
 
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
@@ -108,6 +125,7 @@ compose_comment <- function(
     [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"
   )
 
+  # TODO use diff_line_table for the second details
   glue::glue(
     "
     {marker}
@@ -117,19 +135,21 @@ compose_comment <- function(
     ![badge]({badge_url})
 
     {coverage_summary}
-
+    {diff_coverage_summary}
 
     <details>
+      <summary>Details on changes in file coverage</summary>
+      <br/>
 
-    <summary>Details on affected files</summary>
-    <br/>
-
-    {diff_md_table}
-
+      {file_cov_md_table}
     </details>
 
-    <br/>
-    Results for commit: {pr_details$head_sha}
+    <details>
+      <summary>Details on diff coverage</summary>
+      <br/>
+
+      {diff_line_md_table}
+    </details>
 
     :recycle: Comment updated with the latest results.
 
@@ -180,7 +200,7 @@ compose_coverage_summary <- function(pr_details, delta) {
     delta == 0 ~ "not change"
   )
 
-  by_delta <- glue::glue(" by {delta} percentage points")
+  by_delta <- glue::glue(" by `{delta}` percentage points")
 
   by_delta <- dplyr::if_else(
     delta == 0,
@@ -201,48 +221,30 @@ compose_coverage_summary <- function(pr_details, delta) {
   )
 }
 
-#' Compose coverage details
-#'
-#' @inheritParams compose_comment
-#' @param changed_files (character) names of files changed by the PR. Usually
-#'   the output of [get_changed_files()].
-#'
-#' @returns a markdown table of changes in coverage at file level between the
-#'   head and base branches.
-#'
-#' @keywords internal
-#' @examples
-#' \dontrun{
-#' changed_files <- get_changed_files(
-#'   repo = "dragosmg/covr2mddemo",
-#'   pr_number = 2
-#' )
-#'
-#' coverage_details <- compose_coverage_details(
-#'   head_coverage = head_coverage,
-#'   base_coverage = base_coverage,
-#'   changed_files = changed_files
-#' )
-#' }
-compose_coverage_details <- function(
-  head_coverage,
-  base_coverage,
-  changed_files,
-  keep_all_files = FALSE,
-  align = "rrrc"
-) {
-  # TODO handle the case when there are no relevant changed files
-  # TODO think about when we would want to return all the files
-  # (keep_all_files = TRUE), not just those touched by the PR
-  diff_df <- derive_diff_df(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files,
-    keep_all_files = keep_all_files
+
+compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
+  diff_coverage <- diff_line_coverage |>
+    dplyr::summarise(
+      total_lines_added = sum(.data$lines_added),
+      total_lines_covered = sum(.data$lines_covered)
+    )
+
+  percentage_line_coverage <- round(
+    diff_coverage$total_lines_covered /
+      diff_coverage$total_lines_added,
+    2
   )
 
-  diff_df_to_md(
-    diff_df,
-    align = align
+  emoji <- dplyr::if_else(
+    percentage_line_coverage >= target,
+    ":white_check_mark: ",
+    ":x: "
+  )
+
+  glue::glue(
+    "{emoji} Diff coverage: {percentage_line_coverage}% \\
+    ({diff_coverage$total_lines_covered} out of \\
+    {diff_coverage$total_lines_added} added lines are covered by tests). \\
+    Target coverage is at least `{target}%`."
   )
 }

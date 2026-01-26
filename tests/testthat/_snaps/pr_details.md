@@ -34,3 +34,15 @@
     Output
       [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
 
+# extract_added_lines works
+
+    Code
+      extract_added_lines(test_diff_text)
+    Output
+      # A tibble: 3 x 2
+         line text                                                                
+        <dbl> <chr>                                                               
+      1    12 "  if (!is.numeric(x)) {"                                           
+      2    14 "      \"`x` must be numeric. You supplied a {.class {class(x)}}\","
+      3    15 "      call = rlang::caller_env()"                                  
+
