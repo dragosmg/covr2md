@@ -115,7 +115,7 @@ compose_comment <- function(
     diff_line_coverage
   )
 
-  diff_line_md_table <- line_coverage_to_md(
+  diff_line_md_table <- line_cov_to_md(
     diff_line_coverage
   )
 

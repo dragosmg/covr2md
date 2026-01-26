@@ -71,7 +71,7 @@ file_cov_df_to_md <- function(file_cov_df, align = "rrrrc") {
 #' @returns a markdown table as a string
 #'
 #' @keywords internal
-line_coverage_to_md <- function(
+line_cov_to_md <- function(
   diff_line_coverage,
   align = "rrrr"
 ) {
