@@ -93,12 +93,9 @@ compose_comment <- function(
     delta_total_coverage
   )
 
-  # file_cov_md_table <- compose_file_cov_details(
-  #   head_coverage = head_coverage,
-  #   base_coverage = base_coverage,
-  #   changed_files = changed_files,
-  #   align = align
-  # )
+  # TODO handle the case when there are no relevant changed files
+  # TODO think about when we would want to return all the files, not just
+  # those touched or affected by the PR
 
   file_cov_md_table <- derive_file_cov_df(
     head_coverage = head_coverage,
@@ -224,49 +221,6 @@ compose_coverage_summary <- function(pr_details, delta) {
   )
 }
 
-#' Compose coverage details
-#'
-#' @inheritParams compose_comment
-#' @param changed_files (character) names of files changed by the PR. Usually
-#'   the output of [get_changed_files()].
-#'
-#' @returns a markdown table of changes in coverage at file level between the
-#'   head and base branches.
-#'
-#' @keywords internal
-#' @examples
-#' \dontrun{
-#' changed_files <- get_changed_files(
-#'   repo = "dragosmg/covr2mddemo",
-#'   pr_number = 2
-#' )
-#'
-#' file_coverage_details <- compose_file_cov_details(
-#'   head_coverage = head_coverage,
-#'   base_coverage = base_coverage,
-#'   changed_files = changed_files
-#' )
-#' }
-compose_file_cov_details <- function(
-  head_coverage,
-  base_coverage,
-  changed_files,
-  align = "rrrrc"
-) {
-  # TODO handle the case when there are no relevant changed files
-  # TODO think about when we would want to return all the files, not just
-  # those touched or affected by the PR
-  file_cov_df <- derive_file_cov_df(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files
-  )
-
-  file_cov_df_to_md(
-    file_cov_df,
-    align = align
-  )
-}
 
 compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
   diff_coverage <- diff_line_coverage |>
