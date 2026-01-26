@@ -125,12 +125,17 @@ compose_comment <- function(
     diff_line_coverage
   )
 
+  diff_line_md_table <- line_coverage_to_md(
+    diff_line_coverage
+  )
+
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
     "<sup>Created on {Sys.Date()} with \\
     [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"
   )
 
+  # TODO use diff_line_table for the second details
   glue::glue(
     "
     {marker}
@@ -158,7 +163,7 @@ compose_comment <- function(
     <summary>Details on line coverage change</summary>
     <br/>
 
-    {diff_md_table}
+    {diff_line_md_table}
 
     </details>
 

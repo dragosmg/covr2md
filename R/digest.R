@@ -42,7 +42,10 @@ digest_coverage <- function(x = covr::package_coverage()) {
     coverage = total
   )
 
-  output <- dplyr::bind_rows(file_coverage_df, total_coverage_df)
+  output <- dplyr::bind_rows(
+    file_coverage_df,
+    total_coverage_df
+  )
 
   output
 }

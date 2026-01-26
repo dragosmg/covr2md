@@ -26,7 +26,7 @@ coverage_to_md <- function(x, align = "rr") {
 #'   collapsed into a single string.
 #'
 #' @keywords internal
-diff_df_to_md <- function(diff_df, align = "rrrc") {
+diff_df_to_md <- function(diff_df, align = "rrrrc") {
   diff_df_prep <- diff_df |>
     dplyr::mutate(
       # add a brief visual interpretation of the delta with arrows or equal sign
@@ -74,13 +74,50 @@ diff_df_to_md <- function(diff_df, align = "rrrc") {
   diff_md_table
 }
 
-line_coverage_to_md <- function(diff_line_coverage) {
+line_coverage_to_md <- function(
+  diff_line_coverage,
+  align = "rrrr"
+) {
   diff_coverage <- diff_line_coverage |>
+    dplyr::group_by(
+      .data$file
+    ) |>
     dplyr::summarise(
-      total_lines_added = sum(.data$lines_added),
-      total_lines_covered = sum(.data$lines_covered)
+      lines_added = sum(.data$lines_added),
+      lines_covered = sum(.data$lines_covered)
+    ) |>
+    dplyr::ungroup()
+
+  total_row <- diff_coverage |>
+    dplyr::summarise(
+      lines_added = sum(.data$lines_added),
+      lines_covered = sum(.data$lines_covered)
+    ) |>
+    dplyr::mutate(
+      file = "Total",
+      .before = "lines_added"
     )
 
-  percentage_line_coverage <- diff_coverage$total_lines_covered /
-    diff_coverage$total_lines_added
+  output <- dplyr::bind_rows(
+    diff_coverage,
+    total_row
+  ) |>
+    dplyr::mutate(
+      coverage = round(lines_covered / lines_added, 2),
+      coverage = paste0(.data$coverage, "%")
+    ) |>
+    dplyr::rename(
+      File = file,
+      `Lines added` = lines_added,
+      `Lines tested` = lines_covered,
+      Coverage = coverage
+    )
+
+  output |>
+    knitr::kable(
+      align = align
+    ) |>
+    glue::glue_collapse(
+      sep = "\n"
+    )
 }
