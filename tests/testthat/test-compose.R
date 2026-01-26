@@ -27,6 +27,6 @@ test_that("compose_coverage_summary works", {
   expect_identical(2 * 2, 4)
 })
 
-test_that("compose_coverage_details works", {
+test_that("compose_file_cov_details works", {
   expect_identical(2 * 2, 4)
 })

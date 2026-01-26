@@ -61,7 +61,7 @@ digest_coverage <- function(x = covr::package_coverage()) {
 #'   * `delta`: difference in coverage between head and base.
 #'
 #' @keywords internal
-derive_diff_df <- function(
+derive_file_cov_df <- function(
   head_coverage,
   base_coverage,
   changed_files

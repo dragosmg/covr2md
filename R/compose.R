@@ -79,7 +79,7 @@ compose_comment <- function(
   }
 
   # TODO given that changed_files is kinda optional, make sure
-  # compose_coverage_details works
+  # compose_file_cov_details works
   # FIXME changed_files is misleading a bit. I think the focus should be not so
   # much on the files for which the content has changed, but rather on the files
   # for which the coverage has changed.
@@ -89,7 +89,7 @@ compose_comment <- function(
   # or better we focus on both (either files that have changed and see what
   # effects the change has had in terms of coverage)
   #
-  diff_md_table <- compose_coverage_details(
+  diff_md_table <- compose_file_cov_details(
     head_coverage = head_coverage,
     base_coverage = base_coverage,
     changed_files = changed_files,
@@ -246,13 +246,13 @@ compose_coverage_summary <- function(pr_details, delta) {
 #'   pr_number = 2
 #' )
 #'
-#' coverage_details <- compose_coverage_details(
+#' file_coverage_details <- compose_file_cov_details(
 #'   head_coverage = head_coverage,
 #'   base_coverage = base_coverage,
 #'   changed_files = changed_files
 #' )
 #' }
-compose_coverage_details <- function(
+compose_file_cov_details <- function(
   head_coverage,
   base_coverage,
   changed_files,
@@ -261,14 +261,14 @@ compose_coverage_details <- function(
   # TODO handle the case when there are no relevant changed files
   # TODO think about when we would want to return all the files, not just
   # those touched or affected by the PR
-  diff_df <- derive_diff_df(
+  file_cov_df <- derive_file_cov_df(
     head_coverage = head_coverage,
     base_coverage = base_coverage,
     changed_files = changed_files
   )
 
-  diff_df_to_md(
-    diff_df,
+  file_cov_df_to_md(
+    file_cov_df,
     align = align
   )
 }

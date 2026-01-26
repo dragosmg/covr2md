@@ -6,10 +6,6 @@ coverage_to_md <- function(x, align = "rr") {
     )
 }
 
-# x = head coverage
-# y = base coverage
-#
-# align = markdown column alignment
 
 # TODO needs a better name. this is file level. needs to be distinguishable from
 # line-level
@@ -19,14 +15,14 @@ coverage_to_md <- function(x, align = "rr") {
 #' Makes the column names and the contents of the `delta` column more readable.
 #' Transforms the output to markdown and collapses into a single string.
 #'
-#' @param diff_df (`tibble`) a diff df, the output of [derive_diff_df()]
+#' @param diff_df (`tibble`) a diff df, the output of [derive_file_cov_df()]
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar containing markdown version of the diff df
 #'   collapsed into a single string.
 #'
 #' @keywords internal
-diff_df_to_md <- function(diff_df, align = "rrrrc") {
+file_cov_df_to_md <- function(diff_df, align = "rrrrc") {
   diff_df_prep <- diff_df |>
     dplyr::mutate(
       # add a brief visual interpretation of the delta with arrows or equal sign
@@ -66,7 +62,9 @@ diff_df_to_md <- function(diff_df, align = "rrrrc") {
   names(diff_df_prep) <- diff_df_names
 
   diff_md_table <- diff_df_prep |>
-    knitr::kable(align = align) |>
+    knitr::kable(
+      align = align
+    ) |>
     glue::glue_collapse(
       sep = "\n"
     )
