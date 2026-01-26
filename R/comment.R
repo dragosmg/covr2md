@@ -55,7 +55,7 @@ get_comment_id <- function(
   comments_info <- tryCatch(
     glue::glue("GET {api_url}") |>
       gh::gh(),
-    error = function(e) return(NULL)
+    error = function(e) NULL
   )
 
   if (rlang::is_null(comments_info)) {

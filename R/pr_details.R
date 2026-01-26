@@ -161,16 +161,19 @@ get_diff_text <- function(
 # the output file) and their contents
 extract_added_lines <- function(diff_text) {
   raw_df <- diff_text |>
-    stringr::str_split(pattern = "\n") |>
+    stringr::str_split(
+      pattern = stringr::fixed("\n")
+    ) |>
     # TODO check if one
     purrr::pluck(1) |>
     tibble::tibble(raw = _)
 
   output <- raw_df |>
     dplyr::mutate(
-      is_hunk = stringr::str_detect(raw, "^@@")
-    ) |>
-    dplyr::mutate(
+      is_hunk = stringr::str_starts(
+        raw,
+        stringr::fixed("@@")
+      ),
       # identify the start of the hunk in the destination file
       new_start = dplyr::if_else(
         .data$is_hunk,
@@ -181,7 +184,9 @@ extract_added_lines <- function(diff_text) {
         .data$new_start,
         stringr::fixed("+")
       ),
-      new_start = as.numeric(.data$new_start)
+      new_start = as.numeric(
+        .data$new_start
+      )
     ) |>
     # TODO this should hold with multiple hunks, but check
     tidyr::fill(
