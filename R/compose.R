@@ -46,7 +46,7 @@
 #' @examples
 #' \dontrun{
 #' head_coverage <- covr::package_coverage()
-#' system2("git", c("checkout", "main"))
+#' system("git checkout main")
 #' base_coverage <- covr::package_coverage()
 #'
 #' compose_comment(
@@ -148,23 +148,17 @@ compose_comment <- function(
     {diff_coverage_summary}
 
     <details>
+      <summary>Details on changes in file coverage</summary>
+      <br/>
 
-    <summary>Details on file coverage change</summary>
-    <br/>
-
-    {diff_md_table}
-
+      {diff_md_table}
     </details>
 
-    <br/>
-
     <details>
+      <summary>Details on diff coverage</summary>
+      <br/>
 
-    <summary>Details on line coverage change</summary>
-    <br/>
-
-    {diff_line_md_table}
-
+      {diff_line_md_table}
     </details>
 
     :recycle: Comment updated with the latest results.
@@ -283,19 +277,29 @@ compose_coverage_details <- function(
   )
 }
 
-compose_diff_coverage_summary <- function(diff_line_coverage) {
+compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
   diff_coverage <- diff_line_coverage |>
     dplyr::summarise(
       total_lines_added = sum(.data$lines_added),
       total_lines_covered = sum(.data$lines_covered)
     )
 
-  percentage_line_coverage <- diff_coverage$total_lines_covered /
-    diff_coverage$total_lines_added
+  percentage_line_coverage <- round(
+    diff_coverage$total_lines_covered /
+      diff_coverage$total_lines_added,
+    2
+  )
+
+  emoji <- dplyr::if_else(
+    percentage_line_coverage >= target,
+    ":white_check_mark: ",
+    ":x: "
+  )
 
   glue::glue(
-    "Diff coverage: {round(percentage_line_coverage, 2)}% \\
+    "{emoji} Diff coverage: {percentage_line_coverage}% \\
     ({diff_coverage$total_lines_covered} out of \\
-    {diff_coverage$total_lines_added} added lines are covered by tests)."
+    {diff_coverage$total_lines_added} added lines are covered by tests). \\
+    Target coverage is at least `{target}%`."
   )
 }

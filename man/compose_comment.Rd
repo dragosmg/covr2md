@@ -50,7 +50,7 @@ Compose a coverage comment
 \examples{
 \dontrun{
 head_coverage <- covr::package_coverage()
-system2("git", c("checkout", "main"))
+system("git checkout main")
 base_coverage <- covr::package_coverage()
 
 compose_comment(
