@@ -86,7 +86,9 @@ compose_comment <- function(
   total_base_coverage <- covr::percent_coverage(base_coverage)
   delta_total_coverage <- round(total_head_coverage - total_base_coverage, 2)
 
-  badge_url <- build_badge_url(total_head_coverage)
+  # make the badge then save it somewhere
+  # badge_url <- build_badge_url(total_head_coverage)
+  badge_url <- "<placeholder>"
 
   coverage_summary <- compose_coverage_summary(
     pr_details,
@@ -122,10 +124,9 @@ compose_comment <- function(
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
     "<sup>Created on {Sys.Date()} with \\
-    [covr2md {packageVersion('covr2md')}](https://reprex.tidyverse.org)</sup>"
+    [covr2md {packageVersion('covr2md')}](https://url-placeholder)</sup>"
   )
 
-  # TODO use diff_line_table for the second details
   glue::glue(
     "
     {marker}

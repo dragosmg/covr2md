@@ -7,7 +7,7 @@
 #   All declared Imports should be used.
 # to_report_data uses htmltools
 ignore_unused_imports <- function() {
-  htmltools::a
+  htmltools::a # nocov
 }
 
 ## usethis namespace: start

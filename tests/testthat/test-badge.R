@@ -1,150 +1,65 @@
-test_that("derive_badge_value() works", {
-  expect_identical(
-    derive_badge_value(
-      10.234
-    ),
-    "10.23%25"
-  )
-
-  expect_identical(
-    derive_badge_value(
-      56.943
-    ),
-    "56.94%25"
-  )
-
-  expect_identical(
-    derive_badge_value(
-      90.51235454
-    ),
-    "90.51%25"
-  )
-})
-
-test_that("derive_badge_value() complains", {
-  expect_error(
-    derive_badge_value(
-      c(10.234, 38.399)
-    ),
-    "`percentage` must be a scalar double.",
-    fixed = TRUE
-  )
-
-  expect_error(
-    derive_badge_value(
-      "foo"
-    ),
-    "`percentage` must be a scalar double.",
-    fixed = TRUE
-  )
-
-  expect_error(
-    derive_badge_value(
-      TRUE
-    ),
-    "`percentage` must be a scalar double.",
-    fixed = TRUE
-  )
-})
-
 test_that("derive_badge_colour() works", {
-  expect_identical(
-    derive_badge_colour(10),
-    "red"
-  )
+  coverages <- 1:20 * 5
 
   expect_identical(
-    derive_badge_colour(50),
-    "orange"
-  )
-
-  expect_identical(
-    derive_badge_colour(60),
-    "yellow"
-  )
-
-  expect_identical(
-    derive_badge_colour(70),
-    "yellowgreen"
-  )
-
-  expect_identical(
-    derive_badge_colour(80),
-    "green"
-  )
-
-  expect_identical(
-    derive_badge_colour(90),
-    "brightgreen"
-  )
-
-  expect_identical(
-    derive_badge_colour(NA_real_),
-    "lightgrey"
-  )
-
-  expect_identical(
-    derive_badge_colour(NULL),
-    "lightgrey"
+    purrr::map_chr(
+      coverages,
+      derive_value_colour
+    ) |>
+      unique(),
+    # values for 90 and 100 are identical / duplicates
+    unique(coverage_thresholds$colour)
   )
 })
 
-test_that("derive_badge_colour() complains", {
-  expect_error(
-    derive_badge_colour(c(78.5, 32.5)),
-    "`percentage` must be a scalar double.",
-    fixed = TRUE
+test_that("derive_badge_colour() with NULL and NA", {
+  expect_identical(
+    derive_value_colour(NA_real_),
+    "#9f9f9f"
   )
 
-  expect_error(
-    derive_badge_colour("foo"),
-    "`percentage` must be a scalar double.",
-    fixed = TRUE
-  )
-
-  expect_error(
-    derive_badge_colour(TRUE),
-    "`percentage` must be a scalar double.",
-    fixed = TRUE
+  expect_identical(
+    derive_value_colour(NULL),
+    "#9f9f9f"
   )
 })
 
-test_that("build_badge_url() works", {
+test_that("generate_badge", {
   expect_snapshot(
-    build_badge_url(10)
+    (generate_badge(5))
+  )
+
+  expect_snapshot(
+    (generate_badge(25))
+  )
+
+  expect_snapshot(
+    (generate_badge(55))
+  )
+
+  expect_snapshot(
+    (generate_badge(75))
+  )
+
+  expect_snapshot(
+    (generate_badge(95))
   )
 })
 
-test_that("build_badge_url() with NA and NULL", {
+test_that("generate_badge with NA, NULL and out-of-bounds values", {
   expect_snapshot(
-    build_badge_url(NA_real_)
+    (generate_badge(NA_real_))
   )
 
   expect_snapshot(
-    build_badge_url(NULL)
-  )
-})
-
-test_that("build_badge_url() complains", {
-  # with non-scalar numeric inputs
-  expect_snapshot(
-    error = TRUE,
-    build_badge_url(c(75, 80))
-  )
-
-  # with non-numeric inputs
-  expect_snapshot(
-    error = TRUE,
-    build_badge_url("foo")
+    (generate_badge(NULL))
   )
 
   expect_snapshot(
-    error = TRUE,
-    build_badge_url(TRUE)
+    (generate_badge(1302))
   )
 
   expect_snapshot(
-    error = TRUE,
-    build_badge_url(list(75))
+    (generate_badge(-5))
   )
 })
