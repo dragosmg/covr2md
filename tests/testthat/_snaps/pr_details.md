@@ -1,7 +1,7 @@
 # get_pr_details() works
 
     Code
-      get_pr_details(repo = "dragosmg/covr2mddemo", pr_number = 2)
+      get_pr_details(repo = "dragosmg/covr2ghdemo", pr_number = 2)
     Output
       $pr_number
       [1] 2
@@ -19,10 +19,10 @@
       [1] "63e9463f904c5c079296dbbe3b8c285cf6d95653"
       
       $pr_html_url
-      [1] "https://github.com/dragosmg/covr2mddemo/pull/2"
+      [1] "https://github.com/dragosmg/covr2ghdemo/pull/2"
       
       $diff_url
-      [1] "https://github.com/dragosmg/covr2mddemo/pull/2.diff"
+      [1] "https://github.com/dragosmg/covr2ghdemo/pull/2.diff"
       
       attr(,"class")
       [1] "pr_details"
@@ -30,7 +30,7 @@
 # get_changed_files() works
 
     Code
-      get_changed_files(repo = "dragosmg/covr2mddemo", pr_number = 2)
+      get_changed_files(repo = "dragosmg/covr2ghdemo", pr_number = 2)
     Output
       [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
 

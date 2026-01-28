@@ -1,16 +1,16 @@
 # compose_comment works
 
     Code
-      compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2mddemo",
+      compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
         pr_number = 3)
     Output
-      <!-- covr2md-code-coverage -->
+      <!-- covr2gh-code-coverage -->
       
       ## Coverage summary
       
       ![badge](<placeholder>)
       
-      :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2mddemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by `21.05` percentage points.
+      :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by `21.05` percentage points.
       :x:  Diff coverage: 0% (0 out of 7 added lines are covered by tests). Target coverage is at least `80%`.
       
       <details>
@@ -39,5 +39,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2md 0.0.0.9008](https://url-placeholder)</sup>
+      <sup>Created on <removed-date> with [covr2gh 0.0.0.9008](https://url-placeholder)</sup>
 
