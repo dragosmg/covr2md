@@ -2,11 +2,17 @@
 #   * in the PR comment
 #   * in the Readme
 #   * maybe stored in a separate branch (e.g. coverage-artifacts)?
+#' Generate a coverage badge
+#'
+#' @param value (a numeric scalar) percentage coverage.
+#'
+#' @returns an SVG string invisibly
+#'
+#' @export
+#' @examples
+#' generate_badge(5)
+#' generate_badge(48)
 generate_badge <- function(value) {
-  # enforce value being between 0 and 100
-  # TODO message about it
-  # TODO test
-
   # NAs are contagious, NULLs are not
   if (!is.null(value)) {
     value_adjusted <- max(min(value, 100), 0)
@@ -155,7 +161,7 @@ badge_boilerplate <- '
 '
 
 coverage_thresholds <- tibble::tibble(
-  value = c(0, 30, 50, 65, 80, 90, 100),
+  value = c(0, 20, 40, 55, 70, 85, 100),
   colour = c(
     "#D9534F",
     "#E4804E",
