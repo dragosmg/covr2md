@@ -28,7 +28,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4.1.1
         with:
-          token:${{ secrets.vbump || secrets.GITHUB_TOKEN}}
+          token:${{ secrets.VBUMP || secrets.GITHUB_TOKEN}}
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
