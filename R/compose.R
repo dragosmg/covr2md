@@ -135,7 +135,7 @@ compose_comment <- function(
 
     ## Coverage summary
 
-    ![badge](badge_url)
+    ![badge]({badge_url})
 
     {coverage_summary}
     {diff_coverage_summary}
