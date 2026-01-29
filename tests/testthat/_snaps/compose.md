@@ -4,6 +4,7 @@
       compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
         pr_number = 3)
     Output
+      Badge URL is: https://raw.githubusercontent.com/dragosmg/covr2ghdemo/covr2gh-storage/badges/increase-coverage/coverage_badge.svg
       <!-- covr2gh-code-coverage -->
       
       ## Coverage summary
