@@ -121,6 +121,8 @@ compose_comment <- function(
     diff_line_coverage
   )
 
+  badge_url <- "https://github.com/dragosmg/covr2ghdemo/tree/covr2gh-storage/badges/gha-t2/coverage_badge.svg"
+
   # TODO update URL with the correct pkgdown one once there is one
   sup <- glue::glue(
     "<sup>Created on {Sys.Date()} with \\
@@ -133,7 +135,7 @@ compose_comment <- function(
 
     ## Coverage summary
 
-    ![badge](badge.svg)
+    ![badge](badge_url)
 
     {coverage_summary}
     {diff_coverage_summary}
