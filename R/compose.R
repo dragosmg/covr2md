@@ -88,6 +88,8 @@ compose_comment <- function(
 
   badge_url <- build_badge_url(pr_details)
 
+  print(glue::glue("Badge URL is: {badge_url}"))
+
   coverage_summary <- compose_coverage_summary(
     pr_details,
     delta_total_coverage
