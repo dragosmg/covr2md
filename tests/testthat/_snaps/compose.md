@@ -8,7 +8,7 @@
       
       ## Coverage summary
       
-      ![badge](badge.svg)
+      ![badge](badge_url)
       
       :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by `21.05` percentage points.
       :x:  Diff coverage: 0% (0 out of 7 added lines are covered by tests). Target coverage is at least `80%`.
@@ -43,5 +43,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2gh 0.0.0.9008](https://url-placeholder)</sup>
+      <sup>Created on <removed-date> with [covr2gh 0.0.0.9009](https://url-placeholder)</sup>
 
