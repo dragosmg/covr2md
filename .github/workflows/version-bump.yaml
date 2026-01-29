@@ -72,6 +72,17 @@ jobs:
           echo "CURRENT_PKG_VERSION=${{ env.CURRENT_PKG_VERSION }}"
           echo "NEW_PKG_VERSION=${{ env.NEW_PKG_VERSION }}"
 
+      - name: Checkout to main 🛎
+        run: |
+          git fetch origin main
+          git checkout main
+          git pull origin main
+      - name: Set file pattern to commit ⚙️
+        id: file-pattern
+        run: |
+          FILE_PATTERN="NEWS.md DESCRIPTION"
+          echo "file-pattern=$FILE_PATTERN" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Commit and push changes 📌
         if: ${{ env.NEW_PKG_VERSION }}
         uses: stefanzweifel/git-auto-commit-action@v5
