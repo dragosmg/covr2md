@@ -37,5 +37,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2gh 0.0.0.9012](https://url-placeholder)</sup>
+      <sup>Created on <removed-date> with [covr2gh 0.0.0.9013](https://url-placeholder)</sup>
 

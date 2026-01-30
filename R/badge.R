@@ -65,104 +65,23 @@ generate_badge <- function(value) {
 
     # nolint end
 
+    badge_template_path <- fs::path_package(
+        "templates",
+        "badge.txt",
+        package = "covr2gh"
+    )
+    badge_template <- readLines(badge_template_path) |>
+        stringr::str_flatten(
+            collapse = "\n"
+        )
+
     badge_svg <- glue::glue(
-        badge_boilerplate,
+        badge_template,
         .trim = TRUE
     )
 
     invisible(badge_svg)
 }
-
-badge_boilerplate <- '
-  <svg xmlns="http://www.w3.org/2000/svg"
-        width="{total_width}"
-        height="20"
-        role="img"
-        aria-label="coverage: {char_value}">
-
-    <title>
-        coverage: {char_value}
-    </title>
-
-    <defs>
-        <!-- rounded corners -->
-        <clipPath id="clipr">
-            <rect width="{total_width}"
-                    height="20"
-                    rx="3"
-                    fill="#fff"/>
-        </clipPath>
-
-        <!-- subtle gradient overlay -->
-        <linearGradient id="gradient"
-                        x2="0"
-                        y2="100%">
-            <stop offset="0"
-                    stop-color="#bbb"
-                    stop-opacity="0.1"/>
-            <stop offset="1" stop-opacity="0.1"/>
-        </linearGradient>
-    </defs>
-
-    <!-- badge background -->
-    <g clip-path="url(#clipr)">
-        <rect width="{label_width}"
-                height="20"
-                fill="#555"/>
-        <rect x="{label_width}"
-                width="{value_width}"
-                height="20"
-                fill="{value_colour}"/>
-        <rect width="{total_width}"
-                height="20"
-                fill="url(#gradient)"/>
-    </g>
-
-    <!-- badge text -->
-    <g fill="#fff"
-        text-anchor="middle"
-        font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
-        font-size="11"
-        >
-
-        <!-- label shadow -->
-        <text aria-hidden="true"
-                x="31"
-                y="15"
-                fill="#010101"
-                fill-opacity="0.3"
-                textLength="{text_length_label}">
-            coverage
-        </text>
-
-        <!-- label text -->
-        <text x="31"
-                y="14"
-                fill="#fff"
-                textLength="{text_length_label}">
-            coverage
-        </text>
-
-        <!-- value shadow -->
-        <text aria-hidden="true"
-                x="{text_value_start}"
-                y="15"
-                fill="#010101"
-                fill-opacity="0.3"
-                textLength="{text_length_value}">
-          {char_value}
-        </text>
-
-        <!-- value text -->
-        <text x="{text_value_start}"
-                y="14"
-                fill="#fff"
-                textLength="{text_length_value}">
-          {char_value}
-        </text>
-    </g>
-</svg>
-'
 
 coverage_thresholds <- tibble::tibble(
     value = c(0, 20, 40, 55, 70, 85, 100),
