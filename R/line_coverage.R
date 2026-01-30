@@ -1,4 +1,17 @@
+#' Compose the line coverage summary
+#'
+#' Builds the high-level sentence summarising the line coverage of the patch.
+#'
+#' @param diff_line_coverage a `tibble` the output of [get_diff_line_coverage()]
+#' @param target (numeric) the target coverage for the diff. Default to 80, but
+#' most often the base total coverage should be used.
+#'
+#' @returns a glue string, a sentence summarising the diff coverage.
+#'
+#' @keywords internal
 compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
+    target <- round(target, 2)
+
     if (is.null(diff_line_coverage)) {
         # TODO we probably want to return this when we only have deletions
         # but i expect diff_line_coverage to be empty then
@@ -14,8 +27,9 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         )
 
     percentage_line_coverage <- round(
-        diff_coverage$total_lines_covered /
-            diff_coverage$total_lines_added,
+        (diff_coverage$total_lines_covered /
+            diff_coverage$total_lines_added) *
+            100,
         2
     )
 
@@ -36,6 +50,19 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
     # nolint end
 }
 
+#' Compose the line coverage details section
+#'
+#' The section is made up of a subtitle (Heading 3) and a Markdown table. If
+#' the input object is `NULL` an empty string is returned.
+#'
+#' This section will be part of the "More details" collapsible section of the
+#' GitHub comment.
+#'
+#' @inheritParams compose_line_coverage_summary
+#'
+#' @returns a `glue` string
+#'
+#' @keywords internal
 compose_line_coverage_details <- function(diff_line_coverage) {
     diff_line_md_table <- line_cov_to_md(diff_line_coverage)
 
@@ -48,7 +75,8 @@ compose_line_coverage_details <- function(diff_line_coverage) {
     diff_cov_details <- glue::glue(
         "{subtitle}
 
-        {diff_line_md_table}"
+        {diff_line_md_table}",
+        .trim = TRUE
     )
 
     diff_cov_details
