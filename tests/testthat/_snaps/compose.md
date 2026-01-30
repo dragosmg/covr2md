@@ -4,37 +4,30 @@
       compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
         pr_number = 3)
     Output
-      Badge URL is: https://raw.githubusercontent.com/dragosmg/covr2ghdemo/covr2gh-storage/badges/increase-coverage/coverage_badge.svg
       <!-- covr2gh-code-coverage -->
       
-      ## Coverage summary
+      ## :safety_vest: Coverage summary
       
       ![badge](https://raw.githubusercontent.com/dragosmg/covr2ghdemo/covr2gh-storage/badges/increase-coverage/coverage_badge.svg)
       
-      :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) (<removed-commit-sha>) into _main_ (<removed-commit-sha>) - will **increase** coverage by `21.05` percentage points.
+      :white_check_mark: Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`68ad63e`](head_sha_url)) into _main_ ([`8427de3`](base_sha_url)) - will **increase** coverage by `21.05` percentage points.
       :x:  Diff coverage: 0% (0 out of 7 added lines are covered by tests). Target coverage is at least `80%`.
       
       <details>
-        <summary>Details on changes in file coverage</summary>
-        <br/>
-        ### Files impacted either by code or coverage changes.
-        <br/>
+      <summary>Details</summary>
       
-        |          File| Coverage head| Coverage base| &Delta;|                     |
-      |-------------:|-------------:|-------------:|-------:|:-------------------:|
-      |   R/add_one.R|           40%|           40%|    0.00| :heavy_equals_sign: |
-      | R/add_three.R|            0%|            0%|    0.00| :heavy_equals_sign: |
-      |   R/add_two.R|        57.14%|            0%|   57.14|     :arrow_up:      |
-      |         Total|        31.58%|        10.53%|   21.05|     :arrow_up:      |
-      </details>
+      ### Files impacted either by code or coverage changes
       
-      <details>
-        <summary>Details on diff coverage</summary>
-        <br/>
-        ### Coverage for added lines.
-        <br/>
+      |          File| Coverage head| Coverage base| &Delta; |                     |
+      |-------------:|-------------:|-------------:|:-------:|:-------------------:|
+      |   R/add_one.R|           40%|           40%|  0.00   | :heavy_equals_sign: |
+      | R/add_three.R|            0%|            0%|  0.00   | :heavy_equals_sign: |
+      |   R/add_two.R|        57.14%|            0%|  57.14  |     :arrow_up:      |
+      |         Total|        31.58%|        10.53%|  21.05  |     :arrow_up:      |
       
-        |          File| Lines added| Lines tested| Coverage|
+      ### Coverage for added lines
+      
+      |          File| Lines added| Lines tested| Coverage|
       |-------------:|-----------:|------------:|--------:|
       |   R/add_one.R|           3|            0|       0%|
       | R/add_three.R|           3|            0|       0%|
@@ -44,5 +37,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2gh 0.0.0.9011](https://url-placeholder)</sup>
+      <sup>Created on <removed-date> with [covr2gh 0.0.0.9012](https://url-placeholder)</sup>
 

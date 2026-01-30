@@ -2,7 +2,28 @@ linters: all_linters(
     implicit_integer_linter = NULL,
     todo_comment_linter = NULL,
     one_call_pipe_linter = NULL,
-    implicit_assignment_linter = NULL
+    implicit_assignment_linter = NULL,
+    indentation_linter = indentation_linter(4L),
+    nested_pipe_linter = nested_pipe_linter(
+      allow_outer_calls = c(
+        "tryCatch",
+        "try",
+        "withCallingHandlers",
+        "expect_identical"
+      )
+    ),
+    undesirable_function_linter = undesirable_function_linter(
+      fun = modify_defaults(
+        defaults = default_undesirable_functions,
+        structure = NULL
+      )
+    ),
+    object_usage_linter = object_usage_linter(
+      interpret_extensions = c(
+        "glue",
+        "rlang"
+      )
+    )
   ) # see vignette("lintr")
 encoding: "UTF-8"
 exclusions: list(
