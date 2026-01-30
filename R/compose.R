@@ -68,7 +68,7 @@ compose_comment <- function(
         pr_number = pr_number
     )
 
-    if (rlang::is_empty(changed_files)) {
+    if (rlang::is_empty(relevant_files)) {
         cli::cli_alert_info(
             "No coverage relevant files changed. Returning all files"
         )
@@ -101,13 +101,13 @@ compose_comment <- function(
     file_cov_md_table <- derive_file_cov_df(
         head_coverage = head_coverage,
         base_coverage = base_coverage,
-        changed_files = changed_files
+        relevant_files = relevant_files
     ) |>
         file_cov_df_to_md()
 
     diff_line_coverage <- get_diff_line_coverage(
         head_coverage = head_coverage,
-        changed_files = changed_files,
+        relevant_files = relevant_files,
         repo = repo,
         pr_details = pr_details
     )

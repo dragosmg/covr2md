@@ -111,10 +111,10 @@ get_relevant_files <- function(
     files_info <- glue::glue("GET {files_api_url}") |>
         gh::gh()
 
-    changed_files <- purrr::map_chr(files_info, "filename")
+    relevant_files <- purrr::map_chr(files_info, "filename")
 
     relevant_files_changed <- stringr::str_subset(
-        changed_files,
+        relevant_files,
         pattern = "^R/|^src"
     )
 
@@ -138,7 +138,7 @@ get_relevant_files <- function(
 get_diff_text <- function(
     repo,
     pr_details,
-    changed_files,
+    relevant_files,
     call = rlang::caller_env()
 ) {
     # TODO add inputs checks
@@ -160,9 +160,9 @@ get_diff_text <- function(
     # the content of each element is the patch
     # we can then map over this list
     output <- reply$files |>
-        # we focus on `changed_files` to get to the added lines
+        # we focus on `relevant_files` to get to the added lines
         purrr::keep(
-            \(x) x$filename %in% changed_files
+            \(x) x$filename %in% relevant_files
         ) |>
         purrr::map(
             \(x) purrr::keep_at(x, c("filename", "patch"))
@@ -263,13 +263,13 @@ extract_added_lines <- function(diff_text) {
 get_diff_line_coverage <- function(
     repo,
     pr_details,
-    changed_files,
+    relevant_files,
     head_coverage
 ) {
     diff_text <- get_diff_text(
         repo = repo,
         pr_details = pr_details,
-        changed_files = changed_files
+        relevant_files = relevant_files
     ) |>
         purrr::flatten() # TODO ??????? needed?
 

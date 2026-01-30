@@ -4,7 +4,7 @@
 \alias{derive_file_cov_df}
 \title{Derive a coverage tibble for the changed files}
 \usage{
-derive_file_cov_df(head_coverage, base_coverage, changed_files)
+derive_file_cov_df(head_coverage, base_coverage, relevant_files)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.

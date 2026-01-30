@@ -4,7 +4,7 @@
 \alias{get_diff_text}
 \title{Get the PR diff}
 \usage{
-get_diff_text(repo, pr_details, changed_files, call = rlang::caller_env())
+get_diff_text(repo, pr_details, relevant_files, call = rlang::caller_env())
 }
 \arguments{
 \item{repo}{(character) the repository name in the GitHub format

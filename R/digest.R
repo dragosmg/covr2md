@@ -64,7 +64,7 @@ digest_coverage <- function(x = covr::package_coverage()) {
 derive_file_cov_df <- function(
     head_coverage,
     base_coverage,
-    changed_files
+    relevant_files
 ) {
     head_coverage_digest <- digest_coverage(head_coverage)
 
@@ -85,7 +85,7 @@ derive_file_cov_df <- function(
             delta = .data$coverage_head - .data$coverage_base
         )
 
-    # keep any files with changes in content (`changed_files`) or in coverage
+    # keep any files with changes in content (`relevant_files`) or in coverage
     cov_change_files <- diff_df |>
         dplyr::filter(
             .data$delta != 0
@@ -96,7 +96,7 @@ derive_file_cov_df <- function(
 
     impacted_files <- c(
         union(
-            changed_files,
+            relevant_files,
             cov_change_files
         ),
         "Total"
