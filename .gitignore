@@ -7,3 +7,4 @@
 
 /.quarto/
 **/*.quarto_ipynb
+docs

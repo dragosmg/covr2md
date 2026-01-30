@@ -6,7 +6,7 @@ Authors@R:
 Description: Convert covr code coverage output into Markdown in
     preparation for use with GitHub comments.
 License: MIT + file LICENSE
-URL: https://github.com/dragosmg/covr2gh
+URL: https://github.com/dragosmg/covr2gh, https://dragosmg.github.io/covr2gh/
 BugReports: https://github.com/dragosmg/covr2gh/issues
 Depends:
     R (>= 4.2.0)
