@@ -21,61 +21,61 @@
 #' get_comment_id("dragosmg/demo-repo", 3)
 #' }
 get_comment_id <- function(
-  repo,
-  pr_number,
-  marker = "<!-- covr2gh-code-coverage -->",
-  call = rlang::caller_env()
+    repo,
+    pr_number,
+    marker = "<!-- covr2gh-code-coverage -->",
+    call = rlang::caller_env()
 ) {
-  if (!rlang::is_scalar_character(repo)) {
-    cli::cli_abort(
-      "`repo` must be a character scalar.",
-      call = call
-    )
-  }
+    if (!rlang::is_scalar_character(repo)) {
+        cli::cli_abort(
+            "`repo` must be a character scalar.",
+            call = call
+        )
+    }
 
-  if (!rlang::is_scalar_integerish(pr_number)) {
-    cli::cli_abort(
-      "`pr_number` must be an integer-like scalar.",
-      call = call
-    )
-  }
+    if (!rlang::is_scalar_integerish(pr_number)) {
+        cli::cli_abort(
+            "`pr_number` must be an integer-like scalar.",
+            call = call
+        )
+    }
 
-  if (!rlang::is_scalar_character(marker)) {
-    cli::cli_abort(
-      "`marker` must be a character scalar.",
-      call = call
-    )
-  }
+    if (!rlang::is_scalar_character(marker)) {
+        cli::cli_abort(
+            "`marker` must be a character scalar.",
+            call = call
+        )
+    }
 
-  api_url <- glue::glue(
-    "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
-  )
-
-  # TODO add test to confirm everything works with a NULL
-  comments_info <- tryCatch(
-    glue::glue("GET {api_url}") |>
-      gh::gh(),
-    error = function(e) NULL
-  )
-
-  if (rlang::is_null(comments_info)) {
-    return(NULL)
-  }
-
-  # identify the comment that contains the marker we set
-  comment_index <- comments_info |>
-    # look in the body of the comment for the marker
-    purrr::map("body") |>
-    # detect_index identifies the position of the first match
-    purrr::detect_index(
-      \(x) stringr::str_detect(x, pattern = marker)
+    api_url <- glue::glue(
+        "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
     )
 
-  if (comment_index == 0) {
-    return(NULL)
-  }
+    # TODO add test to confirm everything works with a NULL
+    comments_info <- tryCatch(
+        glue::glue("GET {api_url}") |>
+            gh::gh(),
+        error = function(e) NULL
+    )
 
-  comments_info[[comment_index]]$id
+    if (rlang::is_null(comments_info)) {
+        return(NULL)
+    }
+
+    # identify the comment that contains the marker we set
+    comment_index <- comments_info |>
+        # look in the body of the comment for the marker
+        purrr::map("body") |>
+        # detect_index identifies the position of the first match
+        purrr::detect_index(
+            \(x) stringr::str_detect(x, pattern = marker)
+        )
+
+    if (comment_index == 0) {
+        return(NULL)
+    }
+
+    comments_info[[comment_index]]$id
 }
 
 
@@ -101,37 +101,37 @@ get_comment_id <- function(
 #' )
 #' }
 post_comment <- function(
-  body,
-  repo,
-  pr_number,
-  comment_id = NULL
+    body,
+    repo,
+    pr_number,
+    comment_id = NULL
 ) {
-  # TODO add checks for
-  #  * body
-  #  * repo
-  #  * pr_number
-  #  * comment_id
-  #  * marker
+    # TODO add checks for
+    #  * body
+    #  * repo
+    #  * pr_number
+    #  * comment_id
+    #  * marker
 
-  # posting a new comment vs updating an existing one requires hitting a
-  # different endpoint
+    # posting a new comment vs updating an existing one requires hitting a
+    # different endpoint
 
-  # update an existing issue comment
-  api_url <- glue::glue(
-    "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
-  )
-
-  if (rlang::is_null(comment_id)) {
-    # post / create a new issue comment
+    # update an existing issue comment
     api_url <- glue::glue(
-      "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+        "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
     )
-  }
 
-  response <- glue::glue("POST {api_url}") |>
-    gh::gh(body = body)
+    if (rlang::is_null(comment_id)) {
+        # post / create a new issue comment
+        api_url <- glue::glue(
+            "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+        )
+    }
 
-  response
+    response <- glue::glue("POST {api_url}") |>
+        gh::gh(body = body)
+
+    response
 }
 
 #' Delete a comment
@@ -149,15 +149,15 @@ post_comment <- function(
 #' delete_comment("dragosmg/this-is-my-repo", 4553)
 #' }
 delete_comment <- function(
-  repo,
-  comment_id
+    repo,
+    comment_id
 ) {
-  api_url <- glue::glue(
-    "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
-  )
+    api_url <- glue::glue(
+        "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
+    )
 
-  response <- glue::glue("DELETE {api_url}") |>
-    gh::gh()
+    response <- glue::glue("DELETE {api_url}") |>
+        gh::gh()
 
-  response
+    response
 }

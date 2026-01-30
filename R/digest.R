@@ -17,37 +17,37 @@
 #'   digest_coverage()
 #' }
 digest_coverage <- function(x = covr::package_coverage()) {
-  if (!inherits(x, "coverage")) {
-    cli::cli_abort(
-      "`x` must be a coverage object"
+    if (!inherits(x, "coverage")) {
+        cli::cli_abort(
+            "`x` must be a coverage object"
+        )
+    }
+
+    file_coverage_df <- x |>
+        covr::coverage_to_list() |>
+        purrr::pluck(
+            "filecoverage"
+        ) |>
+        tibble::enframe(
+            name = "file",
+            value = "coverage"
+        )
+
+    total <- x |>
+        covr::coverage_to_list() |>
+        purrr::pluck("totalcoverage")
+
+    total_coverage_df <- tibble::tibble(
+        file = "Total",
+        coverage = total
     )
-  }
 
-  file_coverage_df <- x |>
-    covr::coverage_to_list() |>
-    purrr::pluck(
-      "filecoverage"
-    ) |>
-    tibble::enframe(
-      name = "file",
-      value = "coverage"
+    output <- dplyr::bind_rows(
+        file_coverage_df,
+        total_coverage_df
     )
 
-  total <- x |>
-    covr::coverage_to_list() |>
-    purrr::pluck("totalcoverage")
-
-  total_coverage_df <- tibble::tibble(
-    file = "Total",
-    coverage = total
-  )
-
-  output <- dplyr::bind_rows(
-    file_coverage_df,
-    total_coverage_df
-  )
-
-  output
+    output
 }
 
 #' Derive a coverage tibble for the changed files
@@ -62,50 +62,50 @@ digest_coverage <- function(x = covr::package_coverage()) {
 #'
 #' @keywords internal
 derive_file_cov_df <- function(
-  head_coverage,
-  base_coverage,
-  changed_files
+    head_coverage,
+    base_coverage,
+    changed_files
 ) {
-  head_coverage_digest <- digest_coverage(head_coverage)
+    head_coverage_digest <- digest_coverage(head_coverage)
 
-  base_coverage_digest <- digest_coverage(base_coverage)
+    base_coverage_digest <- digest_coverage(base_coverage)
 
-  diff_df <- head_coverage_digest |>
-    dplyr::left_join(
-      base_coverage_digest,
-      by = dplyr::join_by(
-        file
-      ),
-      suffix = c(
-        "_head",
-        "_base"
-      )
-    ) |>
-    dplyr::mutate(
-      delta = .data$coverage_head - .data$coverage_base
+    diff_df <- head_coverage_digest |>
+        dplyr::left_join(
+            base_coverage_digest,
+            by = dplyr::join_by(
+                file
+            ),
+            suffix = c(
+                "_head",
+                "_base"
+            )
+        ) |>
+        dplyr::mutate(
+            delta = .data$coverage_head - .data$coverage_base
+        )
+
+    # keep any files with changes in content (`changed_files`) or in coverage
+    cov_change_files <- diff_df |>
+        dplyr::filter(
+            .data$delta != 0
+        ) |>
+        dplyr::pull(
+            file
+        )
+
+    impacted_files <- c(
+        union(
+            changed_files,
+            cov_change_files
+        ),
+        "Total"
     )
 
-  # keep any files with changes in content (`changed_files`) or in coverage
-  cov_change_files <- diff_df |>
-    dplyr::filter(
-      .data$delta != 0
-    ) |>
-    dplyr::pull(
-      file
-    )
+    diff_df <- diff_df |>
+        dplyr::filter(
+            file %in% impacted_files
+        )
 
-  impacted_files <- c(
-    union(
-      changed_files,
-      cov_change_files
-    ),
-    "Total"
-  )
-
-  diff_df <- diff_df |>
-    dplyr::filter(
-      file %in% impacted_files
-    )
-
-  diff_df
+    diff_df
 }

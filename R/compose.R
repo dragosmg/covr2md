@@ -55,83 +55,84 @@
 #' )
 #' }
 compose_comment <- function(
-  head_coverage,
-  base_coverage,
-  repo,
-  pr_number,
-  marker = "<!-- covr2gh-code-coverage -->"
+    head_coverage,
+    base_coverage,
+    repo,
+    pr_number,
+    marker = "<!-- covr2gh-code-coverage -->"
 ) {
-  # TODO add some checks on inputs
-  # FIXME
+    # TODO add some checks on inputs
+    # FIXME
 
-  changed_files <- get_changed_files(
-    repo = repo,
-    pr_number = pr_number
-  )
-
-  if (rlang::is_empty(changed_files)) {
-    cli::cli_alert_info(
-      "No coverage relevant files changed. Returning all files"
+    changed_files <- get_changed_files(
+        repo = repo,
+        pr_number = pr_number
     )
-    # TODO check this scenario
-    # keep_all_files <- TRUE
-  }
 
-  pr_details <- get_pr_details(
-    repo = repo,
-    pr_number = pr_number
-  )
+    if (rlang::is_empty(changed_files)) {
+        cli::cli_alert_info(
+            "No coverage relevant files changed. Returning all files"
+        )
+        # TODO check this scenario
+        # keep_all_files <- TRUE
+    }
 
-  total_head_coverage <- covr::percent_coverage(head_coverage)
-  total_base_coverage <- covr::percent_coverage(base_coverage)
-  delta_total_coverage <- round(total_head_coverage - total_base_coverage, 2)
+    pr_details <- get_pr_details(
+        repo = repo,
+        pr_number = pr_number
+    )
 
-  badge_url <- build_badge_url(pr_details)
+    total_head_coverage <- covr::percent_coverage(head_coverage)
+    total_base_coverage <- covr::percent_coverage(base_coverage)
+    delta_total_coverage <- round(
+        total_head_coverage - total_base_coverage,
+        2
+    )
 
-  print(glue::glue("Badge URL is: {badge_url}"))
+    badge_url <- build_badge_url(pr_details)
 
-  coverage_summary <- compose_coverage_summary(
-    pr_details,
-    delta_total_coverage
-  )
+    coverage_summary <- compose_coverage_summary(
+        pr_details,
+        delta_total_coverage
+    )
 
-  # TODO handle the case when there are no relevant changed files
-  # TODO think about when we would want to return all the files, not just
-  # those touched or affected by the PR
+    # TODO handle the case when there are no relevant changed files
+    # TODO think about when we would want to return all the files, not just
+    # those touched or affected by the PR
 
-  file_cov_md_table <- derive_file_cov_df(
-    head_coverage = head_coverage,
-    base_coverage = base_coverage,
-    changed_files = changed_files
-  ) |>
-    file_cov_df_to_md()
+    file_cov_md_table <- derive_file_cov_df(
+        head_coverage = head_coverage,
+        base_coverage = base_coverage,
+        changed_files = changed_files
+    ) |>
+        file_cov_df_to_md()
 
-  diff_line_coverage <- get_diff_line_coverage(
-    head_coverage = head_coverage,
-    changed_files = changed_files,
-    repo = repo,
-    pr_details = pr_details
-  )
+    diff_line_coverage <- get_diff_line_coverage(
+        head_coverage = head_coverage,
+        changed_files = changed_files,
+        repo = repo,
+        pr_details = pr_details
+    )
 
-  diff_coverage_summary <- compose_diff_coverage_summary(
-    diff_line_coverage
-  )
+    diff_coverage_summary <- compose_diff_coverage_summary(
+        diff_line_coverage
+    )
 
-  diff_line_md_table <- line_cov_to_md(
-    diff_line_coverage
-  )
+    diff_line_md_table <- line_cov_to_md(
+        diff_line_coverage
+    )
 
-  # TODO update URL with the correct pkgdown one once there is one
-  sup <- glue::glue(
-    "<sup>Created on {Sys.Date()} with \\
+    # TODO update URL with the correct pkgdown one once there is one
+    sup <- glue::glue(
+        "<sup>Created on {Sys.Date()} with \\
     [covr2gh {packageVersion('covr2gh')}](https://url-placeholder)</sup>"
-  )
+    )
 
-  glue::glue(
-    "
+    glue::glue(
+        "
     {marker}
 
-    ## Coverage summary
+    ## :safety_vest: Coverage summary
 
     ![badge]({badge_url})
 
@@ -139,28 +140,22 @@ compose_comment <- function(
     {diff_coverage_summary}
 
     <details>
-      <summary>Details on changes in file coverage</summary>
-      <br/>
-      ### Files impacted either by code or coverage changes.
-      <br/>
+    <summary>Details</summary>
 
-      {file_cov_md_table}
-    </details>
+    ### Files impacted either by code or coverage changes
 
-    <details>
-      <summary>Details on diff coverage</summary>
-      <br/>
-      ### Coverage for added lines.
-      <br/>
+    {file_cov_md_table}
 
-      {diff_line_md_table}
+    ### Coverage for added lines
+
+    {diff_line_md_table}
     </details>
 
     :recycle: Comment updated with the latest results.
 
     {sup}
     "
-  )
+    )
 }
 
 # TODO look into logic invalidating the comment when the base_sha changes
@@ -199,68 +194,91 @@ compose_comment <- function(
 #' )
 #' }
 compose_coverage_summary <- function(pr_details, delta) {
-  delta_translation <- dplyr::case_when(
-    delta > 0 ~ "increase",
-    delta < 0 ~ "decrease",
-    delta == 0 ~ "not change"
-  )
+    delta_translation <- dplyr::case_when(
+        delta > 0 ~ "increase",
+        delta < 0 ~ "decrease",
+        delta == 0 ~ "not change"
+    )
 
-  by_delta <- glue::glue(" by `{delta}` percentage points")
+    by_delta <- glue::glue(" by `{delta}` percentage points")
 
-  by_delta <- dplyr::if_else(
-    delta == 0,
-    "",
-    by_delta
-  )
+    by_delta <- dplyr::if_else(
+        delta == 0,
+        "",
+        by_delta
+    )
 
-  emoji <- dplyr::if_else(
-    delta >= 0,
-    ":white_check_mark: ",
-    ":x: "
-  )
+    emoji <- dplyr::if_else(
+        delta >= 0,
+        ":white_check_mark: ",
+        ":x: "
+    )
 
-  glue::glue(
-    "{emoji}Merging PR [#{ pr_details$pr_number}]({pr_details$pr_html_url}) \\
-    ({pr_details$head_sha}) into _{pr_details$base_name}_ \\
-    ({pr_details$base_sha}) - will **{delta_translation}** coverage{by_delta}."
-  )
+    # nolint start object_usage_linter
+    short_sha_head <- short_sha(pr_details$head_sha)
+    head_sha_url <- glue::glue(
+        "https://github.com/{pr_details$repo}/commit/{pr_details$head_sha}"
+    )
+    short_sha_base <- short_sha(pr_details$base_sha)
+    base_sha_url <- glue::glue(
+        "https://github.com/{pr_details$repo}/commit/{pr_details$base_sha}"
+    )
+    # nolint end
+
+    # nolint start: line_length_linter
+    glue::glue(
+        "{emoji}Merging PR [#{ pr_details$pr_number}]({pr_details$pr_html_url}) \\
+        ([`{short_sha_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
+        ([`{short_sha_base}`](base_sha_url)) - will **{delta_translation}** coverage\\
+        {by_delta}."
+    )
+    # nolint end
 }
 
 
 compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
-  diff_coverage <- diff_line_coverage |>
-    dplyr::summarise(
-      total_lines_added = sum(.data$lines_added),
-      total_lines_covered = sum(.data$lines_covered)
+    diff_coverage <- diff_line_coverage |>
+        dplyr::summarise(
+            total_lines_added = sum(.data$lines_added),
+            total_lines_covered = sum(.data$lines_covered)
+        )
+
+    percentage_line_coverage <- round(
+        diff_coverage$total_lines_covered /
+            diff_coverage$total_lines_added,
+        2
     )
 
-  percentage_line_coverage <- round(
-    diff_coverage$total_lines_covered /
-      diff_coverage$total_lines_added,
-    2
-  )
+    emoji <- dplyr::if_else(
+        percentage_line_coverage >= target,
+        ":white_check_mark: ",
+        ":x: "
+    )
 
-  emoji <- dplyr::if_else(
-    percentage_line_coverage >= target,
-    ":white_check_mark: ",
-    ":x: "
-  )
-
-  # TODO make target the current base coverage
-  glue::glue(
-    "{emoji} Diff coverage: {percentage_line_coverage}% \\
+    # TODO make target the current base coverage
+    # nolint start: object_usage_linter
+    glue::glue(
+        "{emoji} Diff coverage: {percentage_line_coverage}% \\
     ({diff_coverage$total_lines_covered} out of \\
     {diff_coverage$total_lines_added} added lines are covered by tests). \\
     Target coverage is at least `{target}%`."
-  )
+    )
+    # nolint end
 }
 
 build_badge_url <- function(pr_details) {
-  repo <- pr_details$repo
-  branch <- "covr2gh-storage/badges"
-  head <- pr_details$head_name
+    repo <- pr_details$repo
+    branch_folder <- glue::glue(
+        "covr2gh-storage/badges/{pr_details$head_name}" # nolint
+    )
 
-  glue::glue(
-    "https://raw.githubusercontent.com/{repo}/{branch}/{head}/coverage_badge.svg"
-  )
+    # nolint start line_length_linter
+    glue::glue(
+        "https://raw.githubusercontent.com/{repo}/{branch_folder}/coverage_badge.svg"
+    )
+    # nolint end
+}
+
+short_sha <- function(sha, n = 7) {
+    stringr::str_sub(sha, 1, n)
 }
