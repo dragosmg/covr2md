@@ -1,0 +1,23 @@
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://dragosmg.github.io/covr2gh/404.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/LICENSE-text.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/LICENSE.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/authors.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/index.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/news/index.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/compose_comment.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/compose_coverage_summary.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/covr2gh-package.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/delete_comment.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/derive_file_cov_df.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/digest_coverage.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/file_cov_df_to_md.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/generate_badge.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/get_changed_files.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/get_comment_id.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/get_pr_details.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/index.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/line_cov_to_md.html</loc></url>
+<url><loc>https://dragosmg.github.io/covr2gh/reference/post_comment.html</loc></url>
+</urlset>
+
