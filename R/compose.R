@@ -73,8 +73,7 @@ compose_comment <- function(
         cli::cli_alert_info(
             "No coverage relevant files changed. Returning all files"
         )
-        # TODO check this scenario
-        # keep_all_files <- TRUE
+        # TODO check this scenario keep_all_files <- TRUE
     }
 
     pr_details <- get_pr_details(

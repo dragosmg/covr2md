@@ -140,9 +140,11 @@ get_diff_text <- function(
     # the content of each element is the patch
     # we can then map over this list
     output <- reply$files |>
-        purrr::keep(~ .x$filename %in% changed_files) |>
+        purrr::keep(
+            \(x) x$filename %in% changed_files
+        ) |>
         purrr::map(
-            ~ purrr::keep_at(.x, c("filename", "patch"))
+            \(x) purrr::keep_at(x, c("filename", "patch"))
         ) |>
         purrr::map(
             \(x) {
