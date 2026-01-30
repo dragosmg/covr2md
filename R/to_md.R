@@ -4,14 +4,18 @@
 #' interpretation column. The transforms the output to markdown and collapses
 #' into a single string.
 #'
-#' @param file_cov_df (`tibble`) a diff df, the output of [derive_file_cov_df()]
+#' @param file_cov_df a `tibble`, the output of [combine_file_coverage()].
 #' @inheritParams knitr::kable
 #'
 #' @returns a character scalar containing markdown version of the diff df
 #'   collapsed into a single string.
 #'
 #' @keywords internal
-file_cov_df_to_md <- function(file_cov_df, align = "rrrcc") {
+file_cov_to_md <- function(file_cov_df, align = "rrrcc") {
+    if (is.null(file_cov_df)) {
+        return("")
+    }
+
     file_cov_df_prep <- file_cov_df |>
         dplyr::mutate(
             # add a brief visual interpretation of the delta with arrows or
@@ -66,7 +70,7 @@ file_cov_df_to_md <- function(file_cov_df, align = "rrrcc") {
 #' markdown which gets collapsed into a single string.
 #'
 #' @param diff_line_coverage (`tibble`) diff line coverage data. The output of
-#'   [derive_file_cov_df()]
+#'   [combine_file_coverage()]
 #' @inheritParams knitr::kable
 #'
 #' @returns a markdown table as a string
@@ -76,17 +80,11 @@ line_cov_to_md <- function(
     diff_line_coverage,
     align = "rrrr"
 ) {
-    diff_coverage <- diff_line_coverage |>
-        dplyr::group_by(
-            .data$file
-        ) |>
-        dplyr::summarise(
-            lines_added = sum(.data$lines_added),
-            lines_covered = sum(.data$lines_covered)
-        ) |>
-        dplyr::ungroup()
+    if (is.null(diff_line_coverage)) {
+        return("")
+    }
 
-    total_row <- diff_coverage |>
+    total_row <- diff_line_coverage |>
         dplyr::summarise(
             lines_added = sum(.data$lines_added),
             lines_covered = sum(.data$lines_covered)
@@ -97,12 +95,12 @@ line_cov_to_md <- function(
         )
 
     output <- dplyr::bind_rows(
-        diff_coverage,
+        diff_line_coverage,
         total_row
     ) |>
         dplyr::mutate(
             coverage = round(
-                .data$lines_covered / .data$lines_added,
+                (.data$lines_covered / .data$lines_added) * 100,
                 2
             ),
             coverage = paste0(
