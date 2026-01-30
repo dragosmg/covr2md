@@ -260,6 +260,29 @@ extract_added_lines <- function(diff_text) {
     output
 }
 
+#' Get the line coverage for the diff
+#'
+#' Are the added lines covered by unit tests?
+#' Does this in several steps:
+#'   * get the text of the git diff (the combined diff format)
+#'   * extracts the added lines and calculates the new line numbers
+#'   * does a bit of shuffling of the head coverage data to summarise at
+#'   line level
+#'   * summarises the number of lines added and number of lines covered by
+#'   tests at file level
+#'
+#'
+#' @inheritParams get_pr_details
+#' @inheritParams compose_coverage_summary
+#' @param relevant_files (character) files with changes in coverage
+#' @inheritParams compose_comment
+#'
+#' @returns a `tibble` with 3 columns:
+#'   * file: file name
+#'   * lines_added: total number of lines that would be added by merging the PR
+#'   * lines_covered: number of added lines covered by unit tests
+#'
+#' @keywords internal
 get_diff_line_coverage <- function(
     repo,
     pr_details,
@@ -272,6 +295,11 @@ get_diff_line_coverage <- function(
         relevant_files = relevant_files
     ) |>
         purrr::flatten() # TODO ??????? needed?
+
+    if (rlang::is_empty(diff_text)) {
+        # TODO exit early it means the relevant files haven't actually changed
+        return(NULL)
+    }
 
     added_lines <- diff_text |>
         # TODO see how this behaves with more complicated diffs - eg a tfrmt one

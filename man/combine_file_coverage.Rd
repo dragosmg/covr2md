@@ -2,7 +2,7 @@
 % Please edit documentation in R/file_coverage.R
 \name{combine_file_coverage}
 \alias{combine_file_coverage}
-\title{Derive a coverage tibble for the changed files}
+\title{Combine head and base file-level coverage}
 \usage{
 combine_file_coverage(head_coverage, base_coverage)
 }
@@ -18,12 +18,12 @@ branch.}
 a\code{tibble} with 4 columns:
 \itemize{
 \item \code{file}: file name
-\item \code{coverage_head}: coverage for the current branch
+\item \code{coverage_head}: coverage for the head branch
 \item \code{coverage_base} coverage for the base branch, and
 \item \code{delta}: difference in coverage between head and base.
 }
 }
 \description{
-Derive a coverage tibble for the changed files
+Combine head and base file-level coverage
 }
 \keyword{internal}
