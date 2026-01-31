@@ -24,9 +24,9 @@ test_that("post_comment, get_comment_id & delete_comment work", {
     expect_identical(
         get_comment_id(
             repo = "dragosmg/covr2ghdemo", # nolint
-            pr_number = 3
+            pr_number = 2
         ),
-        3767770706
+        3826887442
     )
 
     expect_no_error(
