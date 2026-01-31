@@ -3,7 +3,5 @@
 export(compose_comment)
 export(file_coverage)
 export(generate_badge)
-export(get_comment_id)
-export(get_pr_details)
 export(post_comment)
 importFrom(rlang,.data)
