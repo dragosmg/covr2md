@@ -130,7 +130,9 @@ compose_comment <- function(
 
     pkg_version <- glue::glue("v{packageVersion('covr2gh')}")
 
-    pkg_url <- "[covr2gh {pkg_version}](https://dragosmg.github.io/covr2gh)"
+    pkg_url <- glue::glue(
+        "[covr2gh {pkg_version}](https://dragosmg.github.io/covr2gh)"
+    )
 
     footer <- glue::glue(
         "<sup>Created on {Sys.Date()} with {pkg_url}.</sup>"

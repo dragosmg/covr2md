@@ -33,5 +33,5 @@
       
       :recycle: Comment updated with the latest results.
       
-      <sup>Created on <removed-date> with [covr2gh](https://dragosmg.github.io/covr2gh).</sup>
+      <sup>Created on <removed-date> with [covr2gh v0.0.0.9014](https://dragosmg.github.io/covr2gh).</sup>
 
