@@ -57,23 +57,8 @@ compose_comment <- function(
     repo,
     pr_number
 ) {
-    marker = "<!-- covr2gh-do-not-delete -->"
     # TODO add some checks on inputs
-    # FIXME
-
     marker <- "<!-- covr2gh-do-not-delete -->"
-
-    relevant_files <- get_relevant_files(
-        repo = repo,
-        pr_number = pr_number
-    )
-
-    if (rlang::is_empty(relevant_files)) {
-        cli::cli_alert_info(
-            "No coverage relevant files changed. Returning all files"
-        )
-        # TODO check this scenario keep_all_files <- TRUE
-    }
 
     pr_details <- get_pr_details(
         repo = repo,
@@ -82,6 +67,23 @@ compose_comment <- function(
 
     total_head_coverage <- covr::percent_coverage(head_coverage)
     total_base_coverage <- covr::percent_coverage(base_coverage)
+
+    if (
+        isTRUE(
+            all.equal(
+                total_head_coverage,
+                total_base_coverage,
+                tolerance = 0.0001
+            )
+        )
+    ) {
+        # TODO we probably want to exit here
+        # TODO prepare the badge and exit early
+        cli::cli_alert_info(
+            "No significant delta in coverage."
+        )
+    }
+
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
         2
@@ -98,12 +100,17 @@ compose_comment <- function(
     # TODO think about when we would want to return all the files, not just
     # those touched or affected by the PR
 
-    file_cov_md_table <- derive_file_cov_df(
+    # TODO only focus on the file with changes in coverage or new files
+    file_cov_df <- combine_file_coverage(
         head_coverage = head_coverage,
-        base_coverage = base_coverage,
-        relevant_files = relevant_files
-    ) |>
-        file_cov_df_to_md()
+        base_coverage = base_coverage
+    )
+
+    file_coverage_details <- compose_file_coverage_details(
+        file_cov_df
+    )
+
+    relevant_files <- setdiff(file_cov_df$file, "Overall")
 
     diff_line_coverage <- get_diff_line_coverage(
         head_coverage = head_coverage,
@@ -112,48 +119,44 @@ compose_comment <- function(
         pr_details = pr_details
     )
 
-    diff_coverage_summary <- compose_diff_coverage_summary(
+    line_coverage_summary <- compose_line_coverage_summary(
+        diff_line_coverage,
+        target = total_base_coverage
+    )
+
+    line_coverage_details <- compose_line_coverage_details(
         diff_line_coverage
     )
 
-    diff_line_md_table <- line_cov_to_md(
-        diff_line_coverage
-    )
+    pkg_version <- glue::glue("v{packageVersion('covr2gh')")
+
+    pkg_url <- "[covr2gh {pkg_version}](https://dragosmg.github.io/covr2gh)"
 
     footer <- glue::glue(
-        "<sup>
-            Created on {Sys.Date()} with \\
-        [covr2gh](https://dragosmg.github.io/covr2gh/).
-        </sup>"
+        "<sup>Created on {Sys.Date()} with {pkg_url}.</sup>"
     )
 
     glue::glue(
-        "
-    {marker}
+        "{marker}
 
-    ## :safety_vest: Coverage summary
+        ## :safety_vest: Coverage summary
 
-    ![badge]({badge_url})
+        ![badge]({badge_url})
 
-    {coverage_summary}
-    {diff_coverage_summary}
+        {coverage_summary}
+        {line_coverage_summary}
 
-    <details>
-    <summary>Details</summary>
+        <details>
+        <summary>Details</summary>
 
-    ### Files impacted either by code or coverage changes
+        {file_coverage_details}
 
-    {file_cov_md_table}
+        {line_coverage_details}
+        </details>
 
-    ### Coverage for added lines
+        :recycle: Comment updated with the latest results.
 
-    {diff_line_md_table}
-    </details>
-
-    :recycle: Comment updated with the latest results.
-
-    {footer}
-    "
+        {footer}"
     )
 }
 
@@ -214,11 +217,11 @@ compose_coverage_summary <- function(pr_details, delta) {
     )
 
     # nolint start object_usage_linter
-    short_sha_head <- short_sha(pr_details$head_sha)
+    short_hash_head <- short_hash(pr_details$head_sha)
     head_sha_url <- glue::glue(
         "https://github.com/{pr_details$repo}/commit/{pr_details$head_sha}"
     )
-    short_sha_base <- short_sha(pr_details$base_sha)
+    short_hash_base <- short_hash(pr_details$base_sha)
     base_sha_url <- glue::glue(
         "https://github.com/{pr_details$repo}/commit/{pr_details$base_sha}"
     )
@@ -227,43 +230,13 @@ compose_coverage_summary <- function(pr_details, delta) {
     # nolint start: line_length_linter
     glue::glue(
         "{emoji}Merging PR [#{ pr_details$pr_number}]({pr_details$pr_html_url}) \\
-        ([`{short_sha_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
-        ([`{short_sha_base}`](base_sha_url)) - will **{delta_translation}** coverage\\
+        ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
+        ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** coverage\\
         {by_delta}."
     )
     # nolint end
 }
 
-
-compose_diff_coverage_summary <- function(diff_line_coverage, target = 80) {
-    diff_coverage <- diff_line_coverage |>
-        dplyr::summarise(
-            total_lines_added = sum(.data$lines_added),
-            total_lines_covered = sum(.data$lines_covered)
-        )
-
-    percentage_line_coverage <- round(
-        diff_coverage$total_lines_covered /
-            diff_coverage$total_lines_added,
-        2
-    )
-
-    emoji <- dplyr::if_else(
-        percentage_line_coverage >= target,
-        ":white_check_mark: ",
-        ":x: "
-    )
-
-    # TODO make target the current base coverage
-    # nolint start: object_usage_linter
-    glue::glue(
-        "{emoji} Diff coverage: {percentage_line_coverage}% \\
-    ({diff_coverage$total_lines_covered} out of \\
-    {diff_coverage$total_lines_added} added lines are covered by tests). \\
-    Target coverage is at least `{target}%`."
-    )
-    # nolint end
-}
 
 build_badge_url <- function(pr_details) {
     repo <- pr_details$repo
@@ -276,8 +249,4 @@ build_badge_url <- function(pr_details) {
         "https://raw.githubusercontent.com/{repo}/{branch_folder}/coverage_badge.svg"
     )
     # nolint end
-}
-
-short_sha <- function(sha, n = 7) {
-    stringr::str_sub(sha, 1, n)
 }
