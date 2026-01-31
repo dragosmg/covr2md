@@ -21,7 +21,8 @@
 #'   * `pr_html_url`: the URL to the PR HTML branch
 #'   * `diff_url`: the diff URL
 #'
-#' @export
+#' @keywords internal
+#'
 #' @examples
 #' \dontrun{
 #' get_pr_details("<owner>/<myawesomerepo>", 2)
