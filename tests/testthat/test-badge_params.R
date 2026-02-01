@@ -219,7 +219,7 @@ test_that("badge_params() with NULL and NA", {
             list(
                 value_num = NA_real_,
                 value_char = "unknown",
-                value_col = "#9f9f9f",
+                value_colour = "#9f9f9f",
                 width_label = 60,
                 width_value = 60,
                 text_length_label = 50,
@@ -237,7 +237,7 @@ test_that("badge_params() with NULL and NA", {
             list(
                 value_num = NA_real_,
                 value_char = "unknown",
-                value_col = "#9f9f9f",
+                value_colour = "#9f9f9f",
                 width_label = 60,
                 width_value = 60,
                 text_length_label = 50,
@@ -257,7 +257,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 5.67,
                 value_char = "6%",
-                value_col = "#D9534F",
+                value_colour = "#D9534F",
                 width_label = 60,
                 width_value = 30,
                 text_length_label = 50,
@@ -275,7 +275,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 15.35,
                 value_char = "15%",
-                value_col = "#D9534F",
+                value_colour = "#D9534F",
                 width_label = 60,
                 width_value = 35,
                 text_length_label = 50,
@@ -293,7 +293,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 45.69,
                 value_char = "46%",
-                value_col = "#F0AD4E",
+                value_colour = "#F0AD4E",
                 width_label = 60,
                 width_value = 35,
                 text_length_label = 50,
@@ -311,7 +311,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 65.69,
                 value_char = "66%",
-                value_col = "#DFB317",
+                value_colour = "#DFB317",
                 width_label = 60,
                 width_value = 35,
                 text_length_label = 50,
@@ -329,7 +329,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 75.69,
                 value_char = "76%",
-                value_col = "#A4C61D",
+                value_colour = "#A4C61D",
                 width_label = 60,
                 width_value = 35,
                 text_length_label = 50,
@@ -347,7 +347,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 95.69,
                 value_char = "96%",
-                value_col = "#5CB85C",
+                value_colour = "#5CB85C",
                 width_label = 60,
                 width_value = 35,
                 text_length_label = 50,
@@ -365,7 +365,7 @@ test_that("badge_params() regular cases", {
             list(
                 value_num = 100,
                 value_char = "100%",
-                value_col = "#5CB85C",
+                value_colour = "#5CB85C",
                 width_label = 60,
                 width_value = 40,
                 text_length_label = 50,
@@ -385,7 +385,7 @@ test_that("badge_params() with gt 100 and lt 0", {
             list(
                 value_num = 100,
                 value_char = "100%",
-                value_col = "#5CB85C",
+                value_colour = "#5CB85C",
                 width_label = 60,
                 width_value = 40,
                 text_length_label = 50,
@@ -403,7 +403,7 @@ test_that("badge_params() with gt 100 and lt 0", {
             list(
                 value_num = 0,
                 value_char = "0%",
-                value_col = "#D9534F",
+                value_colour = "#D9534F",
                 width_label = 60,
                 width_value = 30,
                 text_length_label = 50,
