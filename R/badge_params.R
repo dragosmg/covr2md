@@ -1,3 +1,24 @@
+#' Transform a coverage value into char
+#'
+#' Outputs both values as both are used downstream by various other helpers.
+#' If the input values are `NA` or `NULL` it converts them to `"unknown"`.
+#' If the values are greater than 100 or less than 0 it adjusts them to these
+#' values
+#'
+#' @param value (numeric) coverage value. Can also be `NA` or `NULL`
+#' @param verbose (logical) if we want messages around the clamping. Default is
+#'   `FALSE`.
+#' @param call (call) defaults to [rlang::caller_env()]
+#'
+#' @returns a list with 2 element:
+#'   * `num`: the value as numeric
+#'   * `char`: the value as character
+#'
+#' @keywords internal
+#' @examples
+#' \dontrun{
+#' value_to_char(26.78)
+#' }
 value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
     if (is.null(value) || is.na(value)) {
         return(
@@ -32,16 +53,30 @@ value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
 
     value_char <- paste0(round(value_num), "%")
 
-    list(
-        num = value_num,
-        char = value_char
+    structure(
+        list(
+            num = value_num,
+            char = value_char
+        ),
+        class = "badge_value"
     )
 }
 
+#' Estimate the width of the value box
+#'
+#' @param badge_value (`badge_value`) the output of `value_to_char()`
+#' @param width_label (numeric) the width of the label box. Defaults to 60
+#'   pixels.
+#'
+#' @returns numeric representing the with of the box in which the value will
+#' appear
+#'
+#' @keywords internal
 estimate_width_value <- function(
     badge_value,
     width_label = 60
 ) {
+    # TODO check if input is `badge_value`
     dplyr::case_when(
         badge_value$char == "unknown" ~ width_label,
         badge_value$char == "100%" ~ 40,
@@ -50,6 +85,15 @@ estimate_width_value <- function(
     )
 }
 
+#' Estimate the length of the value text
+#'
+#' @inheritParams estimate_width_value
+#' @param text_length_label (numeric) the length of the label text. Defaults to
+#'   50 pixels.
+#'
+#' @returns numeric representing the length of the label text
+#'
+#' @keywords internal
 estimate_text_length_value <- function(badge_value, text_length_label = 50) {
     dplyr::case_when(
         badge_value$char == "unknown" ~ text_length_label,
@@ -95,16 +139,19 @@ derive_badge_params <- function(value) {
         text_length_label = text_length_label
     )
 
-    list(
-        value_num = badge_value$num,
-        value_char = badge_value$char,
-        value_col = value_colour,
-        width_label = width_label,
-        width_value = width_value,
-        text_length_label = text_length_label,
-        text_length_value = text_length_value,
-        total_width = width_label + width_value,
-        text_start_value = width_label + width_value / 2
+    structure(
+        list(
+            value_num = badge_value$num,
+            value_char = badge_value$char,
+            value_col = value_colour,
+            width_label = width_label,
+            width_value = width_value,
+            text_length_label = text_length_label,
+            text_length_value = text_length_value,
+            total_width = width_label + width_value,
+            text_start_value = width_label + width_value / 2
+        ),
+        class = "badge_params"
     )
 }
 
