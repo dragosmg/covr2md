@@ -48,7 +48,8 @@ generate_badge <- function(value) {
 #' In a public repo, using a storage branch should not work when the PR comes
 #' from a fork (as the automatic GHA token only has read privileges).
 #' In conclusion, we can make a distinction between PR from forks (will use an
-#' external URL) vs non-forks (which will upload the badge to the storage branch).
+#' external URL) vs non-forks (which will upload the badge to the storage
+#' branch).
 #'
 #' Once the PR is merged the workflow triggered on push to main will be able to
 #' upload the badge to the storage branch since it's no longer an "external"
@@ -73,10 +74,10 @@ build_badge_url <- function(pr_details, value) {
             )
         value <- badge_params$value_char
 
-        url <- glue::glue(
+        badge_url <- glue::glue(
             "https://img.shields.io/badge/coverage-{value}25-{colour}.svg"
         )
-        return(url)
+        return(badge_url)
     }
 
     repo <- pr_details$repo
@@ -84,7 +85,9 @@ build_badge_url <- function(pr_details, value) {
         "covr2gh-storage/badges/{pr_details$head_name}" # nolint
     )
 
-    glue::glue(
+    badge_url <- glue::glue(
         "https://raw.githubusercontent.com/{repo}/{folder}/coverage_badge.svg"
     )
+
+    badge_url
 }

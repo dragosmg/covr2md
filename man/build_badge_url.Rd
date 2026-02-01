@@ -33,7 +33,8 @@ using an external URL might not be possible.
 In a public repo, using a storage branch should not work when the PR comes
 from a fork (as the automatic GHA token only has read privileges).
 In conclusion, we can make a distinction between PR from forks (will use an
-external URL) vs non-forks (which will upload the badge to the storage branch).
+external URL) vs non-forks (which will upload the badge to the storage
+branch).
 
 Once the PR is merged the workflow triggered on push to main will be able to
 upload the badge to the storage branch since it's no longer an "external"

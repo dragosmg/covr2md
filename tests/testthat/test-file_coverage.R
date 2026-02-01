@@ -55,7 +55,7 @@ test_that("combine_file_coverage works", {
 
 test_that("compose_file_coverage_details works", {
     file_cov <- tibble::tibble(
-        file = c("R/foo.R", "R/bar.R", "R/baz.R", "Overall"),
+        file = c("R/foo.R", "R/bar.R", "R/baz.R", "Overall"), # nolint
         coverage_head = c(56.2, 43.5, 78.34, 60.34),
         coverage_base = c(52.1, 12.5, 84.23, 54.5)
     ) |>

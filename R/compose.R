@@ -65,15 +65,22 @@ compose_comment <- function(
         pr_number = pr_number
     )
 
-    total_head_coverage <- covr::percent_coverage(head_coverage)
-    total_base_coverage <- covr::percent_coverage(base_coverage)
+    total_head_coverage <- covr::percent_coverage(
+        head_coverage
+    )
+    total_base_coverage <- covr::percent_coverage(
+        base_coverage
+    )
 
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
         2
     )
 
-    badge_url <- build_badge_url(pr_details)
+    badge_url <- build_badge_url(
+        pr_details,
+        value = total_head_coverage
+    )
 
     coverage_summary <- compose_coverage_summary(
         pr_details,
