@@ -58,6 +58,7 @@ get_pr_details <- function(
         list(
             repo = repo,
             pr_number = pr_number,
+            is_fork = pr_info$head$repo$fork,
             head_name = pr_info$head$ref,
             head_sha = pr_info$head$sha,
             base_name = pr_info$base$ref,

@@ -9,6 +9,9 @@
       $pr_number
       [1] 2
       
+      $is_fork
+      [1] FALSE
+      
       $head_name
       [1] "add_three"
       

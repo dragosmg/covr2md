@@ -3,10 +3,10 @@
         width="{total_width}"
         height="20"
         role="img"
-        aria-label="coverage: {char_value}">
+        aria-label="coverage: {value_char}">
 
     <title>
-        coverage: {char_value}
+        coverage: {value_char}
     </title>
 
     <defs>
@@ -31,11 +31,11 @@
 
     <!-- badge background -->
     <g clip-path="url(#clipr)">
-        <rect width="{label_width}"
+        <rect width="{width_label}"
                 height="20"
                 fill="#555"/>
-        <rect x="{label_width}"
-                width="{value_width}"
+        <rect x="{width_label}"
+                width="{width_value}"
                 height="20"
                 fill="{value_colour}"/>
         <rect width="{total_width}"
@@ -70,21 +70,20 @@
 
         <!-- value shadow -->
         <text aria-hidden="true"
-                x="{text_value_start}"
+                x="{text_start_value}"
                 y="15"
                 fill="#010101"
                 fill-opacity="0.3"
                 textLength="{text_length_value}">
-          {char_value}
+          {value_char}
         </text>
 
         <!-- value text -->
-        <text x="{text_value_start}"
+        <text x="{text_start_value}"
                 y="14"
                 fill="#fff"
                 textLength="{text_length_value}">
-          {char_value}
+          {value_char}
         </text>
     </g>
 </svg>
-

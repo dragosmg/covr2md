@@ -16,7 +16,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         # TODO we probably want to return this when we only have deletions
         # but i expect diff_line_coverage to be empty then
         return(
-            ":heavy_equals_sign: Diff coverage: No lines added to relevant files."
+            ":heavy_equals_sign: Diff coverage: No lines added to relevant files." # nolint
         )
     }
 
@@ -27,8 +27,8 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         )
 
     percentage_line_coverage <- round(
-        (diff_coverage$total_lines_covered /
-            diff_coverage$total_lines_added) *
+        diff_coverage$total_lines_covered /
+            diff_coverage$total_lines_added *
             100,
         2
     )
@@ -72,7 +72,11 @@ compose_line_coverage_details <- function(diff_line_coverage) {
         subtitle <- "### Coverage for added lines"
     }
 
-    diff_cov_details <- glue::glue(
+    diff_cov_details <- glue::glue_data(
+        list(
+            subtitle = subtitle,
+            diff_line_md_table = diff_line_md_table
+        ),
         "{subtitle}
 
         {diff_line_md_table}",

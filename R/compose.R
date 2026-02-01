@@ -68,28 +68,15 @@ compose_comment <- function(
     total_head_coverage <- covr::percent_coverage(head_coverage)
     total_base_coverage <- covr::percent_coverage(base_coverage)
 
-    if (
-        isTRUE(
-            all.equal(
-                total_head_coverage,
-                total_base_coverage,
-                tolerance = 0.0001
-            )
-        )
-    ) {
-        # TODO we probably want to exit here
-        # TODO prepare the badge and exit early
-        cli::cli_alert_info(
-            "No significant delta in coverage."
-        )
-    }
-
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
         2
     )
 
-    badge_url <- build_badge_url(pr_details)
+    badge_url <- build_badge_url(
+        pr_details,
+        value = total_head_coverage
+    )
 
     coverage_summary <- compose_coverage_summary(
         pr_details,
@@ -97,6 +84,8 @@ compose_comment <- function(
     )
 
     # TODO handle the case when there are no relevant changed files
+    #  this works on just needs some tweaks
+
     # TODO think about when we would want to return all the files, not just
     # those touched or affected by the PR
 
@@ -235,20 +224,6 @@ compose_coverage_summary <- function(pr_details, delta) {
         ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
         ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** coverage\\
         {by_delta}."
-    )
-    # nolint end
-}
-
-
-build_badge_url <- function(pr_details) {
-    repo <- pr_details$repo
-    branch_folder <- glue::glue(
-        "covr2gh-storage/badges/{pr_details$head_name}" # nolint
-    )
-
-    # nolint start line_length_linter
-    glue::glue(
-        "https://raw.githubusercontent.com/{repo}/{branch_folder}/coverage_badge.svg"
     )
     # nolint end
 }
