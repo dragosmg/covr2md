@@ -85,7 +85,7 @@ get_pr_details <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_relevant_files("dragosmg/covr2ghdemo", 2)
+#' get_relevant_files("<owner>/covr2ghdemo", 2)
 #' }
 get_relevant_files <- function(
     repo,

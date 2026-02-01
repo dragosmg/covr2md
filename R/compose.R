@@ -47,7 +47,7 @@
 #' compose_comment(
 #'   head_coverage = head_coverage,
 #'   base_coverage = base_coverage,
-#'   repo = "dragosmg/covr2ghdemo",
+#'   repo = "<owner>/<repo>",
 #'   pr_number = 3
 #' )
 #' }
@@ -177,7 +177,7 @@ compose_comment <- function(
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details(
-#'   repo = "dragosmg/covr2ghdemo",
+#'   repo = "<owner>/<repo>",
 #'   pr_number = 2
 #' )
 #'
