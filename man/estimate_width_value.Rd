@@ -7,7 +7,7 @@
 estimate_width_value(badge_value, width_label = 60)
 }
 \arguments{
-\item{badge_value}{(\code{badge_value}) the output of \code{value_to_char()}}
+\item{badge_value}{(\code{badge_value}) the output of \code{badge_value()}}
 
 \item{width_label}{(numeric) the width of the label box. Defaults to 60
 pixels.}

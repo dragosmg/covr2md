@@ -7,7 +7,7 @@
 estimate_text_length_value(badge_value, text_length_label = 50)
 }
 \arguments{
-\item{badge_value}{(\code{badge_value}) the output of \code{value_to_char()}}
+\item{badge_value}{(\code{badge_value}) the output of \code{badge_value()}}
 
 \item{text_length_label}{(numeric) the length of the label text. Defaults to
 50 pixels.}
