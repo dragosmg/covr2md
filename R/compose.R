@@ -224,17 +224,3 @@ compose_coverage_summary <- function(pr_details, delta) {
     )
     # nolint end
 }
-
-
-build_badge_url <- function(pr_details) {
-    repo <- pr_details$repo
-    branch_folder <- glue::glue(
-        "covr2gh-storage/badges/{pr_details$head_name}" # nolint
-    )
-
-    # nolint start line_length_linter
-    glue::glue(
-        "https://raw.githubusercontent.com/{repo}/{branch_folder}/coverage_badge.svg"
-    )
-    # nolint end
-}
