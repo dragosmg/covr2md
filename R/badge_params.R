@@ -17,14 +17,17 @@
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' value_to_char(26.78)
+#' badge_value(26.78)
 #' }
-value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
+badge_value <- function(value, verbose = FALSE, call = rlang::caller_env()) {
     if (is.null(value) || is.na(value)) {
         return(
-            list(
-                num = NA_real_,
-                char = "unknown"
+            structure(
+                list(
+                    num = NA_real_,
+                    char = "unknown"
+                ),
+                class = "badge_value"
             )
         )
     }
@@ -64,7 +67,7 @@ value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
 
 #' Estimate the width of the value box
 #'
-#' @param badge_value (`badge_value`) the output of `value_to_char()`
+#' @param badge_value (`badge_value`) the output of `badge_value()`
 #' @param width_label (numeric) the width of the label box. Defaults to 60
 #'   pixels.
 #'
@@ -76,7 +79,12 @@ estimate_width_value <- function(
     badge_value,
     width_label = 60
 ) {
-    # TODO check if input is `badge_value`
+    if (!is_badge_value(badge_value)) {
+        cli::cli_abort(
+            "`badge_value` is not an object of class `<badge_value>`."
+        )
+    }
+
     dplyr::case_when(
         badge_value$char == "unknown" ~ width_label,
         badge_value$char == "100%" ~ 40,
@@ -95,6 +103,12 @@ estimate_width_value <- function(
 #'
 #' @keywords internal
 estimate_text_length_value <- function(badge_value, text_length_label = 50) {
+    if (!is_badge_value(badge_value)) {
+        cli::cli_abort(
+            "`badge_value` is not an object of class `<badge_value>`."
+        )
+    }
+
     dplyr::case_when(
         badge_value$char == "unknown" ~ text_length_label,
         badge_value$char == "100%" ~ 31,
@@ -117,7 +131,7 @@ estimate_text_length_value <- function(badge_value, text_length_label = 50) {
 #   * text_value_start = label_width + value_width / 2
 
 derive_badge_params <- function(value) {
-    badge_value <- value_to_char(value)
+    badge_value <- badge_value(value)
 
     value_colour <- derive_badge_colour(badge_value)
 
@@ -187,6 +201,12 @@ derive_badge_colour <- function(
     badge_value,
     colours = coverage_thresholds
 ) {
+    if (!is_badge_value(badge_value)) {
+        cli::cli_abort(
+            "`badge_value` is not an object of class `<badge_value>`."
+        )
+    }
+
     if (badge_value$char == "unknown") {
         return("#9f9f9f")
     }
@@ -200,4 +220,8 @@ derive_badge_colour <- function(
     value_colour <- coverage_thresholds$colour[idx]
 
     value_colour
+}
+
+is_badge_value <- function(x) {
+    inherits(x, "badge_value")
 }
