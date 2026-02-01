@@ -660,8 +660,6 @@
 
     Code
       (generate_badge(1302))
-    Message
-      i The coverage percentage has been adjusted to 100 from the initial value of 1302.
     Output
         <svg xmlns="http://www.w3.org/2000/svg"
               width="100"
@@ -756,8 +754,6 @@
 
     Code
       (generate_badge(-5))
-    Message
-      i The coverage percentage has been adjusted to 0 from the initial value of -5.
     Output
         <svg xmlns="http://www.w3.org/2000/svg"
               width="90"
