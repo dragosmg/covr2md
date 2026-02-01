@@ -37,15 +37,24 @@ value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
         char = value_char
     )
 }
-value_width <- function(
+
+est_width_value <- function(
     badge_value,
     label_width = 60
 ) {
-    output <- dplyr::case_when(
+    dplyr::case_when(
         badge_value$char == "unknown" ~ label_width,
         badge_value$char == "100%" ~ 40,
         nchar(badge_value$char) < 3 ~ 30,
         .default = 35
     )
-    output
+}
+
+estimate_text_length_value <- function(badge_value, text_length_label = 50) {
+    dplyr::case_when(
+        badge_value$char == "unknown" ~ text_length_label,
+        badge_value$char == "100%" ~ 31,
+        nchar(badge_value$char) < 3 ~ 20,
+        .default = 26
+    )
 }

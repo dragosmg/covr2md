@@ -91,53 +91,96 @@ test_that("value_to_char() clamps values gt 100 or lt 0", {
     )
 })
 
-test_that("value_width", {
+test_that("est_width_value", {
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(NA)
         ),
         60
     )
 
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(NULL)
         ),
         60
     )
 
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(5.45)
         ),
         30
     )
 
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(15.45)
         ),
         35
     )
 
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(45.45)
         ),
         35
     )
 
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(100)
         ),
         40
     )
 
     expect_identical(
-        value_width(
+        est_width_value(
             value_to_char(145.45)
         ),
         40
+    )
+})
+
+test_that("estimate_text_length_value", {
+    expect_identical(
+        estimate_text_length_value(
+            value_to_char(NA)
+        ),
+        50
+    )
+    expect_identical(
+        estimate_text_length_value(
+            value_to_char(NULL)
+        ),
+        50
+    )
+
+    expect_identical(
+        estimate_text_length_value(
+            value_to_char(45.56)
+        ),
+        26
+    )
+
+    expect_identical(
+        estimate_text_length_value(
+            value_to_char(78.89)
+        ),
+        26
+    )
+
+    expect_identical(
+        estimate_text_length_value(
+            value_to_char(178.89)
+        ),
+        31
+    )
+
+    expect_identical(
+        estimate_text_length_value(
+            value_to_char(7)
+        ),
+        20
     )
 })
