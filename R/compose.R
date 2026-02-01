@@ -65,12 +65,8 @@ compose_comment <- function(
         pr_number = pr_number
     )
 
-    total_head_coverage <- covr::percent_coverage(
-        head_coverage
-    )
-    total_base_coverage <- covr::percent_coverage(
-        base_coverage
-    )
+    total_head_coverage <- covr::percent_coverage(head_coverage)
+    total_base_coverage <- covr::percent_coverage(base_coverage)
 
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
