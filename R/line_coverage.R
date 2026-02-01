@@ -16,7 +16,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         # TODO we probably want to return this when we only have deletions
         # but i expect diff_line_coverage to be empty then
         return(
-            ":heavy_equals_sign: Diff coverage: No lines added to relevant files."
+            ":heavy_equals_sign: Diff coverage: No lines added to relevant files." # nolint
         )
     }
 

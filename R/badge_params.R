@@ -37,7 +37,7 @@ badge_value <- function(value, verbose = FALSE, call = rlang::caller_env()) {
     if (value > 100) {
         if (verbose) {
             cli::cli_alert_info(
-                "{.arg value} is greater than 100%. It will be adjusted to 100%.",
+                "`value` is greater than 100%. It will be adjusted to 100%.",
                 .envir = call
             )
         }
@@ -47,7 +47,7 @@ badge_value <- function(value, verbose = FALSE, call = rlang::caller_env()) {
     if (value < 0) {
         if (verbose) {
             cli::cli_alert_info(
-                "{.arg value} is less than 0%. It will be adjusted to 0%.",
+                "`value` is less than 0%. It will be adjusted to 0%.",
                 .envir = call
             )
         }
