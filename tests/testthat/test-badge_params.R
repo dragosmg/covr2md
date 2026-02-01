@@ -91,51 +91,51 @@ test_that("value_to_char() clamps values gt 100 or lt 0", {
     )
 })
 
-test_that("est_width_value", {
+test_that("estimate_width_value", {
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(NA)
         ),
         60
     )
 
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(NULL)
         ),
         60
     )
 
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(5.45)
         ),
         30
     )
 
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(15.45)
         ),
         35
     )
 
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(45.45)
         ),
         35
     )
 
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(100)
         ),
         40
     )
 
     expect_identical(
-        est_width_value(
+        estimate_width_value(
             value_to_char(145.45)
         ),
         40

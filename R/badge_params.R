@@ -38,7 +38,7 @@ value_to_char <- function(value, verbose = FALSE, call = rlang::caller_env()) {
     )
 }
 
-est_width_value <- function(
+estimate_width_value <- function(
     badge_value,
     label_width = 60
 ) {
