@@ -4,7 +4,7 @@
 \alias{build_badge_url}
 \title{Build the URL to the badge SVG}
 \usage{
-build_badge_url(pr_details)
+build_badge_url(pr_details, badge_value)
 }
 \arguments{
 \item{pr_details}{}
