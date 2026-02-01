@@ -44,8 +44,9 @@ accompanying workflow that does the following:
   - a collapsible “Details” section containing two tables which offer
     more insight into the high-level summaries.
 - produces a coverage badge for the head branch and pushes it to a
-  “storage” branch (`_covr2gh_storage`). This is not possible for PRs
-  originating from forks as they will not have write permissions to the
-  repo. In this case the produced badge is not self-contained and an
-  external - to the repo - ULR is used instead of committing the badge
-  to the storage branch.
+  “storage” branch (`_covr2gh_storage`)[^1].
+
+[^1]: This is not possible for PRs originating from forks as they will
+    not have write permissions to the repo. In this case the produced
+    badge is not self-contained and an external - to the repo - ULR is
+    used instead of committing the badge to the storage branch.
