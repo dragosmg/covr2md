@@ -79,6 +79,10 @@ get_comment_id <- function(
 #'
 #' @inheritParams get_pr_details
 #' @param body (character scalar) the content of the body of the message.
+#' @param new (logical) post a new comment or update existing one. Defaults to
+#'   `FALSE`.
+#' @param delete (logical) whether to delete a comment. Useful when posting new
+#'   comments (delete old ones).
 #' @inheritParams compose_comment
 #'
 #' @returns a `gh_response` object containing the API response
@@ -95,12 +99,22 @@ get_comment_id <- function(
 post_comment <- function(
     body,
     repo,
-    pr_number
+    pr_number,
+    new = FALSE,
+    delete = new
 ) {
     comment_id <- get_comment_id(
         repo = repo,
         pr_number = pr_number
     )
+
+    if (isTRUE(new) && isTRUE(delete) && !rlang::is_null(comment_id)) {
+        delete_comment(repo, comment_id)
+    }
+
+    if (rlang::is_null(comment_id)) {
+        new <- TRUE
+    }
 
     # TODO add checks for
     #  * body
@@ -110,17 +124,29 @@ post_comment <- function(
     # posting a new comment vs updating an existing one is accomplished by
     # using different endpoints
 
-    # endpoint for posting a new issue comment
-    api_url <- glue::glue(
-        "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
-    )
-
-    if (!rlang::is_null(comment_id)) {
+    if (isTRUE(new)) {
+        # endpoint for posting a new issue comment
+        api_url <- glue::glue(
+            "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+        )
+    } else {
         # endpoint for updating an existing one
         api_url <- glue::glue(
             "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
         )
     }
+
+    # # endpoint for posting a new issue comment
+    # api_url <- glue::glue(
+    #     "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
+    # )
+
+    # if (!rlang::is_null(comment_id)) {
+    #     # endpoint for updating an existing one
+    #     api_url <- glue::glue(
+    #         "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
+    #     )
+    # }
 
     response <- glue::glue("POST {api_url}") |>
         gh::gh(body = body)

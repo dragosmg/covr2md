@@ -4,7 +4,7 @@
 \alias{post_comment}
 \title{Post or update comment}
 \usage{
-post_comment(body, repo, pr_number)
+post_comment(body, repo, pr_number, new = FALSE, delete = new)
 }
 \arguments{
 \item{body}{(character scalar) the content of the body of the message.}
@@ -13,6 +13,12 @@ post_comment(body, repo, pr_number)
 (\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
+
+\item{new}{(logical) post a new comment or update existing one. Defaults to
+\code{FALSE}.}
+
+\item{delete}{(logical) whether to delete a comment. Useful when posting new
+comments (delete old ones).}
 }
 \value{
 a \code{gh_response} object containing the API response

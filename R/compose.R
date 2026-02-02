@@ -192,7 +192,7 @@ compose_coverage_summary <- function(pr_details, delta) {
         delta == 0 ~ "not change"
     )
 
-    by_delta <- glue::glue(" by `{delta}` percentage points")
+    by_delta <- glue::glue(" by `{abs(delta)}` percentage points")
 
     by_delta <- dplyr::if_else(
         delta == 0,
@@ -206,23 +206,37 @@ compose_coverage_summary <- function(pr_details, delta) {
         ":x: "
     )
 
-    # nolint start object_usage_linter
-    short_hash_head <- short_hash(pr_details$head_sha)
-    head_sha_url <- glue::glue(
-        "https://github.com/{pr_details$repo}/commit/{pr_details$head_sha}"
+    head_sha_url <- glue::glue_data(
+        list(
+            repo = pr_details$repo,
+            head_sha = pr_details$head_sha
+        ),
+        "https://github.com/{repo}/commit/{head_sha}"
     )
-    short_hash_base <- short_hash(pr_details$base_sha)
-    base_sha_url <- glue::glue(
-        "https://github.com/{pr_details$repo}/commit/{pr_details$base_sha}"
-    )
-    # nolint end
 
-    # nolint start: line_length_linter
-    glue::glue(
-        "{emoji}Merging PR [#{ pr_details$pr_number}]({pr_details$pr_html_url}) \\
-        ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
-        ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** coverage\\
-        {by_delta}."
+    base_sha_url <- glue::glue_data(
+        list(
+            repo = pr_details$repo,
+            base_sha = pr_details$base_sha
+        ),
+        "https://github.com/{repo}/commit/{base_sha}"
     )
-    # nolint end
+
+    glue::glue_data(
+        list(
+            emoji = emoji,
+            pr_number = pr_details$pr_number,
+            pr_html_url = pr_details$pr_html_url,
+            short_hash_head = short_hash(pr_details$head_sha),
+            head_sha_url = head_sha_url,
+            short_hash_base = short_hash(pr_details$base_sha),
+            base_sha_url = base_sha_url,
+            delta_translation = delta_translation,
+            by_delta = by_delta
+        ),
+        "{emoji} Merging PR [#{pr_number}]({pr_html_url}) \\
+        ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
+        ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** \\
+        coverage {by_delta}."
+    )
 }
