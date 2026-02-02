@@ -7,7 +7,7 @@ then a a new comment is posted.
 ## Usage
 
 ``` r
-post_comment(body, repo, pr_number)
+post_comment(body, repo, pr_number, new = FALSE, delete = new)
 ```
 
 ## Arguments
@@ -23,6 +23,16 @@ post_comment(body, repo, pr_number)
 - pr_number:
 
   (integer) the PR number
+
+- new:
+
+  (logical) post a new comment or update existing one. Defaults to
+  `FALSE`.
+
+- delete:
+
+  (logical) whether to delete a comment. Useful when posting new
+  comments (delete old ones).
 
 ## Value
 

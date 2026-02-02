@@ -45,7 +45,7 @@ a new comment is posted.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">post_comment</span><span class="op">(</span><span class="va">body</span>, <span class="va">repo</span>, <span class="va">pr_number</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">post_comment</span><span class="op">(</span><span class="va">body</span>, <span class="va">repo</span>, <span class="va">pr_number</span>, new <span class="op">=</span> <span class="cn">FALSE</span>, delete <span class="op">=</span> <span class="va">new</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -63,6 +63,16 @@ a new comment is posted.</p>
 
 <dt id="arg-pr-number">pr_number<a class="anchor" aria-label="anchor" href="#arg-pr-number"></a></dt>
 <dd><p>(integer) the PR number</p></dd>
+
+
+<dt id="arg-new">new<a class="anchor" aria-label="anchor" href="#arg-new"></a></dt>
+<dd><p>(logical) post a new comment or update existing one. Defaults to
+<code>FALSE</code>.</p></dd>
+
+
+<dt id="arg-delete">delete<a class="anchor" aria-label="anchor" href="#arg-delete"></a></dt>
+<dd><p>(logical) whether to delete a comment. Useful when posting new
+comments (delete old ones).</p></dd>
 
 </dl></div>
     <div class="section level2">
