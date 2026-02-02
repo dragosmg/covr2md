@@ -150,7 +150,7 @@ get_diff_text <- function(
     # TODO add inputs checks
     # TODO standalone rlang?
     repo <- pr_details$repo
-    # browser()
+
     base_head <- glue::glue(
         "{pr_details$base_name}...{pr_details$head_name}"
     )
