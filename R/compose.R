@@ -237,6 +237,6 @@ compose_coverage_summary <- function(pr_details, delta) {
         "{emoji} Merging PR [#{pr_number}]({pr_html_url}) \\
         ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
         ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** \\
-        coverage {by_delta}."
+        overall coverage {by_delta}."
     )
 }
