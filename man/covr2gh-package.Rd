@@ -4,9 +4,9 @@
 \name{covr2gh-package}
 \alias{covr2gh}
 \alias{covr2gh-package}
-\title{covr2gh: Tools to Convert covr Output to Markdown}
+\title{covr2gh: Use covr Output in GitHub}
 \description{
-Convert covr code coverage output into Markdown in preparation for use with GitHub comments.
+Post code coverage insights as GitHub comments.
 }
 \seealso{
 Useful links:
