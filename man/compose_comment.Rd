@@ -4,7 +4,13 @@
 \alias{compose_comment}
 \title{Compose a coverage comment}
 \usage{
-compose_comment(head_coverage, base_coverage, repo, pr_number)
+compose_comment(
+  head_coverage,
+  base_coverage,
+  repo,
+  pr_number,
+  diff_cov_target = NULL
+)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
@@ -18,6 +24,9 @@ base branch.}
 (\code{"OWNER/REPO"}).}
 
 \item{pr_number}{(integer) the PR number}
+
+\item{diff_cov_target}{(numeric) minimum accepted diff coverage. Defaults to
+\code{NULL} which is then interpreted as overall base branch coverage.}
 }
 \value{
 a character scalar with the content of the GitHub comment
