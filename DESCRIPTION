@@ -1,10 +1,9 @@
 Package: covr2gh
-Title: Tools to Convert covr Output to Markdown
-Version: 0.0.0.9015
+Title: Use covr Output in GitHub
+Version: 0.0.0.9016
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
-Description: Convert covr code coverage output into Markdown in
-    preparation for use with GitHub comments.
+Description: Post code coverage insights as GitHub comments.
 License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2gh, https://dragosmg.github.io/covr2gh/
 BugReports: https://github.com/dragosmg/covr2gh/issues
