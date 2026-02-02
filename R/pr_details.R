@@ -129,22 +129,28 @@ get_relevant_files <- function(
 #' the PR. It then subsets these to only includes files under `R/` or `src/`.
 #'
 #' @inheritParams get_pr_details
+#' @inheritParams get_diff_line_coverage
 #'
 #' @returns a character vector containing the names of the changed files.
 #'
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_diff_text("<owner>/<repo>", 2)
+#' pr_details <- get_pr_details("<owner>/<repo>", 2)
+#' # TODO example
+#' relevant_files <-
+#' diff_text <- get_diff_text(pr_details, relevant_files)
 #' }
 get_diff_text <- function(
-    repo,
     pr_details,
     relevant_files,
     call = rlang::caller_env()
 ) {
+    # TODO pointless to have the repo as input. it's already in pr_details
     # TODO add inputs checks
     # TODO standalone rlang?
+    browser()
+    repo <- pr_details$repo
 
     base_head <- glue::glue(
         "{pr_details$base_name}...{pr_details$head_name}"
@@ -161,6 +167,7 @@ get_diff_text <- function(
     # get the file patches as a named list where the names are the filenames and
     # the content of each element is the patch
     # we can then map over this list
+    # TODO it would be useful if this worked when relevant files is NULL
     output <- reply$files |>
         # we focus on `relevant_files` to get to the added lines
         purrr::keep(
@@ -292,7 +299,6 @@ get_diff_line_coverage <- function(
     head_coverage
 ) {
     diff_text <- get_diff_text(
-        repo = repo,
         pr_details = pr_details,
         relevant_files = relevant_files
     ) |>
