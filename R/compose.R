@@ -193,7 +193,7 @@ compose_coverage_summary <- function(pr_details, delta) {
         delta == 0 ~ "not change"
     )
 
-    by_delta <- glue::glue(" by `{delta}` percentage points")
+    by_delta <- glue::glue(" by `{abs(delta)}` percentage points")
 
     by_delta <- dplyr::if_else(
         delta == 0,
