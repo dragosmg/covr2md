@@ -28,26 +28,25 @@
 #' Compose a coverage comment
 #'
 #' @param head_coverage (coverage) active / current branch (`HEAD`) coverage.
-#'   The output of [covr::package_coverage()] on the branch.
+#'   The output of [covr::package_coverage()] on the head branch.
 #' @param base_coverage (coverage) base / target branch coverage (coverage for
 #'   the branch merging into). The output of [covr::package_coverage()] on the
-#'   branch.
+#'   base branch.
 #' @inheritParams get_pr_details
-#' @inheritParams knitr::kable
 #'
 #' @returns a character scalar with the content of the GitHub comment
 #'
 #' @export
 #' @examples
 #' \dontrun{
-#' head_coverage <- covr::package_coverage()
+#' coverage_head <- covr::package_coverage()
 #' system("git checkout main")
-#' base_coverage <- covr::package_coverage()
+#' coverage_main <- covr::package_coverage()
 #'
 #' compose_comment(
-#'   head_coverage = head_coverage,
-#'   base_coverage = base_coverage,
-#'   repo = "dragosmg/covr2ghdemo",
+#'   head_coverage = coverage_head,
+#'   base_coverage = coverage_main,
+#'   repo = "<owner>/<repo>",
 #'   pr_number = 3
 #' )
 #' }
@@ -177,7 +176,7 @@ compose_comment <- function(
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details(
-#'   repo = "dragosmg/covr2ghdemo",
+#'   repo = "<owner>/<repo>",
 #'   pr_number = 2
 #' )
 #'
@@ -193,7 +192,7 @@ compose_coverage_summary <- function(pr_details, delta) {
         delta == 0 ~ "not change"
     )
 
-    by_delta <- glue::glue(" by `{abs(delta)}` percentage points")
+    by_delta <- glue::glue("by `{abs(delta)}` percentage points")
 
     by_delta <- dplyr::if_else(
         delta == 0,

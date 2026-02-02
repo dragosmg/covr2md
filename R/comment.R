@@ -136,18 +136,6 @@ post_comment <- function(
         )
     }
 
-    # # endpoint for posting a new issue comment
-    # api_url <- glue::glue(
-    #     "https://api.github.com/repos/{repo}/issues/{pr_number}/comments"
-    # )
-
-    # if (!rlang::is_null(comment_id)) {
-    #     # endpoint for updating an existing one
-    #     api_url <- glue::glue(
-    #         "https://api.github.com/repos/{repo}/issues/comments/{comment_id}"
-    #     )
-    # }
-
     response <- glue::glue("POST {api_url}") |>
         gh::gh(body = body)
 

@@ -8,11 +8,11 @@ combine_file_coverage(head_coverage, base_coverage)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
-The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the branch.}
+The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the head branch.}
 
 \item{base_coverage}{(coverage) base / target branch coverage (coverage for
 the branch merging into). The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the
-branch.}
+base branch.}
 }
 \value{
 a\code{tibble} with 4 columns:

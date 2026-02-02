@@ -16,7 +16,7 @@ request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_deta
 \item{relevant_files}{(character) files with changes in coverage}
 
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
-The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the branch.}
+The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the head branch.}
 }
 \value{
 a \code{tibble} with 3 columns:

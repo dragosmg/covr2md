@@ -4,11 +4,13 @@
 \alias{get_diff_text}
 \title{Get the PR diff}
 \usage{
-get_diff_text(repo, pr_details, relevant_files, call = rlang::caller_env())
+get_diff_text(pr_details, relevant_files, call = rlang::caller_env())
 }
 \arguments{
-\item{repo}{(character) the repository name in the GitHub format
-(\code{"OWNER/REPO"}).}
+\item{pr_details}{a \verb{<pr_details>} object representing a subset of the pull
+request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_details()}}.}
+
+\item{relevant_files}{(character) files with changes in coverage}
 
 \item{call}{the execution environment to surface the error message from.
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
@@ -22,7 +24,10 @@ the PR. It then subsets these to only includes files under \verb{R/} or \verb{sr
 }
 \examples{
 \dontrun{
-get_diff_text("<owner>/<repo>", 2)
+pr_details <- get_pr_details("<owner>/<repo>", 2)
+# TODO example
+relevant_files <-
+diff_text <- get_diff_text(pr_details, relevant_files)
 }
 }
 \keyword{internal}

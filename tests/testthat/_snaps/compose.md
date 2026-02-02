@@ -10,7 +10,7 @@
       
       ![badge](https://raw.githubusercontent.com/dragosmg/covr2ghdemo/covr2gh-storage/badges/increase-coverage/coverage_badge.svg)
       
-      :white_check_mark:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`a508bf8`](head_sha_url)) into _main_ ([`c4477ac`](base_sha_url)) - will **increase** coverage  by `21.05` percentage points.
+      :white_check_mark:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`48b3564`](head_sha_url)) into _main_ ([`c4477ac`](base_sha_url)) - will **increase** coverage by `21.05` percentage points.
       :x:  Diff coverage: 0% (0 out of 1 added lines are covered by tests). Target coverage is at least `10.53%`.
       
       <details>

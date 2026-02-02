@@ -8,11 +8,11 @@ compose_comment(head_coverage, base_coverage, repo, pr_number)
 }
 \arguments{
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
-The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the branch.}
+The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the head branch.}
 
 \item{base_coverage}{(coverage) base / target branch coverage (coverage for
 the branch merging into). The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the
-branch.}
+base branch.}
 
 \item{repo}{(character) the repository name in the GitHub format
 (\code{"OWNER/REPO"}).}
@@ -27,14 +27,14 @@ Compose a coverage comment
 }
 \examples{
 \dontrun{
-head_coverage <- covr::package_coverage()
+coverage_head <- covr::package_coverage()
 system("git checkout main")
-base_coverage <- covr::package_coverage()
+coverage_main <- covr::package_coverage()
 
 compose_comment(
-  head_coverage = head_coverage,
-  base_coverage = base_coverage,
-  repo = "dragosmg/covr2ghdemo",
+  head_coverage = coverage_head,
+  base_coverage = coverage_main,
+  repo = "<owner>/<repo>",
   pr_number = 3
 )
 }

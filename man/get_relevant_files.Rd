@@ -25,7 +25,7 @@ those under \verb{R/} or \verb{src/}.
 }
 \examples{
 \dontrun{
-get_relevant_files("dragosmg/covr2ghdemo", 2)
+get_relevant_files("<owner>/covr2ghdemo", 2)
 }
 }
 \keyword{internal}
