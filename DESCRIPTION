@@ -1,9 +1,10 @@
 Package: covr2gh
-Title: Use covr Output in GitHub
+Title: Test Coverage Summary in GitHub
 Version: 0.0.0.9016
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
-Description: Post code coverage insights as GitHub comments.
+Description: Extract code coverage insights from covr outputs and post them as
+    GitHub comments.
 License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2gh, https://dragosmg.github.io/covr2gh/
 BugReports: https://github.com/dragosmg/covr2gh/issues
