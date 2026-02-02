@@ -27,7 +27,7 @@ the PR. It then subsets these to only includes files under \verb{R/} or \verb{sr
 pr_details <- get_pr_details("<owner>/<repo>", 2)
 # TODO example
 relevant_files <-
-diff_text <- get_diff_text(pr_details, relevant files)
+diff_text <- get_diff_text(pr_details, relevant_files)
 }
 }
 \keyword{internal}
