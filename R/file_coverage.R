@@ -84,27 +84,14 @@ combine_file_coverage <- function(
             delta = .data$coverage_head - .data$coverage_base
         )
 
-    # keep any files with changes in content (`relevant_files`) or in coverage
-    cov_change_files <- diff_df |>
+    # keep any files with changes in coverage or missing delta
+    diff_df |>
         # TODO allow for some margin here. all.equal, etc
         dplyr::filter(
-            .data$delta != 0
-        ) |>
-        dplyr::pull(
-            file
+            .data$delta != 0 |
+                is.na(.data$coverage_base) | # new files
+                .data$file == "Overall"
         )
-
-    impacted_files <- c(
-        cov_change_files,
-        "Overall"
-    )
-
-    diff_df <- diff_df |>
-        dplyr::filter(
-            file %in% impacted_files
-        )
-
-    diff_df
 }
 
 #' Compose the file coverage details section

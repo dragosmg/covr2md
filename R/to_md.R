@@ -59,6 +59,10 @@ file_cov_to_md <- function(file_cov_df, align = "rrrcc") {
         knitr::kable(
             align = align
         ) |>
+        stringr::str_replace_all(
+            "NA%|NA",
+            "-"
+        ) |>
         glue::glue_collapse(
             sep = "\n"
         )

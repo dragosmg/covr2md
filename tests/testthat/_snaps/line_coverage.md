@@ -17,19 +17,19 @@
     Code
       compose_line_coverage_summary(NULL)
     Output
-      [1] ":heavy_equals_sign: Diff coverage: No lines added to relevant files."
+      [1] ":heavy_equals_sign: Diff coverage: No lines added to tracked source files."
 
 ---
 
     Code
       compose_line_coverage_summary(line_cov)
     Output
-      :x:  Diff coverage: 63.16% (12 out of 19 added lines are covered by tests). Target coverage is at least `80%`.
+      :x:  Diff coverage is 63.16% (12 out of 19 added lines are covered by tests). Minimum accepted is `80%`.
 
 ---
 
     Code
       compose_line_coverage_summary(line_cov, target = 40)
     Output
-      :white_check_mark:  Diff coverage: 63.16% (12 out of 19 added lines are covered by tests). Target coverage is at least `40%`.
+      :white_check_mark:  Diff coverage is 63.16% (12 out of 19 added lines are covered by tests). Minimum accepted is `40%`.
 

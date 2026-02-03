@@ -32,6 +32,8 @@
 #' @param base_coverage (coverage) base / target branch coverage (coverage for
 #'   the branch merging into). The output of [covr::package_coverage()] on the
 #'   base branch.
+#' @param diff_cov_target (numeric) minimum accepted diff coverage. Defaults to
+#'   `NULL` which is then interpreted as overall base branch coverage.
 #' @inheritParams get_pr_details
 #'
 #' @returns a character scalar with the content of the GitHub comment
@@ -54,7 +56,8 @@ compose_comment <- function(
     head_coverage,
     base_coverage,
     repo,
-    pr_number
+    pr_number,
+    diff_cov_target = NULL
 ) {
     # TODO add some checks on inputs
     marker <- "<!-- covr2gh-do-not-delete -->"
@@ -107,9 +110,13 @@ compose_comment <- function(
         pr_details = pr_details
     )
 
+    if (is.null(diff_cov_target)) {
+        diff_cov_target <- total_base_coverage
+    }
+
     line_coverage_summary <- compose_line_coverage_summary(
         diff_line_coverage,
-        target = total_base_coverage
+        target = diff_cov_target
     )
 
     line_coverage_details <- compose_line_coverage_details(
@@ -237,6 +244,6 @@ compose_coverage_summary <- function(pr_details, delta) {
         "{emoji} Merging PR [#{pr_number}]({pr_html_url}) \\
         ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
         ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** \\
-        coverage {by_delta}."
+        overall coverage {by_delta}."
     )
 }

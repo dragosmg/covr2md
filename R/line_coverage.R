@@ -16,7 +16,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         # TODO we probably want to return this when we only have deletions
         # but i expect diff_line_coverage to be empty then
         return(
-            ":heavy_equals_sign: Diff coverage: No lines added to relevant files." # nolint
+            ":heavy_equals_sign: Diff coverage: No lines added to tracked source files." # nolint
         )
     }
 
@@ -26,7 +26,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
             total_lines_covered = sum(.data$lines_covered)
         )
 
-    percentage_line_coverage <- round(
+    line_coverage <- round(
         diff_coverage$total_lines_covered /
             diff_coverage$total_lines_added *
             100,
@@ -34,20 +34,22 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
     )
 
     emoji <- dplyr::if_else(
-        percentage_line_coverage >= target,
+        line_coverage >= target,
         ":white_check_mark: ",
         ":x: "
     )
 
-    # TODO make target the current base coverage
-    # nolint start: object_usage_linter
-    glue::glue(
-        "{emoji} Diff coverage: {percentage_line_coverage}% \\
-    ({diff_coverage$total_lines_covered} out of \\
-    {diff_coverage$total_lines_added} added lines are covered by tests). \\
-    Target coverage is at least `{target}%`."
+    glue::glue_data(
+        list(
+            emoji = emoji,
+            line_coverage = line_coverage,
+            lines_covered = diff_coverage$total_lines_covered,
+            lines_added = diff_coverage$total_lines_added
+        ),
+        "{emoji} Diff coverage is {line_coverage}% ({lines_covered} out of \\
+        {lines_added} added lines are covered by tests). Minimum accepted is \\
+        `{target}%`."
     )
-    # nolint end
 }
 
 #' Compose the line coverage details section

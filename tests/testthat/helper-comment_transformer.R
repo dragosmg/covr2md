@@ -9,7 +9,7 @@ remove_date <- function(x) {
 remove_commit_sha <- function(x) {
     stringr::str_replace_all(
         x,
-        "[:alnum:]{40}",
+        "[0-9a-f]{6,8}",
         "<removed-commit-sha>"
     )
 }
