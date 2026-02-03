@@ -70,7 +70,7 @@ use_covr2gh_badge <- function() {
     check_is_package()
 
     # nolint start: nonportable_path_linter
-    image_source <- "/../covr2gh-storage/badges/main/coverage-badge.svg"
+    image_source <- "/../covr2gh-storage/badges/main/coverage_badge.svg"
     # nolint end
 
     usethis::use_badge(
