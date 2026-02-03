@@ -8,6 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![R-CMD-check](https://github.com/dragosmg/covr2gh/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/dragosmg/covr2gh/actions/workflows/R-CMD-check.yaml)
+[![coverage](/../covr2gh-storage/badges/main/coverage-badge.svg)]()
 <!-- badges: end -->
 
 {covr2gh} was born from a need to have test coverage information to hand
