@@ -6,6 +6,11 @@ on:
       - main
   pull_request:
 
+# multiple workflows might be trying to write to covr2gh-storage at the same time
+concurrency:
+  group: ${{ github.workflow }}-covr2gh-storage
+  cancel-in-progress: false # don't cancel, but queue jobs
+
 permissions:
   pull-requests: write # for commenting on PR
   contents: write # for adding the badges to the covr2gh-storage branch
