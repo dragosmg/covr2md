@@ -1,6 +1,6 @@
 Package: covr2gh
 Title: Test Coverage Summary in 'GitHub'
-Version: 0.0.0.9017
+Version: 0.0.0.9018
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: Calculate test coverage data with 'covr', extract insights, and
@@ -21,9 +21,11 @@ Imports:
     knitr,
     purrr,
     rlang (>= 1.1.0),
+    rprojroot,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    usethis
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

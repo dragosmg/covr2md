@@ -1,10 +1,6 @@
 name: Coverage summary
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
+on: workflow_dispatch
 
 # multiple workflows might try to write to covr2gh-storage at the same time
 concurrency:
@@ -154,6 +150,23 @@ jobs:
           git worktree remove storage --force || true
           git worktree remove base --force || true
           git worktree prune || true
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage
+          path: |
+            ${{ runner.temp }}/head_cov.RDS
+            ${{ runner.temp }}/coverage_badge.svg
+          retention-days: 5
+
+      - name: Upload base coverage (PR only)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-base
+          path: ${{ runner.temp }}/base_cov.RDS
+          retention-days: 5
 
       - name: Job summary
         if: github.event_name == 'pull_request'

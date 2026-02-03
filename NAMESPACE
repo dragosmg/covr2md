@@ -3,4 +3,6 @@
 export(compose_comment)
 export(generate_badge)
 export(post_comment)
+export(use_covr2gh_action)
+export(use_covr2gh_badge)
 importFrom(rlang,.data)
