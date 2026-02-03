@@ -33,10 +33,10 @@
       attr(,"class")
       [1] "pr_details"
 
-# get_relevant_files() works
+# get_changed_files() works
 
     Code
-      get_relevant_files(repo = "dragosmg/covr2ghdemo", pr_number = 2)
+      get_changed_files(repo = "dragosmg/covr2ghdemo", pr_number = 2)
     Output
       [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
 
@@ -48,7 +48,41 @@
       # A tibble: 3 x 2
          line text                                                                
         <dbl> <chr>                                                               
-      1    12 "  if (!is.numeric(x)) {"                                           
-      2    14 "      \"`x` must be numeric. You supplied a {.class {class(x)}}\","
-      3    15 "      call = rlang::caller_env()"                                  
+      1    11 "  if (!is.numeric(x)) {"                                           
+      2    13 "      \"`x` must be numeric. You supplied a {.class {class(x)}}\","
+      3    14 "      call = rlang::caller_env()"                                  
+
+# extract_added_lines with a more complex diff
+
+    Code
+      purrr::map(slightly_complex_diff_text, extract_added_lines)
+    Output
+      $`R/badge.R`
+      # A tibble: 4 x 2
+         line text                                                                    
+        <dbl> <chr>                                                                   
+      1    67 "    # make the URL external for now - the internal one does not work f~
+      2    68 "    # repos anyway"                                                    
+      3    69 "    is_fork <- TRUE"                                                   
+      4    70 ""                                                                      
+      
+      $`R/github_action.R`
+      # A tibble: 14 x 2
+          line text                                                                  
+         <dbl> <chr>                                                                 
+       1    34 "#' @inheritParams get_pr_details"                                    
+       2    39 "#' use_covr2gh_action(\"<owner>/<repo>\")"                           
+       3    41 "use_covr2gh_action <- function(repo, badge = TRUE) {"                
+       4    49 "        use_covr2gh_badge(repo)"                                     
+       5    63 "#' @inheritParams get_pr_details"                                    
+       6    64 "#'"                                                                  
+       7    69 "#' use_covr2gh_badge(\"<owner>/<repo>\")"                            
+       8    71 "use_covr2gh_badge <- function(repo) {"                               
+       9    76 "    href <- glue::glue("                                             
+      10    77 "        \"https://github.com/{repo}/actions/workflows/covr2gh.yaml\""
+      11    78 "    )"                                                               
+      12    79 ""                                                                    
+      13    81 "        badge_name = \"covr2gh-coverage\","                          
+      14    82 "        href = href,"                                                
+      
 
