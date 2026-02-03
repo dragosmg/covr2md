@@ -22,8 +22,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       BADGE_BRANCH: ${{ github.head_ref || github.ref_name }}
-      LOCK_MAX_RETRIES: 5
-      LOCK_SLEEP: 10  # seconds
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -97,36 +95,11 @@ jobs:
 
           cd storage
 
-          # Acquire storage lock with retry/backoff
-          LOCK_FILE=".lock"
-          RETRIES=0
-          while [ $RETRIES -lt $LOCK_MAX_RETRIES ]; do
-            if [ ! -f "$LOCK_FILE" ]; then
-              echo "Locked by $GITHUB_RUN_ID" > "$LOCK_FILE"
-              git add "$LOCK_FILE"
-              git commit -m "Lock storage branch ($GITHUB_RUN_ID)"
-              git push origin covr2gh-storage && break
-            else
-              echo "Lock exists, retrying ($RETRIES/$LOCK_MAX_RETRIES)..."
-              RETRIES=$((RETRIES+1))
-              sleep $LOCK_SLEEP
-            fi
-          done
-          if [ $RETRIES -eq $LOCK_MAX_RETRIES ]; then
-            echo "Could not acquire lock after $LOCK_MAX_RETRIES attempts, exiting."
-            exit 1
-          fi
-
           # Commit badge
           mkdir -p "badges/$BADGE_BRANCH"
           cp "$RUNNER_TEMP/coverage_badge.svg" "badges/$BADGE_BRANCH/coverage_badge.svg"
           git add badges
           git commit -m "Add/Update badge for $BADGE_BRANCH ($GITHUB_SHA)" || true
-          git push origin covr2gh-storage || true
-
-          # Release lock
-          git rm -f .lock || true
-          git commit -m "Release storage lock ($GITHUB_RUN_ID)" || true
           git push origin covr2gh-storage || true
         shell: bash
 
