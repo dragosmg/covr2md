@@ -1,3 +1,5 @@
+# nolint start: line_length_linter
+
 #' Set up a covr2gh GitHub Action workflow
 #'
 #' Sets up a [GitHub Actions](https://github.com/features/actions) workflow that
@@ -48,7 +50,7 @@ use_covr2gh_action <- function(badge = TRUE) {
 
     invisible(TRUE)
 }
-
+# nolint end
 
 #' Add a coverage README badge
 #'
@@ -67,7 +69,9 @@ use_covr2gh_action <- function(badge = TRUE) {
 use_covr2gh_badge <- function() {
     check_is_package()
 
+    # nolint start: nonportable_path_linter
     image_source <- "/../covr2gh-storage/badges/main/coverage-badge.svg"
+    # nolint end
 
     usethis::use_badge(
         badge_name = "covr2gh coverage",
@@ -96,6 +100,7 @@ check_is_package <- function(call = rlang::caller_env()) {
         return(invisible())
     }
 
+    # nolint start: keyword_quote_linter, object_usage_linter
     project_name <- usethis::proj_get() |>
         fs::path_file()
 
@@ -105,4 +110,5 @@ check_is_package <- function(call = rlang::caller_env()) {
             "x" = "Project {.val {project_name}} is not an R package."
         )
     )
+    # nolint end
 }
