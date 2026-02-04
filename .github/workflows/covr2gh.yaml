@@ -176,3 +176,17 @@ jobs:
         if: github.event_name == 'pull_request'
         run: |
           cat "$RUNNER_TEMP/comment.md" >> $GITHUB_STEP_SUMMARY
+
+      - name: Show testthat output
+        if: always()
+        run: |
+          ## --------------------------------------------------------------------
+          find '${{ runner.temp }}/package_head' -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-test-failures
+          path: ${{ runner.temp }}/package_head
