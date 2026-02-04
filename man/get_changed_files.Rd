@@ -25,7 +25,7 @@ those under \verb{R/} or \verb{src/}.
 }
 \examples{
 \dontrun{
-get_changed_files("<owner>/covr2ghdemo", 2)
+get_changed_files("<owner>/<repo>", 2)
 }
 }
 \keyword{internal}

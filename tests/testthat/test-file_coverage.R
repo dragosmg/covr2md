@@ -39,7 +39,13 @@ test_that("combine_file_coverage works", {
         )
     )
 
-    changed_files <- "R/add_two.R" # nolint
+    # nolint start: nonportable_path_linter
+    changed_files <- c(
+        "R/add_one.R",
+        "R/add_three.R",
+        "R/add_two.R"
+    )
+    # nolint end
 
     expect_snapshot(
         combine_file_coverage(

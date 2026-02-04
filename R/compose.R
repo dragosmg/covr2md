@@ -89,13 +89,17 @@ compose_comment <- function(
         delta_total_coverage
     )
 
+    changed_files <- get_changed_files(
+        repo = repo,
+        pr_number = pr_number
+    )
+
     # TODO handle the case when there are no relevant changed files
-    #  this works on just needs some tweaks
+    #  this works, it just needs some tweaks
 
     # TODO think about when we would want to return all the files, not just
     # those touched or affected by the PR
 
-    # TODO only focus on the file with changes in coverage or new files
     file_cov_df <- combine_file_coverage(
         head_coverage = head_coverage,
         base_coverage = base_coverage,
