@@ -5,7 +5,7 @@ Combine head and base file-level coverage
 ## Usage
 
 ``` r
-combine_file_coverage(head_coverage, base_coverage)
+combine_file_coverage(head_coverage, base_coverage, changed_files)
 ```
 
 ## Arguments

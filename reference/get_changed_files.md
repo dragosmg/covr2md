@@ -1,8 +1,8 @@
 # Get changed files
 
-Sends a GET request to the GitHub API and retrieves the relevant files
-involved in the PR. It only includes files that are under `R/` or
-`src/`.
+Sends a GET request to the GitHub API and retrieves the files modified
+by the PR. It then subsets these to only includes the "relevant" files -
+i.e. those under `R/` or `src/`.
 
 ## Usage
 
@@ -34,6 +34,6 @@ a character vector containing the names of the changed files.
 
 ``` r
 if (FALSE) { # \dontrun{
-get_changed_files("dragosmg/covr2ghdemo", 2)
+get_changed_files("<owner>/<repo>", 2)
 } # }
 ```

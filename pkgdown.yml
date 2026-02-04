@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.2.0
 pkgdown_sha: ~
 articles: {}
-last_built: 2026-02-04T22:24Z
+last_built: 2026-02-04T23:10Z
 urls:
   reference: https://dragosmg.github.io/covr2gh/reference
   article: https://dragosmg.github.io/covr2gh/articles
