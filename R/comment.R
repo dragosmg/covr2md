@@ -1,11 +1,10 @@
 #' Identify the covr2gh comment
 #'
-#' Comments are identified by a specific "marker", in itself a comment. This is
-#' hardcoded to `"<!-- covr2gh-do-not-delete -->"`. `get_comment_id()` looks for
-#' this marker. If it can find it, it returns the comment ID, otherwise it
-#' returns `NULL`.
+#' Comments posted by covr2gh are identified by the presence of the
+#' `"<!-- covr2gh-do-not-delete -->"` comment. `get_comment_id()` looks for it.
+#' If it can find it, it returns the comment ID, otherwise it returns `NULL`.
 #'
-#' The output of `get_comment_id()` is the used `post_comment()` post a new
+#' The output of `get_comment_id()` is then used `post_comment()` post a new
 #' comment or update an existing one.
 #'
 #' @inheritParams get_pr_details
@@ -23,8 +22,6 @@ get_comment_id <- function(
     pr_number,
     call = rlang::caller_env()
 ) {
-    marker <- "<!-- covr2gh-do-not-delete -->"
-
     if (!rlang::is_scalar_character(repo)) {
         cli::cli_abort(
             "`repo` must be a character scalar.",
@@ -54,13 +51,13 @@ get_comment_id <- function(
         return(NULL)
     }
 
-    # identify the comment containing the marker
+    # identify the comment containing the covr2gh_comment
     comment_index <- comments_info |>
         # look in the comment body
         purrr::map("body") |>
         # detect_index identifies the position of the first match
         purrr::detect_index(
-            \(x) stringr::str_detect(x, pattern = marker)
+            \(x) stringr::str_detect(x, pattern = covr2gh_comment)
         )
 
     if (comment_index == 0) {

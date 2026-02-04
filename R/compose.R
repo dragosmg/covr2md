@@ -25,7 +25,7 @@
 #   * z - pr number
 #
 
-# helps us identify a comment posted with covr2gh
+# used to identify a comment posted with covr2gh
 covr2gh_comment <- "<!-- covr2gh-do-not-delete -->"
 
 #' Compose a coverage comment
@@ -144,28 +144,28 @@ compose_comment <- function(
         line_coverage_dfs$lines_cov_change_wo_code_change
     )
 
-    pkg_version <- glue::glue("v{packageVersion('covr2gh')}")
-
     pkg_url <- glue::glue(
-        "[covr2gh {pkg_version}](https://dragosmg.github.io/covr2gh)"
+        "[covr2gh v{packageVersion('covr2gh')}](https://dragosmg.github.io/covr2gh)" # nolint
     )
 
-    footer <- glue::glue(
+    footer <- glue::glue_data(
+        list(
+            pkg_url = pkg_url
+        ),
         "<sup>Created on {Sys.Date()} with {pkg_url}.</sup>"
     )
 
     glue::glue_data(
         list(
-            marker = covr2gh_comment,
+            comment = covr2gh_comment,
             badge_url = badge_url,
             coverage_summary = coverage_summary,
             line_coverage_summary = line_coverage_summary,
             file_coverage_details = file_coverage_details,
             line_coverage_details = line_coverage_details,
-            line_cov_loss_details = line_cov_loss_details,
             footer = footer
         ),
-        "{marker}
+        "{comment}
 
         ## :safety_vest: Coverage summary
 
@@ -191,14 +191,6 @@ compose_comment <- function(
 }
 
 # TODO look into logic invalidating the comment when the base_sha changes
-
-# pr_details = a subset of the data we need (the API response)
-#  * pr_number
-#  * pr_html_url
-#  * head_sha
-#  * base_name
-#  * base_sha
-#  * delta in coverage.
 
 #' Compose coverage summary
 #'
