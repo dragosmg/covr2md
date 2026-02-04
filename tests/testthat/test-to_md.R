@@ -4,7 +4,8 @@ test_that("line_cov_to_md works", {
             tibble::tibble(
                 file = c("foo.R", "bar.R", "baz.R"),
                 lines_added = c(5, 4, 10),
-                lines_covered = c(2, 4, 6)
+                lines_covered = c(2, 4, 6),
+                which_lines = c("1-4, 8", "5-8", "1-5, 8-10, 15, 16")
             )
         )
     )
