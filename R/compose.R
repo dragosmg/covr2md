@@ -69,11 +69,6 @@ compose_comment <- function(
         pr_number = pr_number
     )
 
-    changed_files <- get_changed_files(
-        repo = repo,
-        pr_number = pr_number
-    )
-
     total_head_coverage <- covr::percent_coverage(head_coverage)
     total_base_coverage <- covr::percent_coverage(base_coverage)
 
