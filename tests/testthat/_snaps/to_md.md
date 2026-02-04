@@ -23,3 +23,18 @@
       | R/badge.R|                      6|87-89, 92, 93, 96 |
       |     Total|                      6|                  |
 
+# file_cov_to_md
+
+    Code
+      file_cov_to_md(tibble::tibble(file = c("R/foo.R", "R/bar.R", "R/baz/R",
+        "R/baz2.R", "Overall"), coverage_head = c(40, 78, 5, 30, 60), coverage_base = c(
+        45, 80, 5, 25, 32), delta = c(-5, -2, 0, 5, 28)))
+    Output
+      |     File| Coverage head| Coverage base| &Delta; |                     |
+      |--------:|-------------:|-------------:|:-------:|:-------------------:|
+      |  R/foo.R|           40%|           45%|   -5    |    :arrow_down:     |
+      |  R/bar.R|           78%|           80%|   -2    |    :arrow_down:     |
+      |  R/baz/R|            5%|            5%|    0    | :heavy_equals_sign: |
+      | R/baz2.R|           30%|           25%|    5    |     :arrow_up:      |
+      |  Overall|           60%|           32%|   28    |     :arrow_up:      |
+

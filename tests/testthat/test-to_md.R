@@ -31,3 +31,20 @@ test_that("line_cov_loss_to_md", {
         ""
     )
 })
+
+test_that("file_cov_to_md", {
+    expect_snapshot(
+        tibble::tibble(
+            file = c("R/foo.R", "R/bar.R", "R/baz/R", "R/baz2.R", "Overall"),
+            coverage_head = c(40, 78, 5, 30, 60),
+            coverage_base = c(45, 80, 5, 25, 32),
+            delta = c(-5, -2, 0, 5, 28)
+        ) |>
+            file_cov_to_md()
+    )
+
+    expect_identical(
+        file_cov_to_md(NULL),
+        ""
+    )
+})
