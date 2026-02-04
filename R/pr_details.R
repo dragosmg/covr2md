@@ -301,7 +301,7 @@ get_diff_line_coverage <- function(
         pr_details = pr_details,
         relevant_files = relevant_files
     ) |>
-        purrr::flatten() # TODO ??????? needed?
+        purrr::flatten() # TODO flatten is deprecated
 
     if (rlang::is_empty(diff_text)) {
         # TODO exit early it means the relevant files haven't actually changed
