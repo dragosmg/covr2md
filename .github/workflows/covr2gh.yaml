@@ -39,7 +39,7 @@ jobs:
         with:
           extra-packages: |
             any::covr
-            dragosmg/covr2gh@badge-href-contd
+            dragosmg/covr2gh
           needs: coverage
 
       - name: Head coverage & badge
