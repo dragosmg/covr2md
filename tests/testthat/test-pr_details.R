@@ -136,7 +136,10 @@ test_that("get_changed_files() complains with incorrect inputs", {
 
 test_that("extract_added_lines works", {
     # TODO add a couple of tests with more complicated diffs
-    test_diff_text <- testthat::test_path("fixtures", "diff_text.txt") |>
+    test_diff_text <- testthat::test_path(
+        "fixtures",
+        "diff_text.txt"
+    ) |>
         readLines() |>
         stringr::str_flatten(
             collapse = "\n"
@@ -145,6 +148,36 @@ test_that("extract_added_lines works", {
     expect_snapshot(
         extract_added_lines(
             test_diff_text
+        )
+    )
+
+    expect_identical(
+        extract_added_lines(
+            test_diff_text
+        ),
+        tibble::tibble(
+            line = c(12, 14, 15),
+
+            text = c(
+                "  if (!is.numeric(x)) {",
+                "      \"`x` must be numeric. You supplied a {.class {class(x)}}\",", # nolint
+                "      call = rlang::caller_env()"
+            )
+        )
+    )
+})
+
+test_that("extract_added_lines with a more complex diff", {
+    slightly_complex_diff_text <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_diff_text.RDS"
+    ) |>
+        readRDS()
+
+    expect_snapshot(
+        purrr::map(
+            slightly_complex_diff_text,
+            extract_added_lines
         )
     )
 })
