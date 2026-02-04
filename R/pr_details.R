@@ -33,6 +33,8 @@ get_pr_details <- function(
     call = rlang::caller_env()
 ) {
     # TODO check for GitHub format (`OWNER/REPO`)
+    # TODO I think usethis call this repo_spec. Might make sense to sync with
+    # that?
     if (!rlang::is_scalar_character(repo)) {
         cli::cli_abort(
             "`repo` must be a character scalar.",
@@ -85,9 +87,9 @@ get_pr_details <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_relevant_files("<owner>/covr2ghdemo", 2)
+#' get_changed_files("<owner>/covr2ghdemo", 2)
 #' }
-get_relevant_files <- function(
+get_changed_files <- function(
     repo,
     pr_number,
     call = rlang::caller_env()
@@ -191,12 +193,16 @@ get_diff_text <- function(
 # input is the output of get_diff_text
 # returns a data.frame with the position (line number) of the added lines (in
 # the output file) and their contents
+# get_diff_text returns a list so this function should be used with map
 extract_added_lines <- function(diff_text) {
     raw_df <- diff_text |>
         stringr::str_split(
             pattern = stringr::fixed("\n")
         ) |>
         # TODO check if one
+        # TODO this is a bit risky as for more complex diffs pluck(1) get the
+        # first element. The function returns something, but not what we would
+        # expect
         purrr::pluck(1) |>
         tibble::tibble(raw = _)
 
@@ -243,6 +249,7 @@ extract_added_lines <- function(diff_text) {
                     .data$raw,
                     stringr::fixed("-")
                 ) ~ "deleted",
+                .data$is_hunk ~ "hunk",
                 TRUE ~ "context"
             ),
             advances = .data$type %in% c("added", "context")
@@ -295,13 +302,14 @@ get_diff_line_coverage <- function(
     repo,
     pr_details,
     relevant_files,
-    head_coverage
+    head_coverage,
+    base_coverage
 ) {
     diff_text <- get_diff_text(
         pr_details = pr_details,
         relevant_files = relevant_files
     ) |>
-        purrr::flatten() # TODO ??????? needed?
+        purrr::flatten()
 
     if (rlang::is_empty(diff_text)) {
         # TODO exit early it means the relevant files haven't actually changed
@@ -317,30 +325,126 @@ get_diff_line_coverage <- function(
             names_to = "file"
         )
 
-    lines_coverage <- head_coverage |>
-        to_report_data() |>
-        purrr::pluck("full") |>
-        purrr::list_rbind(
-            names_to = "file"
-        ) |>
-        dplyr::mutate(
-            coverage = as.numeric(.data$coverage)
-        )
+    lines_head <- line_coverage(head_coverage)
+    #   |>
+    #         to_report_data() |>
+    #         purrr::pluck("full") |>
+    #         purrr::list_rbind(
+    #             names_to = "file"
+    #         ) |>
+    #         dplyr::mutate(
+    #             coverage = as.numeric(.data$coverage)
+    #         )
+
+    lines_cov_change_wo_code_change <- cov_change_wo_code_change(
+        head_coverage = head_coverage,
+        base_coverage = base_coverage,
+        added_lines = added_lines
+    )
+
+    # lines_head_w_cov_change_wo_code_change |>
+    #     dplyr::select(-.data$source) |>
+    #     dplyr::mutate(
+    #         line_head_next = dplyr::lead(.data$line_head),
+    #         diff_next = .data$line_head_next - .data$line_head
+    #     ) |>
+    #     View()
+
+    # lines_head_w_cov_change_wo_code_change |>
+    #     dplyr::group_by(
+    #         .data$file
+    #     ) |>
+    #     dplyr::summarise(
+    #         lines_loss_cov = dplyr::n(),
+    #         which_lines = find_intervals(.data$line_head)
+    #     ) |>
+    #     dplyr::ungroup()
+
+    # lines_base <- base_coverage |>
+    #     to_report_data() |>
+    #     purrr::pluck("full") |>
+    #     purrr::list_rbind(
+    #         names_to = "file"
+    #     ) |>
+    #     dplyr::mutate(
+    #         coverage = as.numeric(.data$coverage)
+    #     )
+
+    # meaningful_head <- lines_head |>
+    #     dplyr::filter(!is.na(coverage))
+
+    # meaningful_base <- lines_base |>
+    #     dplyr::filter(!is.na(coverage))
+
+    # head_lines_with_cov_change <- meaningful_head |>
+    #     dplyr::group_by(file) |>
+    #     dplyr::mutate(
+    #         source_prev = dplyr::lag(source, default = "foo"),
+    #         source_next = dplyr::lead(source, default = "foo")
+    #     ) |>
+    #     dplyr::ungroup() |>
+    #     # we care about those lines with 0 coverage in head
+    #     dplyr::filter(coverage == 0) |>
+    #     # and that have not been added
+    #     dplyr::anti_join(
+    #         added_lines,
+    #         by = dplyr::join_by(
+    #             "file",
+    #             "line"
+    #         )
+    #     ) |>
+
+    # now we need to figure for which lines the coverage has
+    # changed. given these have not changed, we assume they are in the same
+    # file and have the same content
+    # TODO this is not robust. we given these haven't changed we could stretch the
+    # assumption that lines before and after remained the same
+
+    # dplyr::left_join(
+    #     meaningful_base |>
+    #         dplyr::group_by(file) |>
+    #         dplyr::mutate(
+    #             source_prev = dplyr::lag(source, default = "foo"),
+    #             source_next = dplyr::lead(source, default = "foo")
+    #         ) |>
+    #         dplyr::ungroup(),
+    #     by = dplyr::join_by(
+    #         "file",
+    #         "source",
+    #         "source_prev",
+    #         "source_next"
+    #     ),
+    #     suffix = c("_head", "_base")
+    # ) |>
+    # dplyr::filter(coverage_base != 0) |>
+    # dplyr::select(-source_prev, -source_next)
+
+    # all_lines <- meaningful_head |>
+    #     dplyr::full_join(
+    #         meaningful_base,
+    #         by = "source",
+    #         suffix = c("_head", "_base")
+    #     )
 
     # TODO maybe do a sense check here as `text` should be identical to `source`
     diff_line_coverage <- added_lines |>
         dplyr::left_join(
-            lines_coverage,
+            lines_head,
             by = dplyr::join_by(
                 "file",
-                "line"
+                "line",
+                "text" == "source"
             )
         ) |>
+        # remove NAs as they map to comments, documentation etc.
+        dplyr::filter(
+            !is.na(.data$coverage)
+        ) |>
         dplyr::mutate(
-            covered = dplyr::case_when(
-                .data$coverage == 0 ~ 0,
-                is.na(.data$coverage) ~ 0,
-                .default = 1
+            covered = dplyr::if_else(
+                .data$coverage == 0,
+                0,
+                1
             )
         ) |>
         dplyr::group_by(
@@ -348,9 +452,100 @@ get_diff_line_coverage <- function(
         ) |>
         dplyr::summarise(
             lines_added = dplyr::n(),
-            lines_covered = sum(.data$covered)
+            lines_covered = sum(.data$covered),
+            which_lines = find_intervals(.data$line)
         ) |>
         dplyr::ungroup()
 
-    diff_line_coverage
+    list(
+        diff_line_coverage = diff_line_coverage,
+        lines_cov_change_wo_code_change = lines_cov_change_wo_code_change
+    )
+}
+
+# extract line coverage from a coverage object
+# capture previous and next lines for positional matching later
+line_coverage <- function(coverage) {
+    coverage |>
+        to_report_data() |>
+        purrr::pluck("full") |>
+        purrr::list_rbind(
+            names_to = "file"
+        ) |>
+        dplyr::mutate(
+            coverage = as.numeric(.data$coverage),
+        ) |>
+        dplyr::group_by(file) |>
+        dplyr::mutate(
+            source_prev = dplyr::lag(source, default = "<missing>"),
+            source_next = dplyr::lead(source, default = "<missing>")
+        ) |>
+        dplyr::ungroup() |>
+        # NAs map to comments, documentation etc.
+        dplyr::filter(
+            !is.na(.data$coverage)
+        )
+}
+
+# figure out which lines have lost coverage without a change in content / code
+# basically, lines that are covered by tests in base, but not in head
+cov_change_wo_code_change <- function(
+    head_coverage,
+    base_coverage,
+    added_lines
+) {
+    line_cov_head <- line_coverage(head_coverage)
+    line_cov_base <- line_coverage(base_coverage)
+
+    head_lines_with_cov_change <- line_cov_head |>
+        # we only want the lines with 0 coverage in head
+        dplyr::filter(
+            .data$coverage == 0
+        ) |>
+        # and that have not been added
+        dplyr::anti_join(
+            added_lines,
+            by = dplyr::join_by(
+                "file",
+                "line"
+            )
+        ) |>
+        # now to figure which of these have coverage in base.
+        # Assumptions, given these lines have not been added in head:
+        # * they are in the same file as before,
+        # * they have the same content as before
+        # * their neighbours (line before and line after) have not changed. if
+        # they did they would've likely been captured in a combined diff.
+        # a bit of a stretch, but let's see if this holds
+        dplyr::left_join(
+            line_cov_base,
+            by = dplyr::join_by(
+                "file",
+                "source",
+                "source_prev",
+                "source_next"
+            ),
+            suffix = c(
+                "_head",
+                "_base"
+            )
+        ) |>
+        # we only want the lines that had coverage in base
+        dplyr::filter(
+            .data$coverage_base != 0
+        ) |>
+        dplyr::select(
+            -"source_prev",
+            -"source_next"
+        )
+
+    head_lines_with_cov_change |>
+        dplyr::group_by(
+            .data$file
+        ) |>
+        dplyr::summarise(
+            lines_loss_cov = dplyr::n(),
+            which_lines = find_intervals(.data$line_head)
+        ) |>
+        dplyr::ungroup()
 }
