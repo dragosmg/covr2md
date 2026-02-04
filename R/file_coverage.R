@@ -32,6 +32,11 @@ file_coverage <- function(x) {
         tibble::enframe(
             name = "file",
             value = "coverage"
+        ) |>
+        dplyr::mutate(
+            coverage = as.numeric(
+                .data$coverage
+            )
         )
 
     total <- x |>
