@@ -4,7 +4,7 @@
 #'
 #' @returns a SVG string invisibly
 #'
-#' @export
+#' @noRd
 #' @examples
 #' generate_badge(5)
 #' generate_badge(48)
