@@ -8,15 +8,7 @@
 #'   * on a *pull request*:
 #'     * calculates test coverage for head.
 #'     * builds a badge (for use in the commit message).
-#'       * if the PR does not come from a fork (write privileges for the
-#'       automated GitHub Actions token), the badge is built with an internal
-#'       function ([generate_badge()]) and committed to the `covr2gh-storage`
-#'       branch.
-#'       * if the PR comes from a fork (the GitHub Actions token only has read
-#'       permissions), the badge is built with an external service (shields.io)
-#'       and is not committed to the storage branch.
-#'     * initialises or switches to the `covr2gh-storage` branch and saves a
-#'       copy of the badge (only if the PR does not come from a fork).
+#'     * initialises or switches to the `covr2gh-storage` branch.
 #'     * switches to base branch and calculates test coverage.
 #'     * compares coverage for head and base and posts a comment with the main
 #'       findings.

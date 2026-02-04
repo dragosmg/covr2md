@@ -8,11 +8,11 @@
               height="20"
               role="img"
               aria-label="coverage: 5%">
-      
+
           <title>
               coverage: 5%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -21,7 +21,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -32,7 +32,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -46,14 +46,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -63,7 +63,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -71,7 +71,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="75"
@@ -81,7 +81,7 @@
                       textLength="20">
                 5%
               </text>
-      
+
               <!-- value text -->
               <text x="75"
                       y="14"
@@ -102,11 +102,11 @@
               height="20"
               role="img"
               aria-label="coverage: 25%">
-      
+
           <title>
               coverage: 25%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -115,7 +115,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -126,7 +126,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -140,14 +140,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -157,7 +157,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -165,7 +165,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="77.5"
@@ -175,7 +175,7 @@
                       textLength="26">
                 25%
               </text>
-      
+
               <!-- value text -->
               <text x="77.5"
                       y="14"
@@ -196,11 +196,11 @@
               height="20"
               role="img"
               aria-label="coverage: 55%">
-      
+
           <title>
               coverage: 55%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -209,7 +209,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -220,7 +220,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -234,14 +234,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -251,7 +251,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -259,7 +259,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="77.5"
@@ -269,7 +269,7 @@
                       textLength="26">
                 55%
               </text>
-      
+
               <!-- value text -->
               <text x="77.5"
                       y="14"
@@ -290,11 +290,11 @@
               height="20"
               role="img"
               aria-label="coverage: 75%">
-      
+
           <title>
               coverage: 75%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -303,7 +303,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -314,7 +314,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -328,14 +328,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -345,7 +345,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -353,7 +353,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="77.5"
@@ -363,7 +363,7 @@
                       textLength="26">
                 75%
               </text>
-      
+
               <!-- value text -->
               <text x="77.5"
                       y="14"
@@ -384,11 +384,11 @@
               height="20"
               role="img"
               aria-label="coverage: 95%">
-      
+
           <title>
               coverage: 95%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -397,7 +397,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -408,7 +408,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -422,14 +422,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -439,7 +439,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -447,7 +447,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="77.5"
@@ -457,7 +457,7 @@
                       textLength="26">
                 95%
               </text>
-      
+
               <!-- value text -->
               <text x="77.5"
                       y="14"
@@ -478,11 +478,11 @@
               height="20"
               role="img"
               aria-label="coverage: unknown">
-      
+
           <title>
               coverage: unknown
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -491,7 +491,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -502,7 +502,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -516,14 +516,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -533,7 +533,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -541,7 +541,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="90"
@@ -551,7 +551,7 @@
                       textLength="50">
                 unknown
               </text>
-      
+
               <!-- value text -->
               <text x="90"
                       y="14"
@@ -572,11 +572,11 @@
               height="20"
               role="img"
               aria-label="coverage: unknown">
-      
+
           <title>
               coverage: unknown
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -585,7 +585,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -596,7 +596,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -610,14 +610,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -627,7 +627,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -635,7 +635,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="90"
@@ -645,7 +645,7 @@
                       textLength="50">
                 unknown
               </text>
-      
+
               <!-- value text -->
               <text x="90"
                       y="14"
@@ -666,11 +666,11 @@
               height="20"
               role="img"
               aria-label="coverage: 100%">
-      
+
           <title>
               coverage: 100%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -679,7 +679,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -690,7 +690,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -704,14 +704,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -721,7 +721,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -729,7 +729,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="80"
@@ -739,7 +739,7 @@
                       textLength="31">
                 100%
               </text>
-      
+
               <!-- value text -->
               <text x="80"
                       y="14"
@@ -760,11 +760,11 @@
               height="20"
               role="img"
               aria-label="coverage: 0%">
-      
+
           <title>
               coverage: 0%
           </title>
-      
+
           <defs>
               <!-- rounded corners -->
               <clipPath id="clipr">
@@ -773,7 +773,7 @@
                           rx="3"
                           fill="#fff"/>
               </clipPath>
-      
+
               <!-- subtle gradient overlay -->
               <linearGradient id="gradient"
                               x2="0"
@@ -784,7 +784,7 @@
                   <stop offset="1" stop-opacity="0.1"/>
               </linearGradient>
           </defs>
-      
+
           <!-- badge background -->
           <g clip-path="url(#clipr)">
               <rect width="60"
@@ -798,14 +798,14 @@
                       height="20"
                       fill="url(#gradient)"/>
           </g>
-      
+
           <!-- badge text -->
           <g fill="#fff"
               text-anchor="middle"
               font-family="Verdana,Geneva,DejaVu Sans,sans-serif"
               font-size="11"
               >
-      
+
               <!-- label shadow -->
               <text aria-hidden="true"
                       x="31"
@@ -815,7 +815,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- label text -->
               <text x="31"
                       y="14"
@@ -823,7 +823,7 @@
                       textLength="50">
                   coverage
               </text>
-      
+
               <!-- value shadow -->
               <text aria-hidden="true"
                       x="75"
@@ -833,7 +833,7 @@
                       textLength="20">
                 0%
               </text>
-      
+
               <!-- value text -->
               <text x="75"
                       y="14"
@@ -844,24 +844,24 @@
           </g>
       </svg>
 
-# build_badge_url when PR from fork
+# build_badge_url
 
     Code
-      build_badge_url(test_pr_details, 78.35)
+      build_badge_url(78.35)
     Output
       https://img.shields.io/badge/coverage-78%25-A4C61D.svg
 
 ---
 
     Code
-      build_badge_url(test_pr_details, 98.45)
+      build_badge_url(98.45)
     Output
       https://img.shields.io/badge/coverage-98%25-5CB85C.svg
 
 ---
 
     Code
-      build_badge_url(test_pr_details, 23.35)
+      build_badge_url(23.35)
     Output
       https://img.shields.io/badge/coverage-23%25-E4804E.svg
 
@@ -870,19 +870,18 @@
     Code
       build_badge_url(test_pr_details, 78.35)
     Output
-      https://img.shields.io/badge/coverage-78%25-A4C61D.svg
+      https://raw.githubusercontent.com/<owner>/<repo>/covr2gh-storage/badges/feature-a-branch/coverage_badge.svg
 
 ---
 
     Code
       build_badge_url(test_pr_details, 98.45)
     Output
-      https://img.shields.io/badge/coverage-98%25-5CB85C.svg
+      https://raw.githubusercontent.com/<owner>/<repo>/covr2gh-storage/badges/feature-a-branch/coverage_badge.svg
 
 ---
 
     Code
       build_badge_url(test_pr_details, 23.35)
     Output
-      https://img.shields.io/badge/coverage-23%25-E4804E.svg
-
+      https://raw.githubusercontent.com/<owner>/<repo>/covr2gh-storage/badges/feature-a-branch/coverage_badge.svg

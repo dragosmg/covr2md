@@ -82,10 +82,7 @@ compose_comment <- function(
         2
     )
 
-    badge_url <- build_badge_url(
-        pr_details,
-        value = total_head_coverage
-    )
+    badge_url <- build_badge_url(total_head_coverage)
 
     coverage_summary <- compose_coverage_summary(
         pr_details,
