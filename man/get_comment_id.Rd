@@ -19,7 +19,7 @@ Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 a numeric scalar representing the comment id or \code{NULL}
 }
 \description{
-Comments posted by covr2gh are identified by the presence of
+Comments posted by covr2gh are identified by the presence of the
 \code{"<!-- covr2gh-do-not-delete -->"} comment. \code{get_comment_id()} looks for it.
 If it can find it, it returns the comment ID, otherwise it returns \code{NULL}.
 }
