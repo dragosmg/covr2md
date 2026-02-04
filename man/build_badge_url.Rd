@@ -4,11 +4,9 @@
 \alias{build_badge_url}
 \title{Build the URL to the badge SVG}
 \usage{
-build_badge_url(pr_details, value)
+build_badge_url(value)
 }
 \arguments{
-\item{pr_details}{a \code{pr_details} object (the output of \code{get_pr_details()})}
-
 \item{value}{(numeric) coverage value}
 }
 \value{

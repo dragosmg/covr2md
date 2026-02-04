@@ -844,45 +844,24 @@
           </g>
       </svg>
 
-# build_badge_url when PR from fork
+# build_badge_url
 
     Code
-      build_badge_url(test_pr_details, 78.35)
+      build_badge_url(78.35)
     Output
       https://img.shields.io/badge/coverage-78%25-A4C61D.svg
 
 ---
 
     Code
-      build_badge_url(test_pr_details, 98.45)
+      build_badge_url(98.45)
     Output
       https://img.shields.io/badge/coverage-98%25-5CB85C.svg
 
 ---
 
     Code
-      build_badge_url(test_pr_details, 23.35)
+      build_badge_url(23.35)
     Output
       https://img.shields.io/badge/coverage-23%25-E4804E.svg
-
----
-
-    Code
-      build_badge_url(test_pr_details, 78.35)
-    Output
-      https://raw.githubusercontent.com/<owner>/<repo>/covr2gh-storage/badges/feature-a-branch/coverage_badge.svg
-
----
-
-    Code
-      build_badge_url(test_pr_details, 98.45)
-    Output
-      https://raw.githubusercontent.com/<owner>/<repo>/covr2gh-storage/badges/feature-a-branch/coverage_badge.svg
-
----
-
-    Code
-      build_badge_url(test_pr_details, 23.35)
-    Output
-      https://raw.githubusercontent.com/<owner>/<repo>/covr2gh-storage/badges/feature-a-branch/coverage_badge.svg
 

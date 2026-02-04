@@ -55,38 +55,24 @@ generate_badge <- function(value) {
 #' upload the badge to the storage branch since it's no longer an "external"
 #' activity.
 #'
-#' @param pr_details a `pr_details` object (the output of `get_pr_details()`)
 #' @param value (numeric) coverage value
 #'
 #' @returns a glue string.
 #'
 #' @keywords internal
-build_badge_url <- function(pr_details, value) {
-    is_fork <- pr_details$is_fork
-
-    if (isTRUE(is_fork)) {
-        # we use a shields badge as the workflow secret does not have enough
-        # privileges to push to the storage branch
-        badge_params <- badge_params(value)
-        colour <- badge_params$value_colour |>
-            stringr::str_remove(
-                stringr::fixed("#")
-            )
-        value <- badge_params$value_char
-
-        badge_url <- glue::glue(
-            "https://img.shields.io/badge/coverage-{value}25-{colour}.svg"
+build_badge_url <- function(value) {
+    badge_params <- badge_params(value)
+    colour <- badge_params$value_colour |>
+        stringr::str_remove(
+            stringr::fixed("#")
         )
-        return(badge_url)
-    }
 
-    repo <- pr_details$repo
-    folder <- glue::glue(
-        "covr2gh-storage/badges/{pr_details$head_name}" # nolint
-    )
-
-    badge_url <- glue::glue(
-        "https://raw.githubusercontent.com/{repo}/{folder}/coverage_badge.svg"
+    badge_url <- glue::glue_data(
+        list(
+            value = badge_params$value_char,
+            colour = colour
+        ),
+        "https://img.shields.io/badge/coverage-{value}25-{colour}.svg"
     )
 
     badge_url
