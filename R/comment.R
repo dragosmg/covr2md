@@ -1,6 +1,6 @@
 #' Identify the covr2gh comment
 #'
-#' Comments posted by covr2gh are identified by the
+#' Comments posted by covr2gh are identified by the presence of
 #' `"<!-- covr2gh-do-not-delete -->"` comment. `get_comment_id()` looks for it.
 #' If it can find it, it returns the comment ID, otherwise it returns `NULL`.
 #'
