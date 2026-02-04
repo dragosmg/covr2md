@@ -33,10 +33,10 @@
       attr(,"class")
       [1] "pr_details"
 
-# get_relevant_files() works
+# get_changed_files() works
 
     Code
-      get_relevant_files(repo = "dragosmg/covr2ghdemo", pr_number = 2)
+      get_changed_files(repo = "dragosmg/covr2ghdemo", pr_number = 2)
     Output
       [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
 

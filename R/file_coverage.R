@@ -24,36 +24,23 @@ file_coverage <- function(x) {
         )
     }
 
-    file_coverage_df <- x |>
+    x |>
         covr::coverage_to_list() |>
-        purrr::pluck(
-            "filecoverage"
-        ) |>
+        purrr::list_c() |>
         tibble::enframe(
             name = "file",
             value = "coverage"
         ) |>
         dplyr::mutate(
+            file = dplyr::if_else(
+                nzchar(.data$file),
+                .data$file,
+                "Overall"
+            ),
             coverage = as.numeric(
                 .data$coverage
             )
         )
-
-    total <- x |>
-        covr::coverage_to_list() |>
-        purrr::pluck("totalcoverage")
-
-    total_coverage_df <- tibble::tibble(
-        file = "Overall",
-        coverage = total
-    )
-
-    output <- dplyr::bind_rows(
-        file_coverage_df,
-        total_coverage_df
-    )
-
-    output
 }
 
 #' Combine head and base file-level coverage
@@ -69,7 +56,8 @@ file_coverage <- function(x) {
 #' @keywords internal
 combine_file_coverage <- function(
     head_coverage,
-    base_coverage
+    base_coverage,
+    changed_files
 ) {
     head_coverage_digest <- file_coverage(head_coverage)
     base_coverage_digest <- file_coverage(base_coverage)
@@ -89,12 +77,12 @@ combine_file_coverage <- function(
             delta = .data$coverage_head - .data$coverage_base
         )
 
-    # keep any files with changes in coverage or missing delta
+    # keep any files with changes in coverage or NA delta
     diff_df |>
-        # TODO allow for some margin here. all.equal, etc
         dplyr::filter(
-            .data$delta != 0 |
+            .data$delta != 0 | # change in coverage
                 is.na(.data$coverage_base) | # new files
+                .data$file %in% changed_files | # changed files
                 .data$file == "Overall"
         )
 }

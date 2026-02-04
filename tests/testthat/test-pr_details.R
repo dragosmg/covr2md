@@ -65,20 +65,20 @@ test_that("get_pr_details() complains with incorrect inputs", {
     )
 })
 
-test_that("get_relevant_files() works", {
+test_that("get_changed_files() works", {
     skip_if_offline()
     expect_snapshot(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = 2
         )
     )
 })
 
-test_that("get_relevant_files() complains with incorrect inputs", {
+test_that("get_changed_files() complains with incorrect inputs", {
     # `repo` is not scalar
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = c("foo", "bar")
         ),
         "`repo` must be a character scalar.",
@@ -87,7 +87,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
     # `repo` is not character
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = 1
         ),
         "`repo` must be a character scalar.",
@@ -95,7 +95,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
     )
 
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = FALSE
         ),
         "`repo` must be a character scalar.",
@@ -106,7 +106,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
     # `pr_number` is not scalar
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = c(2, 3)
         ),
@@ -116,7 +116,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
 
     # `pr_number` is not integerish
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = "foo"
         ),
@@ -125,7 +125,7 @@ test_that("get_relevant_files() complains with incorrect inputs", {
     )
 
     expect_error(
-        get_relevant_files(
+        get_changed_files(
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = FALSE
         ),

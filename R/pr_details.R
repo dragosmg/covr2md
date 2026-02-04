@@ -85,9 +85,9 @@ get_pr_details <- function(
 #' @keywords internal
 #' @examples
 #' \dontrun{
-#' get_relevant_files("<owner>/covr2ghdemo", 2)
+#' get_changed_files("<owner>/<repo>", 2)
 #' }
-get_relevant_files <- function(
+get_changed_files <- function(
     repo,
     pr_number,
     call = rlang::caller_env()
