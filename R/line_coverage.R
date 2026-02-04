@@ -87,3 +87,29 @@ compose_line_coverage_details <- function(diff_line_coverage) {
 
     diff_cov_details
 }
+
+compose_line_coverage_loss_details <- function(
+    lines_cov_change_wo_code_change
+) {
+    line_cov_drop_md_table <- line_cov_loss_to_md(
+        lines_cov_change_wo_code_change
+    )
+
+    subtitle <- ""
+
+    if (!is.null(lines_cov_change_wo_code_change)) {
+        subtitle <- "### Coverage loss for unmodified lines"
+    }
+
+    line_cov_loss_details <- glue::glue_data(
+        list(
+            subtitle = subtitle,
+            line_cov_drop_md_table = line_cov_drop_md_table
+        ),
+        "{subtitle}
+
+        {line_cov_drop_md_table}",
+        .trim = TRUE
+    )
+    line_cov_loss_details
+}

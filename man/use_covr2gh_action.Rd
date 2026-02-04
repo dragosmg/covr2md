@@ -4,9 +4,12 @@
 \alias{use_covr2gh_action}
 \title{Set up a covr2gh GitHub Action workflow}
 \usage{
-use_covr2gh_action(badge = TRUE)
+use_covr2gh_action(repo, badge = TRUE)
 }
 \arguments{
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
+
 \item{badge}{(logical) should a badge be added to README? Defaults to \code{TRUE}.}
 }
 \description{
@@ -39,6 +42,6 @@ findings.
 }
 \examples{
 \dontrun{
-use_covr2gh_action()
+use_covr2gh_action("<owner>/<repo>")
 }
 }

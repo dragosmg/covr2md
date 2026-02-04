@@ -76,6 +76,14 @@ combine_file_coverage <- function(
         dplyr::mutate(
             delta = .data$coverage_head - .data$coverage_base
         )
+    # TODO this does not capture situations when the code has changed, but the
+    # coverage hasn't (i.e. coverage is 0)
+    # * this is relevant
+    # * need to return at capturing both files with changes to coverage and
+    # those
+    # with changes to content. In this case, because we use the files here to
+    # subset the diff_text,
+    # we miss a bunch of files functions with content change
 
     # keep any files with changes in coverage or NA delta
     diff_df |>

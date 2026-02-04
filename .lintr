@@ -9,7 +9,8 @@ linters: all_linters(
         "tryCatch",
         "try",
         "withCallingHandlers",
-        "expect_identical"
+        "expect_identical",
+        "expect_snapshot"
       )
     ),
     undesirable_function_linter = undesirable_function_linter(

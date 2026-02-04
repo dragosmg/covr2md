@@ -154,7 +154,38 @@ jobs:
           git worktree remove base --force || true
           git worktree prune || true
 
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage
+          path: |
+            ${{ runner.temp }}/head_cov.RDS
+            ${{ runner.temp }}/coverage_badge.svg
+          retention-days: 5
+
+      - name: Upload base coverage (PR only)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v6
+        with:
+          name: coverage-base
+          path: ${{ runner.temp }}/base_cov.RDS
+          retention-days: 5
+
       - name: Job summary
         if: github.event_name == 'pull_request'
         run: |
           cat "$RUNNER_TEMP/comment.md" >> $GITHUB_STEP_SUMMARY
+
+      - name: Show testthat output
+        if: always()
+        run: |
+          ## --------------------------------------------------------------------
+          find '${{ runner.temp }}/package_head' -name 'testthat.Rout*' -exec cat '{}' \; || true
+        shell: bash
+
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-test-failures
+          path: ${{ runner.temp }}/package_head

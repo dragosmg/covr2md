@@ -111,24 +111,36 @@ compose_comment <- function(
     # is NA
     relevant_files <- setdiff(file_cov_df$file, "Overall")
 
-    diff_line_coverage <- get_diff_line_coverage(
-        head_coverage = head_coverage,
-        relevant_files = relevant_files,
+    line_coverage_dfs <- get_diff_line_coverage(
         repo = repo,
-        pr_details = pr_details
+        pr_details = pr_details,
+        relevant_files = relevant_files,
+        head_coverage = head_coverage,
+        # to figure out if coverage for a given line has changed
+        base_coverage = base_coverage
     )
+
+    # TODO we need to capture lines that have not changed (they're neither added
+    # TODO nor removed), but their coverage has
+    # e.g. line 30 today is uncovered, used to be line 20 and covered (this is a
+    # change in logic that used to take some execution paths in the path, but
+    # no longer)
 
     if (is.null(diff_cov_target)) {
         diff_cov_target <- total_base_coverage
     }
 
     line_coverage_summary <- compose_line_coverage_summary(
-        diff_line_coverage,
+        line_coverage_dfs$diff_line_coverage,
         target = diff_cov_target
     )
 
     line_coverage_details <- compose_line_coverage_details(
-        diff_line_coverage
+        line_coverage_dfs$diff_line_coverage
+    )
+
+    line_cov_loss_details <- compose_line_coverage_loss_details(
+        line_coverage_dfs$lines_cov_change_wo_code_change
     )
 
     pkg_url <- glue::glue(
@@ -167,6 +179,8 @@ compose_comment <- function(
         {file_coverage_details}
 
         {line_coverage_details}
+
+        {line_cov_loss_details}
         </details>
 
         :recycle: Comment updated with the latest results.

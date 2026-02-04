@@ -4,7 +4,7 @@
 \alias{line_cov_to_md}
 \title{Transform a line coverage tibble to markdown}
 \usage{
-line_cov_to_md(diff_line_coverage, align = "rrrr")
+line_cov_to_md(diff_line_coverage, align = "rrrrl")
 }
 \arguments{
 \item{diff_line_coverage}{(\code{tibble}) diff line coverage data. The output of

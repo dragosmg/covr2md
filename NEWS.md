@@ -1,5 +1,10 @@
 # covr2gh (development version)
 
+* new details section: line coverage loss
+* SVG URL is only external as internal does not work with private repos.
+* `use_covr2gh_badge()` and `use_covr2gh_action()` need to be called with `repo`
+(in the GitHub `"<owner>/<repo>"` format) to avoid sophisticated repo guessing
+logic.
 * `use_covr2gh_action()` adds the `covr2gh.yaml` workflow file and inserts a
 README badge (with `use_covr2gh_badge()`) if the {usethis} block
 (`<!-- badges: start -->` and `<!-- badges: end -->`) exists.

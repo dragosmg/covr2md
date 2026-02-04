@@ -136,7 +136,10 @@ test_that("get_changed_files() complains with incorrect inputs", {
 
 test_that("extract_added_lines works", {
     # TODO add a couple of tests with more complicated diffs
-    test_diff_text <- testthat::test_path("fixtures", "diff_text.txt") |>
+    test_diff_text <- testthat::test_path(
+        "fixtures",
+        "diff_text.txt"
+    ) |>
         readLines() |>
         stringr::str_flatten(
             collapse = "\n"
@@ -145,6 +148,76 @@ test_that("extract_added_lines works", {
     expect_snapshot(
         extract_added_lines(
             test_diff_text
+        )
+    )
+
+    expect_identical(
+        extract_added_lines(
+            test_diff_text
+        ),
+        tibble::tibble(
+            line = c(11, 13, 14),
+            text = c(
+                "  if (!is.numeric(x)) {",
+                "      \"`x` must be numeric. You supplied a {.class {class(x)}}\",", # nolint
+                "      call = rlang::caller_env()"
+            )
+        )
+    )
+})
+
+test_that("extract_added_lines with a more complex diff", {
+    slightly_complex_diff_text <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_diff_text.RDS"
+    ) |>
+        readRDS()
+
+    expect_snapshot(
+        purrr::map(
+            slightly_complex_diff_text,
+            extract_added_lines
+        )
+    )
+})
+
+test_that("cov_change_wo_code_change", {
+    head_coverage <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_head_cov.RDS"
+    ) |>
+        readRDS()
+
+    base_coverage <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_base_cov.RDS"
+    ) |>
+        readRDS()
+
+    slightly_complex_diff_text <- testthat::test_path(
+        "fixtures",
+        "slightly_complex_diff_text.RDS"
+    ) |>
+        readRDS()
+
+    added_lines <- slightly_complex_diff_text |>
+        purrr::map(
+            extract_added_lines
+        ) |>
+        purrr::list_rbind(
+            names_to = "file"
+        )
+
+    expect_identical(
+        cov_change_wo_code_change(
+            head_coverage = head_coverage,
+            base_coverage = base_coverage,
+            added_lines = added_lines
+        ),
+        tibble::tibble(
+            file = "R/badge.R", # nolint
+            lines_loss_cov = 6L,
+            which_lines = "87-89, 92, 93, 96"
         )
     )
 })

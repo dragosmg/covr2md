@@ -34,6 +34,19 @@
       3 R/add_two.R            57.1           0    57.1
       4 Overall                31.6          10.5  21.0
 
+---
+
+    Code
+      combine_file_coverage(head_coverage = head_cov2, base_coverage = base_cov2,
+        changed_files = changed_files2)
+    Output
+      # A tibble: 3 x 4
+        file              coverage_head coverage_base delta
+        <chr>                     <dbl>         <dbl> <dbl>
+      1 R/badge.R                  78.4         100   -21.6
+      2 R/github_action.R           0             0     0  
+      3 Overall                    84.6          86.1  -1.5
+
 # compose_file_coverage_details works
 
     Code

@@ -23,13 +23,14 @@
 #' `use_covr2gh_action()` wraps [usethis::use_github_action()].
 #'
 #' @param badge (logical) should a badge be added to README? Defaults to `TRUE`.
+#' @inheritParams get_pr_details
 #'
 #' @export
 #' @examples
 #' \dontrun{
-#' use_covr2gh_action()
+#' use_covr2gh_action("<owner>/<repo>")
 #' }
-use_covr2gh_action <- function(badge = TRUE) {
+use_covr2gh_action <- function(repo, badge = TRUE) {
     usethis::use_github_action(
         url = "https://github.com/dragosmg/covr2gh/blob/main/.github/workflows/covr2gh.yaml",
         # TODO add a link to the pkgdown article once finished
@@ -37,7 +38,7 @@ use_covr2gh_action <- function(badge = TRUE) {
     )
 
     if (isTRUE(badge)) {
-        use_covr2gh_badge()
+        use_covr2gh_badge(repo)
     }
 
     invisible(TRUE)
@@ -51,20 +52,26 @@ use_covr2gh_action <- function(badge = TRUE) {
 #' badge SVG points to a storage branch in the repo(`covr2gh-storage`). The link
 #' out points to the actions workflow page.
 #'
+#' @inheritParams get_pr_details
+#'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' use_covr2gh_badge()
+#' use_covr2gh_badge("<owner>/<repo>")
 #' }
-use_covr2gh_badge <- function() {
+use_covr2gh_badge <- function(repo) {
     check_is_package()
 
     # nolint start: nonportable_path_linter
 
+    href <- glue::glue(
+        "https://github.com/{repo}/actions/workflows/covr2gh.yaml"
+    )
+
     usethis::use_badge(
-        badge_name = "covr2gh coverage",
-        href = "/../actions/workflows/covr2gh.yaml",
+        badge_name = "covr2gh-coverage",
+        href = href,
         src = "/../covr2gh-storage/badges/main/coverage_badge.svg"
     )
 

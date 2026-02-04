@@ -4,7 +4,13 @@
 \alias{get_diff_line_coverage}
 \title{Get the line coverage for the diff}
 \usage{
-get_diff_line_coverage(repo, pr_details, relevant_files, head_coverage)
+get_diff_line_coverage(
+  repo,
+  pr_details,
+  relevant_files,
+  head_coverage,
+  base_coverage
+)
 }
 \arguments{
 \item{repo}{(character) the repository name in the GitHub format
@@ -17,6 +23,10 @@ request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_deta
 
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
 The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the head branch.}
+
+\item{base_coverage}{(coverage) base / target branch coverage (coverage for
+the branch merging into). The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the
+base branch.}
 }
 \value{
 a \code{tibble} with 3 columns:

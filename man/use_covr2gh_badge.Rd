@@ -4,7 +4,11 @@
 \alias{use_covr2gh_badge}
 \title{Add a coverage README badge}
 \usage{
-use_covr2gh_badge()
+use_covr2gh_badge(repo)
+}
+\arguments{
+\item{repo}{(character) the repository name in the GitHub format
+(\code{"OWNER/REPO"}).}
 }
 \description{
 Inserts the markdown text for a coverage badge in the usethis block (between
@@ -14,6 +18,6 @@ out points to the actions workflow page.
 }
 \examples{
 \dontrun{
-use_covr2gh_badge()
+use_covr2gh_badge("<owner>/<repo>")
 }
 }
