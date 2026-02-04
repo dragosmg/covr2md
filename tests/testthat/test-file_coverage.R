@@ -24,12 +24,14 @@ test_that("file_coverage() complains", {
 })
 
 test_that("combine_file_coverage works", {
+    # test 1
     head_coverage <- readRDS(
         test_path(
             "fixtures",
             "head_coverage.RDS"
         )
     )
+
     base_coverage <- readRDS(
         test_path(
             "fixtures",
@@ -37,19 +39,47 @@ test_that("combine_file_coverage works", {
         )
     )
 
+    changed_files <- "R/add_two.R"
+
     expect_snapshot(
         combine_file_coverage(
             head_coverage,
-            base_coverage
+            base_coverage,
+            changed_files
         )
     )
 
     expect_s3_class(
         combine_file_coverage(
             head_coverage,
-            base_coverage
+            base_coverage,
+            changed_files
         ),
         "tbl_df"
+    )
+
+    # test 2
+    changed_files2 <- c("R/badge.R", "R/github_action.R")
+    head_cov2 <- readRDS(
+        test_path(
+            "fixtures",
+            "slightly_complex_head_cov.RDS"
+        )
+    )
+
+    base_cov2 <- readRDS(
+        test_path(
+            "fixtures",
+            "slightly_complex_base_cov.RDS"
+        )
+    )
+
+    expect_snapshot(
+        combine_file_coverage(
+            head_coverage = head_cov2,
+            base_coverage = base_cov2,
+            changed_files = changed_files2
+        )
     )
 })
 
