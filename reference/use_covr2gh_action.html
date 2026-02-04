@@ -5,16 +5,7 @@ uses covr::package_coverage().
 on a pull request:
 calculates test coverage for head.
 builds a badge (for use in the commit message).
-if the PR does not come from a fork (write privileges for the
-automated GitHub Actions token), the badge is built with an internal
-function (generate_badge()) and committed to the covr2gh-storage
-branch.
-if the PR comes from a fork (the GitHub Actions token only has read
-permissions), the badge is built with an external service (shields.io)
-and is not committed to the storage branch.
-
-initialises or switches to the covr2gh-storage branch and saves a
-copy of the badge (only if the PR does not come from a fork).
+initialises or switches to the covr2gh-storage branch.
 switches to base branch and calculates test coverage.
 compares coverage for head and base and posts a comment with the main
 findings.
@@ -34,16 +25,7 @@ uses covr::package_coverage().
 on a pull request:
 calculates test coverage for head.
 builds a badge (for use in the commit message).
-if the PR does not come from a fork (write privileges for the
-automated GitHub Actions token), the badge is built with an internal
-function (generate_badge()) and committed to the covr2gh-storage
-branch.
-if the PR comes from a fork (the GitHub Actions token only has read
-permissions), the badge is built with an external service (shields.io)
-and is not committed to the storage branch.
-
-initialises or switches to the covr2gh-storage branch and saves a
-copy of the badge (only if the PR does not come from a fork).
+initialises or switches to the covr2gh-storage branch.
 switches to base branch and calculates test coverage.
 compares coverage for head and base and posts a comment with the main
 findings.
@@ -65,7 +47,7 @@ uploads coverage as an artefact.
 
     <a class="navbar-brand me-2" href="../index.html">covr2gh</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9018</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9019</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,16 +77,8 @@ uploads coverage as an artefact.
     <p>Sets up a <a href="https://github.com/features/actions" class="external-link">GitHub Actions</a> workflow that
 calculates and reports test coverage:</p><ul><li><p>uses <code><a href="http://covr.r-lib.org/reference/package_coverage.html" class="external-link">covr::package_coverage()</a></code>.</p></li>
 <li><p>on a <em>pull request</em>:</p><ul><li><p>calculates test coverage for head.</p></li>
-<li><p>builds a badge (for use in the commit message).</p><ul><li><p>if the PR does not come from a fork (write privileges for the
-automated GitHub Actions token), the badge is built with an internal
-function (<code><a href="generate_badge.html">generate_badge()</a></code>) and committed to the <code>covr2gh-storage</code>
-branch.</p></li>
-<li><p>if the PR comes from a fork (the GitHub Actions token only has read
-permissions), the badge is built with an external service (shields.io)
-and is not committed to the storage branch.</p></li>
-</ul></li>
-<li><p>initialises or switches to the <code>covr2gh-storage</code> branch and saves a
-copy of the badge (only if the PR does not come from a fork).</p></li>
+<li><p>builds a badge (for use in the commit message).</p></li>
+<li><p>initialises or switches to the <code>covr2gh-storage</code> branch.</p></li>
 <li><p>switches to base branch and calculates test coverage.</p></li>
 <li><p>compares coverage for head and base and posts a comment with the main
 findings.</p></li>

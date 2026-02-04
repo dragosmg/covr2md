@@ -12,18 +12,7 @@ that calculates and reports test coverage:
 
   - builds a badge (for use in the commit message).
 
-    - if the PR does not come from a fork (write privileges for the
-      automated GitHub Actions token), the badge is built with an
-      internal function
-      ([`generate_badge()`](https://dragosmg.github.io/covr2gh/reference/generate_badge.md))
-      and committed to the `covr2gh-storage` branch.
-
-    - if the PR comes from a fork (the GitHub Actions token only has
-      read permissions), the badge is built with an external service
-      (shields.io) and is not committed to the storage branch.
-
-  - initialises or switches to the `covr2gh-storage` branch and saves a
-    copy of the badge (only if the PR does not come from a fork).
+  - initialises or switches to the `covr2gh-storage` branch.
 
   - switches to base branch and calculates test coverage.
 
