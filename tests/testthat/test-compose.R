@@ -11,8 +11,7 @@ test_that("compose_comment works", {
             "base_coverage.RDS"
         )
     )
-    skip_on_ci()
-    skip_on_covr()
+
     expect_snapshot(
         compose_comment(
             head_coverage,
