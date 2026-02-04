@@ -18,17 +18,7 @@ calculates and reports test coverage:
 \itemize{
 \item calculates test coverage for head.
 \item builds a badge (for use in the commit message).
-\itemize{
-\item if the PR does not come from a fork (write privileges for the
-automated GitHub Actions token), the badge is built with an internal
-function (\code{\link[=generate_badge]{generate_badge()}}) and committed to the \code{covr2gh-storage}
-branch.
-\item if the PR comes from a fork (the GitHub Actions token only has read
-permissions), the badge is built with an external service (shields.io)
-and is not committed to the storage branch.
-}
-\item initialises or switches to the \code{covr2gh-storage} branch and saves a
-copy of the badge (only if the PR does not come from a fork).
+\item initialises or switches to the \code{covr2gh-storage} branch.
 \item switches to base branch and calculates test coverage.
 \item compares coverage for head and base and posts a comment with the main
 findings.
