@@ -82,7 +82,7 @@ file_cov_to_md <- function(file_cov_df, align = "rrrcc") {
 #' @keywords internal
 line_cov_to_md <- function(
     diff_line_coverage,
-    align = "rrrr"
+    align = "rrrrl"
 ) {
     if (is.null(diff_line_coverage)) {
         return("")
@@ -110,13 +110,62 @@ line_cov_to_md <- function(
             coverage = paste0(
                 .data$coverage,
                 "%"
+            ),
+            which_lines = dplyr::if_else(
+                is.na(.data$which_lines),
+                "",
+                .data$which_lines
+            )
+        ) |>
+        dplyr::select(
+            File = file,
+            `Lines added` = "lines_added",
+            `Lines tested` = "lines_covered",
+            Coverage = "coverage",
+            `Which lines` = "which_lines"
+        )
+
+    output |>
+        knitr::kable(
+            align = align
+        ) |>
+        glue::glue_collapse(
+            sep = "\n"
+        )
+}
+
+line_cov_loss_to_md <- function(
+    lines_cov_change_wo_code_change,
+    align = "rrl"
+) {
+    if (is.null(lines_cov_change_wo_code_change)) {
+        return("")
+    }
+
+    total_row <- lines_cov_change_wo_code_change |>
+        dplyr::summarise(
+            lines_loss_cov = sum(.data$lines_loss_cov)
+        ) |>
+        dplyr::mutate(
+            file = "Total",
+            .before = "lines_loss_cov"
+        )
+
+    output <- dplyr::bind_rows(
+        lines_cov_change_wo_code_change,
+        total_row
+    ) |>
+        dplyr::mutate(
+            which_lines = dplyr::if_else(
+                is.na(.data$which_lines),
+                "",
+                .data$which_lines
             )
         ) |>
         dplyr::rename(
             File = file,
-            `Lines added` = "lines_added",
-            `Lines tested` = "lines_covered",
-            Coverage = "coverage"
+            `Lines w/ coverage loss` = "lines_loss_cov",
+            `Which lines` = which_lines
         )
 
     output |>
