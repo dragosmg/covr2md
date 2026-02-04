@@ -14,7 +14,8 @@ test_that("compose_line_coverage_details with df", {
     line_cov <- tibble::tibble(
         file = c("R/foo.R", "R/bar.R", "R/baz.R"), # nolint
         lines_added = c(5, 4, 10),
-        lines_covered = c(2, 4, 6)
+        lines_covered = c(2, 4, 6),
+        which_lines = c("1-4, 6", "5-7, 9", "1-6, 10-13")
     )
 
     expect_s3_class(
