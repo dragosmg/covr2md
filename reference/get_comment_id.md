@@ -1,9 +1,9 @@
 # Identify the covr2gh comment
 
-Comments are identified by a specific "marker", in itself a comment.
-This is hardcoded to `"<!-- covr2gh-do-not-delete -->"`.
-`get_comment_id()` looks for this marker. If it can find it, it returns
-the comment ID, otherwise it returns `NULL`.
+Comments posted by covr2gh are identified by the presence of the
+`"<!-- covr2gh-do-not-delete -->"` comment. `get_comment_id()` looks for
+it. If it can find it, it returns the comment ID, otherwise it returns
+`NULL`.
 
 ## Usage
 
@@ -33,7 +33,7 @@ a numeric scalar representing the comment id or `NULL`
 
 ## Details
 
-The output of `get_comment_id()` is the used
+The output of `get_comment_id()` is then used
 [`post_comment()`](https://dragosmg.github.io/covr2gh/reference/post_comment.md)
 post a new comment or update an existing one.
 
