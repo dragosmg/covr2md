@@ -353,19 +353,16 @@ get_diff_line_coverage <- function(
     relevant_files,
     head_coverage
 ) {
-    # browser()
     diff_text <- get_diff_text(
         pr_details = pr_details,
         relevant_files = relevant_files
     )
 
     if (rlang::is_empty(diff_text)) {
-        # TODO exit early it means the relevant files haven't actually changed
         return(NULL)
     }
 
     added_lines <- diff_text |>
-        # TODO see how this behaves with more complicated diffs - eg a tfrmt one
         purrr::map(
             extract_added_lines
         ) |>
@@ -391,8 +388,8 @@ get_diff_line_coverage <- function(
         dplyr::left_join(
             line_coverage,
             by = dplyr::join_by(
-                file_name == filename,
-                line
+                "file_name" == "filename",
+                "line"
             )
         ) |>
         # missing coverage value implies the line does not contain runnable code
@@ -400,14 +397,14 @@ get_diff_line_coverage <- function(
             !is.na(.data$value)
         ) |>
         dplyr::mutate(
-            covered = value != 0
+            covered = .data$value != 0
         )
     missing_cov <- diff_line_coverage |>
         dplyr::filter(
-            !covered
+            !.data$covered
         ) |>
         dplyr::group_by(
-            file_name
+            .data$file_name
         ) |>
         dplyr::summarise(
             missing = find_intervals(.data$line)
@@ -428,7 +425,7 @@ get_diff_line_coverage <- function(
         dplyr::left_join(
             missing_cov,
             by = dplyr::join_by(
-                file_name
+                "file_name"
             )
         )
 

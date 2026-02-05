@@ -87,7 +87,7 @@ line_cov_to_md <- function(
     if (is.null(diff_line_coverage)) {
         return("")
     }
-    # browser()
+
     total_row <- diff_line_coverage |>
         dplyr::summarise(
             lines_added = sum(.data$lines_added),
@@ -120,7 +120,7 @@ line_cov_to_md <- function(
             )
         ) |>
         dplyr::select(
-            `File name` = file_name,
+            `File name` = "file_name",
             `Lines added` = "lines_added",
             `Lines tested` = "lines_covered",
             Coverage = "coverage",
