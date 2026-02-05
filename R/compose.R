@@ -106,9 +106,8 @@ compose_comment <- function(
     )
 
     # changed_files = files that are being changed by the PR
-    # relevant_files = files that are being changed by the PR and / or their
-    # coverage has changed or they have not existed before (their base coverage)
-    # is NA
+    # relevant_files = files that are being changed by the PR or their coverage
+    # has changed or they have not existed before (their coverage in base is NA)
     relevant_files <- setdiff(file_cov_df$file, "Overall")
 
     diff_line_coverage <- get_diff_line_coverage(
