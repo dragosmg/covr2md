@@ -22,22 +22,34 @@ diff_split <- function(diff_text) {
     combined_diff_df <- classify_lines(raw_diff_df)
 
     base_df <- combined_diff_df |>
-        dplyr::filter(hunk | context | base, !merge) |>
-        dplyr::select(-"head", -"merge")
+        dplyr::filter(
+            .data$hunk | .data$context | .data$base,
+            !.data$merge
+        ) |>
+        dplyr::select(
+            -"head",
+            -"merge"
+        )
 
     head_df <- combined_diff_df |>
-        dplyr::filter(hunk | context | head, !merge) |>
-        dplyr::select(-"base", -"merge")
+        dplyr::filter(
+            .data$hunk | .data$context | .data$head,
+            !.data$merge
+        ) |>
+        dplyr::select(
+            -"base",
+            -"merge"
+        )
 
     head_lines <- head_df |>
         add_line_num_head() |>
         dplyr::filter(
-            !hunk,
-            head
+            !.data$hunk,
+            .data$head
         ) |>
         dplyr::select(
-            line,
-            raw
+            "line",
+            "raw"
         ) |>
         dplyr::mutate(
             source = stringr::str_remove(
@@ -45,17 +57,19 @@ diff_split <- function(diff_text) {
                 "^\\+"
             )
         ) |>
-        dplyr::select(-"raw")
+        dplyr::select(
+            -"raw"
+        )
 
     base_lines <- base_df |>
         add_line_num_base() |>
         dplyr::filter(
-            !hunk,
-            base
+            !.data$hunk,
+            .data$base
         ) |>
         dplyr::select(
-            line,
-            raw
+            "line",
+            "raw"
         ) |>
         dplyr::mutate(
             source = stringr::str_remove(
@@ -132,7 +146,7 @@ classify_lines <- function(raw_diff_df) {
                 .data$raw,
                 stringr::fixed("++")
             ),
-            context = !(hunk | base | head | merge)
+            context = !(.data$hunk | .data$base | .data$head | .data$merge)
         )
 }
 
@@ -148,10 +162,15 @@ classify_lines <- function(raw_diff_df) {
 add_line_num_head <- function(head_df) {
     output <- head_df |>
         dplyr::mutate(
-            add = as.numeric(!hunk),
+            add = as.numeric(
+                !.data$hunk
+            ),
             head_start = dplyr::if_else(
                 .data$hunk,
-                stringr::str_extract(.data$raw, "\\+(\\d+)"),
+                stringr::str_extract(
+                    .data$raw,
+                    "\\+(\\d+)"
+                ),
                 NA_character_
             ),
             head_start = stringr::str_remove_all(
@@ -166,13 +185,17 @@ add_line_num_head <- function(head_df) {
             "head_start",
             .direction = "down"
         ) |>
-        dplyr::group_by(head_start) |>
+        dplyr::group_by(
+            .data$head_start
+        ) |>
         dplyr::mutate(
             line = .data$head_start + cumsum(.data$add) - 1
         ) |>
         dplyr::ungroup() |>
         dplyr::mutate(
-            line = as.integer(line)
+            line = as.integer(
+                .data$line
+            )
         ) |>
         dplyr::select(
             "line",
@@ -189,10 +212,15 @@ add_line_num_head <- function(head_df) {
 add_line_num_base <- function(base_df) {
     output <- base_df |>
         dplyr::mutate(
-            add = as.numeric(!hunk),
+            add = as.numeric(
+                !.data$hunk
+            ),
             base_start = dplyr::if_else(
                 .data$hunk,
-                stringr::str_extract(.data$raw, "\\-(\\d+)"),
+                stringr::str_extract(
+                    .data$raw,
+                    "\\-(\\d+)"
+                ),
                 NA_character_
             ),
             base_start = stringr::str_remove_all(
@@ -207,13 +235,17 @@ add_line_num_base <- function(base_df) {
             "base_start",
             .direction = "down"
         ) |>
-        dplyr::group_by(base_start) |>
+        dplyr::group_by(
+            .data$base_start
+        ) |>
         dplyr::mutate(
             line = .data$base_start + cumsum(.data$add) - 1
         ) |>
         dplyr::ungroup() |>
         dplyr::mutate(
-            line = as.integer(line)
+            line = as.integer(
+                .data$line
+            )
         ) |>
         dplyr::select(
             "line",
