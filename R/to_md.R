@@ -11,7 +11,7 @@
 #'   collapsed into a single string.
 #'
 #' @keywords internal
-file_cov_to_md <- function(file_cov_df, align = "rrrcc") {
+file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
     if (is.null(file_cov_df)) {
         return("")
     }

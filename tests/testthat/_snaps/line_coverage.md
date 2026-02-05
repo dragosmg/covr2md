@@ -24,12 +24,12 @@
     Code
       compose_line_coverage_summary(line_cov)
     Output
-      :x:  Diff coverage is 63.16% (12 out of 19 added lines are covered by tests). Minimum accepted is `80%`.
+      :x:  Diff coverage is `63.16%` (`12` out of `19` added lines are covered by tests). It's good practice to aim for at least `80%` (the base branch test coverage).
 
 ---
 
     Code
       compose_line_coverage_summary(line_cov, target = 40)
     Output
-      :white_check_mark:  Diff coverage is 63.16% (12 out of 19 added lines are covered by tests). Minimum accepted is `40%`.
+      :white_check_mark:  Diff coverage is `63.16%` (`12` out of `19` added lines are covered by tests). 
 

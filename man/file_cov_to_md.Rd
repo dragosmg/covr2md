@@ -4,7 +4,7 @@
 \alias{file_cov_to_md}
 \title{Transform the file coverage tibble into markdown}
 \usage{
-file_cov_to_md(file_cov_df, align = "rrrcc")
+file_cov_to_md(file_cov_df, align = "lrrcc")
 }
 \arguments{
 \item{file_cov_df}{a \code{tibble}, the output of \code{\link[=combine_file_coverage]{combine_file_coverage()}}.}

@@ -22,7 +22,3 @@ test_that("compose_comment works", {
         transform = remove_date_commit_sha
     )
 })
-
-test_that("compose_coverage_summary works", {
-    expect_identical(2 * 2, 4)
-})

@@ -28,13 +28,13 @@ file_coverage <- function(x) {
         covr::coverage_to_list() |>
         purrr::list_c() |>
         tibble::enframe(
-            name = "file",
+            name = "file_name",
             value = "coverage"
         ) |>
         dplyr::mutate(
-            file = dplyr::if_else(
-                nzchar(.data$file),
-                .data$file,
+            file_name = dplyr::if_else(
+                nzchar(.data$file_name),
+                .data$file_name,
                 "Overall"
             ),
             coverage = as.numeric(
@@ -66,7 +66,7 @@ combine_file_coverage <- function(
         dplyr::left_join(
             base_coverage_digest,
             by = dplyr::join_by(
-                file
+                "file_name"
             ),
             suffix = c(
                 "_head",
@@ -82,8 +82,8 @@ combine_file_coverage <- function(
         dplyr::filter(
             .data$delta != 0 | # change in coverage
                 is.na(.data$coverage_base) | # new files
-                .data$file %in% changed_files | # changed files
-                .data$file == "Overall"
+                .data$file_name %in% changed_files | # changed files
+                .data$file_name == "Overall"
         )
 }
 

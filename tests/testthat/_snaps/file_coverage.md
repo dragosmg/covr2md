@@ -4,7 +4,7 @@
       file_coverage(cov)
     Output
       # A tibble: 6 x 2
-        file              coverage
+        file_name         coverage
         <chr>                <dbl>
       1 R/augment_cnp.R      100  
       2 R/cnp.R               70  
@@ -27,7 +27,7 @@
       combine_file_coverage(head_coverage, base_coverage, changed_files)
     Output
       # A tibble: 4 x 4
-        file          coverage_head coverage_base delta
+        file_name     coverage_head coverage_base delta
         <chr>                 <dbl>         <dbl> <dbl>
       1 R/add_one.R            33.3          40   -6.67
       2 R/add_three.R           0             0    0   
@@ -41,10 +41,10 @@
     Output
       ### Files with code or coverage changes
       
-      |    File| Coverage head| Coverage base| &Delta; |              |
-      |-------:|-------------:|-------------:|:-------:|:------------:|
-      | R/foo.R|         56.2%|         52.1%|  4.10   |  :arrow_up:  |
-      | R/bar.R|         43.5%|         12.5%|  31.00  |  :arrow_up:  |
-      | R/baz.R|        78.34%|        84.23%|  -5.89  | :arrow_down: |
-      | Overall|        60.34%|         54.5%|  5.84   |  :arrow_up:  |
+      |File name | Coverage head| Coverage base| &Delta; |              |
+      |:---------|-------------:|-------------:|:-------:|:------------:|
+      |R/foo.R   |         56.2%|         52.1%|  4.10   |  :arrow_up:  |
+      |R/bar.R   |         43.5%|         12.5%|  31.00  |  :arrow_up:  |
+      |R/baz.R   |        78.34%|        84.23%|  -5.89  | :arrow_down: |
+      |Overall   |        60.34%|         54.5%|  5.84   |  :arrow_up:  |
 
