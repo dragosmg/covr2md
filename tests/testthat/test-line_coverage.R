@@ -38,7 +38,7 @@ test_that("compose_line_coverage_summary works", {
     )
 
     line_cov <- tibble::tibble(
-        file = c("R/foo.R", "R/bar.R", "R/baz.R"), # nolint: nonportable_path_linter
+        file_name = c("R/foo.R", "R/bar.R", "R/baz.R"), # nolint: nonportable_path_linter
         lines_added = c(5, 4, 10),
         lines_covered = c(2, 4, 6)
     )
