@@ -10,23 +10,27 @@ get_diff_text(pr_details, relevant_files, call = rlang::caller_env())
 \item{pr_details}{a \verb{<pr_details>} object representing a subset of the pull
 request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_details()}}.}
 
-\item{relevant_files}{(character) files with changes in coverage}
+\item{relevant_files}{(character) files we are interested in. These are
+either being changed by the PR, their coverage has changed or new files
+(for which test coverage in base should be \code{NA}).}
 
 \item{call}{the execution environment to surface the error message from.
 Defaults to \code{\link[rlang:stack]{rlang::caller_env()}}.}
 }
 \value{
-a character vector containing the names of the changed files.
+a named list where the names are file names and the content of each
+element is the patch for the specific file.
 }
 \description{
-Sends a GET request to the GitHub API and retrieves the files modified by
-the PR. It then subsets these to only includes files under \verb{R/} or \verb{src/}.
+Sends a GET request to the GitHub API and retrieves the full PR diff, which
+is a (comparison) between base (the starting point for the comparison) and
+head (the endpoint). The diff is then filtered to only include the "relevant
+files".
 }
 \examples{
 \dontrun{
 pr_details <- get_pr_details("<owner>/<repo>", 2)
-# TODO example
-relevant_files <-
+relevant_files <- c("R/foo.R", "R/bar.R")
 diff_text <- get_diff_text(pr_details, relevant_files)
 }
 }

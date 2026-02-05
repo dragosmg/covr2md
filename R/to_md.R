@@ -82,7 +82,7 @@ file_cov_to_md <- function(file_cov_df, align = "rrrcc") {
 #' @keywords internal
 line_cov_to_md <- function(
     diff_line_coverage,
-    align = "rrrr"
+    align = "lrrrr"
 ) {
     if (is.null(diff_line_coverage)) {
         return("")
@@ -94,7 +94,7 @@ line_cov_to_md <- function(
             lines_covered = sum(.data$lines_covered)
         ) |>
         dplyr::mutate(
-            file = "Total",
+            file_name = "Total",
             .before = "lines_added"
         )
 
@@ -110,13 +110,19 @@ line_cov_to_md <- function(
             coverage = paste0(
                 .data$coverage,
                 "%"
+            ),
+            missing = dplyr::if_else(
+                is.na(.data$missing),
+                "",
+                .data$missing
             )
         ) |>
-        dplyr::rename(
-            File = file,
+        dplyr::select(
+            `File name` = "file_name",
             `Lines added` = "lines_added",
             `Lines tested` = "lines_covered",
-            Coverage = "coverage"
+            Coverage = "coverage",
+            Missing = "missing"
         )
 
     output |>

@@ -13,7 +13,9 @@ get_diff_line_coverage(repo, pr_details, relevant_files, head_coverage)
 \item{pr_details}{a \verb{<pr_details>} object representing a subset of the pull
 request metadata we need. The output of \code{\link[=get_pr_details]{get_pr_details()}}.}
 
-\item{relevant_files}{(character) files with changes in coverage}
+\item{relevant_files}{(character) files we are interested in. These are
+either being changed by the PR, their coverage has changed or new files
+(for which test coverage in base should be \code{NA}).}
 
 \item{head_coverage}{(coverage) active / current branch (\code{HEAD}) coverage.
 The output of \code{\link[covr:package_coverage]{covr::package_coverage()}} on the head branch.}
