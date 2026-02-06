@@ -19,6 +19,6 @@ test_that("compose_comment works", {
             repo = "dragosmg/covr2ghdemo", # nolint
             pr_number = 3
         ),
-        transform = remove_date_commit_sha
+        transform = remove_date_sha_pkg_ver
     )
 })
