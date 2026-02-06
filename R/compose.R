@@ -72,12 +72,14 @@ compose_comment <- function(
     total_head_coverage <- covr::percent_coverage(head_coverage)
     total_base_coverage <- covr::percent_coverage(base_coverage)
 
+    if (is.null(diff_cov_target)) {
+        diff_cov_target <- total_base_coverage
+    }
+
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
         2
     )
-
-    badge_url <- build_badge_url(total_head_coverage)
 
     coverage_summary <- compose_coverage_summary(
         pr_details,
@@ -89,20 +91,10 @@ compose_comment <- function(
         pr_number = pr_number
     )
 
-    # TODO handle the case when there are no relevant changed files
-    #  this works, it just needs some tweaks
-
-    # TODO think about when we would want to return all the files, not just
-    # those touched or affected by the PR
-
     file_cov_df <- combine_file_coverage(
         head_coverage = head_coverage,
         base_coverage = base_coverage,
         changed_files = changed_files
-    )
-
-    file_coverage_details <- compose_file_coverage_details(
-        file_cov_df
     )
 
     # changed_files = files that are being changed by the PR
@@ -117,39 +109,37 @@ compose_comment <- function(
         pr_details = pr_details
     )
 
-    if (is.null(diff_cov_target)) {
-        diff_cov_target <- total_base_coverage
-    }
-
     line_coverage_summary <- compose_line_coverage_summary(
         diff_line_coverage,
         target = diff_cov_target
     )
 
-    line_coverage_details <- compose_line_coverage_details(
-        diff_line_coverage
-    )
+    details_section <- ""
 
-    pkg_url <- glue::glue(
-        "[covr2gh v{packageVersion('covr2gh')}](https://dragosmg.github.io/covr2gh)" # nolint
-    )
+    if (!rlang::is_empty(relevant_files)) {
+        # we compose the details section only when relevant files is not empty
+        file_coverage_details <- compose_file_coverage_details(
+            file_cov_df
+        )
 
-    footer <- glue::glue_data(
-        list(
-            pkg_url = pkg_url
-        ),
-        "<sup>Created on {Sys.Date()} with {pkg_url}.</sup>"
-    )
+        line_coverage_details <- compose_line_coverage_details(
+            diff_line_coverage
+        )
+
+        details_section <- compose_details_section(
+            file_coverage_details = file_coverage_details,
+            line_coverage_details = line_coverage_details
+        )
+    }
 
     glue::glue_data(
         list(
             comment = covr2gh_comment,
-            badge_url = badge_url,
+            badge_url = build_badge_url(total_head_coverage),
             coverage_summary = coverage_summary,
             line_coverage_summary = line_coverage_summary,
-            file_coverage_details = file_coverage_details,
-            line_coverage_details = line_coverage_details,
-            footer = footer
+            details_section = details_section,
+            footer = compose_footer()
         ),
         "{comment}
 
@@ -160,13 +150,7 @@ compose_comment <- function(
         {coverage_summary}
         {line_coverage_summary}
 
-        <details>
-        <summary>Details</summary>
-
-        {file_coverage_details}
-
-        {line_coverage_details}
-        </details>
+        {details_section}
 
         :recycle: Comment updated with the latest results.
 
