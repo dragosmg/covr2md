@@ -54,7 +54,7 @@ jobs:
         shell: Rscript {0}
 
       - name: Get new version 🔖
-        run:
+        run: |
           bumped_version <- desc::desc_get_version()
           cat(paste0("NEW_PKG_VERSION=", bumped_version), file = Sys.getenv("GITHUB_ENV"), append = TRUE)
         shell: Rscript {0}
