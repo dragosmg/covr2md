@@ -208,7 +208,7 @@ compose_coverage_summary <- function(pr_details, delta) {
         delta == 0 ~ "not change"
     )
 
-    by_delta <- glue::glue("by `{abs(delta)}` percentage points")
+    by_delta <- glue::glue(" by `{abs(delta)}` percentage points")
 
     by_delta <- dplyr::if_else(
         delta == 0,
@@ -253,6 +253,6 @@ compose_coverage_summary <- function(pr_details, delta) {
         "{emoji} Merging PR [#{pr_number}]({pr_html_url}) \\
         ([`{short_hash_head}`](head_sha_url)) into _{pr_details$base_name}_ \\
         ([`{short_hash_base}`](base_sha_url)) - will **{delta_translation}** \\
-        overall coverage {by_delta}."
+        overall coverage{by_delta}."
     )
 }
