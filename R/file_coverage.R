@@ -100,16 +100,17 @@ combine_file_coverage <- function(
 compose_file_coverage_details <- function(file_cov_df) {
     file_cov_md_table <- file_cov_to_md(file_cov_df)
 
-    subtitle <- ""
-
-    if (!is.null(file_cov_df)) {
-        subtitle <- "### Files with code or coverage changes"
+    if (file_cov_md_table == "") {
+        return("")
     }
+
+    subtitle <- "### Files with code or coverage changes"
 
     file_cov_details <- glue::glue(
         "{subtitle}
 
         {file_cov_md_table}"
     )
+
     file_cov_details
 }
