@@ -13,4 +13,9 @@ test_that("compose_footer works", {
         compose_footer(),
         transform = remove_date_sha_pkg_ver
     )
+
+    expect_s3_class(
+        compose_footer(),
+        "glue"
+    )
 })
