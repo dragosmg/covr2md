@@ -56,6 +56,6 @@ jobs:
       - name: Commit and push changes 📤
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Bump dev version [skip version bump]"
+          commit_message: "Bump dev version [skip version bump] skip-checks:true"
           file_pattern: |
             DESCRIPTION
