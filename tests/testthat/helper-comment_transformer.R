@@ -31,7 +31,7 @@ remove_pkg_version <- function(x) {
         stringr::regex(
             "(?<![0-9.])\\d{1,2}\\.\\d{1,2}\\.\\d{1,2}(?:\\.\\d{1,4})?(?![0-9.])" # nolint
         ),
-        "<x.y.z.9000>"
+        "<x.y.z>"
     )
 }
 
