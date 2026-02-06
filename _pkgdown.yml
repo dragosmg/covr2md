@@ -1,4 +1,12 @@
 url: https://dragosmg.github.io/covr2gh/
 template:
+  light-switch: true
   bootstrap: 5
+  bslib:
+    bootswatch: flatly
+    base_font: {google: "Roboto"}
+    heading_font: {google: "Roboto Slab"}
+    code_font: {google: "JetBrains Mono"}
 
+development:
+  mode: auto
