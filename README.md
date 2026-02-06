@@ -15,16 +15,13 @@ coverage](/../covr2gh-storage/badges/main/coverage_badge.svg)](https://github.co
 > Test Coverage Summary on ‘GitHub’
 
 On a GitHub pull request, {covr2gh} runs {covr}’s `package_coverage()`
-on both the current (head) and target (base) branches. It then compares
-the two and summarises the findings in a comment.
-
-{covr2gh} does not offer anything new, it’s how it offers it. An R
-package + a GitHub Action workflow that uses only “official” GitHub
-Actions or [r-lib/actions](https://github.com/r-lib/actions).
+on both the current (head) and target (base) branches. It compares the
+two outputs, prepares a summary and posts it as a comment. The author
+and reviewer can then take action.
 
 ## Installation
 
-You can install the development version of covr2gh from
+You can install the development version of {covr2gh} from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -32,5 +29,11 @@ You can install the development version of covr2gh from
 pak::pak("dragosmg/covr2gh")
 ```
 
-Most users would not need to you would use the package via the
-accompanying GitHub Action workflow.
+## Usage
+
+You use it in a package. It comes with a helper function that generates
+a GitHub action workflow.
+
+``` r
+covr2gh::use_covr2gh_action()
+```
