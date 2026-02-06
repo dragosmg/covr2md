@@ -246,6 +246,7 @@ test_that("extract_added_lines with a more complex diff reproducible", {
 })
 
 test_that("get_diff_text works", {
+    # nolint start: nonportable_path_linter
     pr_details <- get_pr_details(
         "dragosmg/covr2ghdemo",
         3
@@ -256,6 +257,7 @@ test_that("get_diff_text works", {
         "R/add_three.R",
         "R/add_two.R"
     )
+    # nolint end
 
     expect_snapshot(
         get_diff_text(
