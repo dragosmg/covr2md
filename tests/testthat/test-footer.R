@@ -5,7 +5,7 @@ test_that("compose_footer works", {
             date = "2026-02-05"
         ),
         glue::as_glue(
-            "<sup>Created on 2026-02-05 with [covr2gh v0.12.3](https://dragosmg.github.io/covr2gh).</sup>"
+            "<sup>Created on 2026-02-05 with [covr2gh v0.12.3](https://dragosmg.github.io/covr2gh).</sup>" # nolint
         )
     )
 
