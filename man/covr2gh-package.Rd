@@ -4,9 +4,9 @@
 \name{covr2gh-package}
 \alias{covr2gh}
 \alias{covr2gh-package}
-\title{covr2gh: Test Coverage Summary in 'GitHub'}
+\title{covr2gh: Test Coverage Summary on 'GitHub'}
 \description{
-Calculate test coverage data with 'covr', extract insights, and post them as comments in 'GitHub' pull requests.
+Calculate test coverage data with 'covr', extract insights, and post them as comments on 'GitHub' pull requests.
 }
 \seealso{
 Useful links:

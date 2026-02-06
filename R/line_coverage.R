@@ -14,7 +14,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
 
     if (is.null(diff_line_coverage)) {
         return(
-            ":heavy_equals_sign: Diff coverage: No lines added to tracked source files." # nolint
+            ":heavy_equals_sign: Diff coverage: No new lines in tracked files."
         )
     }
 
