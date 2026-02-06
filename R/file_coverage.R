@@ -78,13 +78,19 @@ combine_file_coverage <- function(
         )
 
     # keep any files with changes in coverage or NA delta
-    diff_df |>
+    output <- diff_df |>
         dplyr::filter(
             .data$delta != 0 | # change in coverage
                 is.na(.data$coverage_base) | # new files
                 .data$file_name %in% changed_files | # changed files
                 .data$file_name == "Overall"
         )
+
+    if (nrow(output) == 1 && output$file_name == "Overall") {
+        return(NULL)
+    }
+
+    output
 }
 
 #' Compose the file coverage details section
@@ -98,18 +104,19 @@ combine_file_coverage <- function(
 #'
 #' @keywords internal
 compose_file_coverage_details <- function(file_cov_df) {
+    if (is.null(file_cov_df)) {
+        return(glue::as_glue(""))
+    }
+
     file_cov_md_table <- file_cov_to_md(file_cov_df)
 
-    subtitle <- ""
-
-    if (!is.null(file_cov_df)) {
-        subtitle <- "### Files with code or coverage changes"
-    }
+    subtitle <- "### Files with code or coverage changes"
 
     file_cov_details <- glue::glue(
         "{subtitle}
 
         {file_cov_md_table}"
     )
+
     file_cov_details
 }

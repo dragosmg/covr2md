@@ -244,3 +244,49 @@ test_that("extract_added_lines with a more complex diff reproducible", {
             as.integer()
     )
 })
+
+test_that("get_diff_text works", {
+    # nolint start: nonportable_path_linter
+    pr_details <- get_pr_details(
+        "dragosmg/covr2ghdemo",
+        3
+    )
+
+    relevant_files <- c(
+        "R/add_one.R",
+        "R/add_three.R",
+        "R/add_two.R"
+    )
+    # nolint end
+
+    expect_snapshot(
+        get_diff_text(
+            pr_details = pr_details,
+            relevant_files = relevant_files
+        )
+    )
+})
+
+test_that("get_diff_text with empty relevant files", {
+    pr_details <- structure(
+        list(
+            repo = "dragosmg/covr2gh", # nolint
+            pr_number = 90,
+            is_fork = FALSE,
+            head_name = "badge-href-contd",
+            head_sha = "8d59ad50711fc1054f431c3a64ac98138d09ca5d",
+            base_name = "main",
+            base_sha = "a0c335b6c2fbff30817be9308455ba3c9ff8dbf5",
+            pr_html_url = "https://github.com/dragosmg/covr2gh/pull/90",
+            diff_url = "https://github.com/dragosmg/covr2gh/pull/90.diff"
+        ),
+        class = "pr_details"
+    )
+
+    expect_null(
+        get_diff_text(
+            pr_details,
+            relevant_files = character(0)
+        )
+    )
+})

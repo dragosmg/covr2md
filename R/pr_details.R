@@ -148,6 +148,9 @@ get_diff_text <- function(
     relevant_files,
     call = rlang::caller_env()
 ) {
+    if (rlang::is_empty(relevant_files)) {
+        return(NULL)
+    }
     # TODO add inputs checks
     # TODO standalone rlang?
 
@@ -167,7 +170,6 @@ get_diff_text <- function(
     reply <- glue::glue("GET {req_url}") |>
         gh::gh()
 
-    # TODO check with relevant_files = NULL
     output <- reply$files |>
         # we focus on `relevant_files` to get to the added lines
         purrr::keep(

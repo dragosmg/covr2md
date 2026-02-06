@@ -86,3 +86,10 @@ test_that("compose_file_coverage_details works", {
         )
     )
 })
+
+test_that("compose_file_coverage_details with NULL", {
+    expect_identical(
+        compose_file_coverage_details(NULL),
+        glue::as_glue("")
+    )
+})
