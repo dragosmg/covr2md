@@ -1,7 +1,7 @@
-# covr2gh: Test Coverage Summary in 'GitHub'
+# covr2gh: Test Coverage Summary on 'GitHub'
 
 Calculate test coverage data with 'covr', extract insights, and post
-them as comments in 'GitHub' pull requests.
+them as comments on 'GitHub' pull requests.
 
 ## See also
 

@@ -9,12 +9,12 @@
 Source:
 [`DESCRIPTION`](https://github.com/dragosmg/covr2gh/blob/main/DESCRIPTION)
 
-Moldovan-Grünfeld D (2026). *covr2gh: Test Coverage Summary in
+Moldovan-Grünfeld D (2026). *covr2gh: Test Coverage Summary on
 'GitHub'*. R package version 0.0.0.9024,
 <https://github.com/dragosmg/covr2gh>.
 
     @Manual{,
-      title = {covr2gh: Test Coverage Summary in 'GitHub'},
+      title = {covr2gh: Test Coverage Summary on 'GitHub'},
       author = {Dragoș Moldovan-Grünfeld},
       year = {2026},
       note = {R package version 0.0.0.9024},

@@ -1,21 +1,15 @@
 # covr2gh
 
-{covr2gh} was born from a need to have test coverage information to hand
-when reviewing a pull request.
+> Test Coverage Summary on ‘GitHub’
 
-Due to constraints in enterprise environments, this often needs to be
-accomplished without depending on a 3rd party vendor, or an
-[un-verified](https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace#about-badges-in-github-marketplace)
-/ unvetted GitHub Action.
-
-The core functionality focuses on extracting coverage data (with
-[`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md))
-and on presenting a brief summary as a comment on a GitHub pull request
-(PR).
+On a GitHub pull request, {covr2gh} runs {covr}’s `package_coverage()`
+on both the current (head) and target (base) branches. It compares the
+two outputs, prepares a summary and posts it as a comment. The author
+and reviewer can then take action.
 
 ## Installation
 
-You can install the development version of covr2gh from
+You can install the development version of {covr2gh} from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -23,25 +17,11 @@ You can install the development version of covr2gh from
 pak::pak("dragosmg/covr2gh")
 ```
 
-## Example
+## Usage
 
-The package is designed to be used with GitHub Actions. It has an
-accompanying workflow that does the following:
+You use it in a package. It comes with a helper function that generates
+a GitHub action workflow.
 
-- runs
-  [`covr::package_coverage()`](http://covr.r-lib.org/reference/package_coverage.md)
-  on both the head and base branches.
-- compares the outputs and prepares a comment, made up of:
-  - two high-level summary sentences (one focused on the overall text
-    coverage, the other focused on the diff coverage)
-  - a collapsible “Details” section containing two tables which offer
-    more insight into the high-level summaries.
-- produces a coverage badge for the head branch and pushes it to a
-  “storage” branch (`_covr2gh_storage`)[¹](#fn1).
-
-------------------------------------------------------------------------
-
-1.  This is not possible for PRs originating from forks as they will not
-    have write permissions to the repo. In this case the produced badge
-    is not self-contained and an external - to the repo - ULR is used
-    instead of committing the badge to the storage branch.
+``` r
+covr2gh::use_covr2gh_action()
+```
