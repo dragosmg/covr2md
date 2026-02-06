@@ -17,24 +17,24 @@ permissions:
 
 jobs:
   covr2gh:
-    name: Coverage & badge
+    name: Coverage & badge 🦺🎖️
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       BADGE_BRANCH: ${{ github.head_ref || github.ref_name }}
     steps:
-      - name: Checkout repo
+      - name: Checkout repo 📥
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
           ref: ${{ github.head_ref || github.ref_name }}
 
-      - name: Setup R
+      - name: Setup R 🏗️
         uses: r-lib/actions/setup-r@v2
         with:
           use-public-rspm: true
 
-      - name: Setup R dependencies
+      - name: Setup R dependencies 📦
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
@@ -42,7 +42,7 @@ jobs:
             dragosmg/covr2gh
           needs: coverage
 
-      - name: Head coverage & badge
+      - name: Head coverage & badge 🎩🎖️
         run: |
           temp_path <- normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/")
 
@@ -61,12 +61,12 @@ jobs:
           writeLines(badge, file.path(temp_path, "coverage_badge.svg"))
         shell: Rscript {0}
 
-      - name: Configure git identity
+      - name: Configure git identity 🪪
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
 
-      - name: Storage branch (worktree)
+      - name: Storage branch (worktree) 🌳
         if: github.event.pull_request.head.repo.fork == false || github.event_name != 'pull_request'
         run: |
           ORIGINAL_REF="$(git rev-parse --abbrev-ref HEAD)"
@@ -103,13 +103,13 @@ jobs:
           git push origin covr2gh-storage || true
         shell: bash
 
-      - name: Attach base branch worktree (PR only)
+      - name: Attach base branch worktree (PR only) 🌳
         if: github.event_name == 'pull_request'
         run: |
           git fetch origin "${{ github.base_ref }}"
           git worktree add base "${{ github.base_ref }}"
 
-      - name: Calculate base coverage (PR only)
+      - name: Calculate base coverage (PR only) 🧱
         if: github.event_name == 'pull_request'
         working-directory: base
         run: |
@@ -124,7 +124,7 @@ jobs:
           saveRDS(base_cov, file.path(temp_path, "base_cov.RDS"))
         shell: Rscript {0}
 
-      - name: Post coverage comment (PR only)
+      - name: Post coverage comment (PR only) ✍️💬
         if: github.event_name == 'pull_request'
         run: |
           temp_path <- normalizePath(Sys.getenv("RUNNER_TEMP"), winslash = "/")
@@ -147,14 +147,14 @@ jobs:
           writeLines(comment, file.path(temp_path, "comment.md"))
         shell: Rscript {0}
 
-      - name: Cleanup worktrees
+      - name: Cleanup worktrees 🌳✨
         if: always()
         run: |
           git worktree remove storage --force || true
           git worktree remove base --force || true
           git worktree prune || true
 
-      - name: Job summary
+      - name: Job summary 📋
         if: github.event_name == 'pull_request'
         run: |
           cat "$RUNNER_TEMP/comment.md" >> $GITHUB_STEP_SUMMARY
