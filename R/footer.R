@@ -1,5 +1,5 @@
 compose_footer <- function(
-    pkg_ver = packageVersion("covr2gh"),
+    pkg_ver = utils::packageVersion("covr2gh"),
     pkg_url = "https://dragosmg.github.io/covr2gh",
     date = Sys.Date()
 ) {
