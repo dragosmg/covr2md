@@ -1,10 +1,10 @@
 Package: covr2gh
-Title: Test Coverage Summary in 'GitHub'
+Title: Test Coverage Summary on 'GitHub'
 Version: 0.0.0.9024
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: Calculate test coverage data with 'covr', extract insights,
-    and post them as comments in 'GitHub' pull requests.
+    and post them as comments on 'GitHub' pull requests.
 License: MIT + file LICENSE
 URL: https://github.com/dragosmg/covr2gh,
     https://dragosmg.github.io/covr2gh/

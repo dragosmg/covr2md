@@ -12,17 +12,15 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](/../covr2gh-storage/badges/main/coverage_badge.svg)](https://github.com/dragosmg/covr2gh/actions/workflows/covr2gh.yaml)
 <!-- badges: end -->
 
-{covr2gh} was born from a need to easily access test coverage
-information when reviewing a pull request.
+> Test Coverage Summary on ‘GitHub’
 
-Due to enterprise environments constraints, this often needs to be
-accomplished without having access to a 3rd party vendor, or an
-[un-verified](https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace#about-badges-in-github-marketplace)
-/ unvetted GitHub Action.
+On a GitHub pull request, {covr2gh} runs {covr}’s `package_coverage()`
+on both the current (head) and target (base) branches. It then compares
+the two and summarises the findings in a comment.
 
-The core functionality focuses on extracting coverage data (with
-`covr::package_coverage()`) and on presenting a brief summary as a
-comment on a GitHub pull request (PR).
+{covr2gh} does not offer anything new, it’s how it offers it. An R
+package + a GitHub Action workflow that uses only “official” GitHub
+Actions or [r-lib/actions](https://github.com/r-lib/actions).
 
 ## Installation
 
@@ -34,21 +32,5 @@ You can install the development version of covr2gh from
 pak::pak("dragosmg/covr2gh")
 ```
 
-## Example
-
-The package is designed to be used with GitHub Actions. It has an
-accompanying workflow that does the following:
-
-- runs `covr::package_coverage()` on both the head and base branches.
-- compares the outputs and prepares a comment, made up of:
-  - two high-level summary sentences (one focused on the overall text
-    coverage, the other focused on the diff coverage)
-  - a collapsible “Details” section containing two tables which offer
-    more insight into the high-level summaries.
-- produces a coverage badge for the head branch and pushes it to a
-  “storage” branch (`_covr2gh_storage`)[^1].
-
-[^1]: This is not possible for PRs originating from forks as they will
-    not have write permissions to the repo. In this case the produced
-    badge is not self-contained and an external - to the repo - ULR is
-    used instead of committing the badge to the storage branch.
+Most users would not need to you would use the package via the
+accompanying GitHub Action workflow.

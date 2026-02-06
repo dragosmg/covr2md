@@ -3,7 +3,7 @@ template:
   light-switch: true
   bootstrap: 5
   bslib:
-    bootswatch: sandstone
+    bootswatch: flatly
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto Slab"}
     code_font: {google: "JetBrains Mono"}
