@@ -16,6 +16,12 @@ file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
         return("")
     }
 
+    # TODO probably better to handle it upstream. leave it here for now
+    # file_cov_df will rarely be empty, but might have only the Overall row
+    if (nrow(file_cov_df) == 1 && file_cov_df$file_name == "Overall") {
+        return("")
+    }
+
     file_cov_df_prep <- file_cov_df |>
         dplyr::mutate(
             # add a brief visual interpretation of the delta with arrows or
