@@ -12,11 +12,11 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](/../covr2gh-storage/badges/main/coverage_badge.svg)](https://github.com/dragosmg/covr2gh/actions/workflows/covr2gh.yaml)
 <!-- badges: end -->
 
-{covr2gh} was born from a need to have test coverage information to hand
-when reviewing a pull request.
+{covr2gh} was born from a need to easily access test coverage
+information when reviewing a pull request.
 
-Due to constraints in enterprise environments, this often needs to be
-accomplished without depending on a 3rd party vendor, or an
+Due to enterprise environments constraints, this often needs to be
+accomplished without having access to a 3rd party vendor, or an
 [un-verified](https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace#about-badges-in-github-marketplace)
 / unvetted GitHub Action.
 
