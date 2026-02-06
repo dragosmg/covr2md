@@ -1,4 +1,4 @@
-name: Post-merge dev version bump ⬆️
+name: Dev version bump ⬆️
 
 on:
   push:
@@ -25,18 +25,19 @@ jobs:
       )
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repo 📥
         uses: actions/checkout@v6
         with:
+          token: ${{ secrets.BUMP || secrets.GITHUB_TOKEN }}
           ref: ${{ github.head_ref }}
           # Value already defaults to true, but `persist-credentials` is
           # required to push new commits to the repository.
           persist-credentials: true
 
-      - name: Setup R
+      - name: Setup R 🏗️
         uses: r-lib/actions/setup-r@v2
 
-      - name: Install {desc} and {stringr}
+      - name: Install {desc} and {stringr} 📦
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
           packages: desc
@@ -50,7 +51,7 @@ jobs:
         run: if (desc::desc_has_fields("Date")) desc::desc_set("Date", Sys.Date())
         shell: Rscript {0}
 
-      - name: Commit and push changes
+      - name: Commit and push changes 📤
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "Bump dev version [skip-version-bump]"
