@@ -37,6 +37,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         ":x: "
     )
 
+    # TODO check if the target value was supplied by the user or by us
     advice <- glue::glue(
         "It's good practice to aim for at least `{target}%` (the base branch \\
         test coverage)."
