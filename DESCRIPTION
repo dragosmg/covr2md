@@ -1,6 +1,6 @@
 Package: covr2gh
 Title: Test Coverage Summary on 'GitHub'
-Version: 0.0.0.9026
+Version: 0.0.0.9027
 Authors@R:
     person("Dragoș", "Moldovan-Grünfeld", , "dragos.mold@gmail.com", role = c("aut", "cre"))
 Description: Calculate test coverage data with 'covr', extract insights,
