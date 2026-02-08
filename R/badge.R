@@ -37,7 +37,7 @@ generate_badge <- function(value) {
 #'
 #' @returns a glue string.
 #'
-#' @keywords internal
+#' @dev
 build_badge_url <- function(value) {
     badge_params <- badge_params(value)
     colour <- badge_params$value_colour |>

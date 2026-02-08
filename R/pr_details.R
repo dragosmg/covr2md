@@ -21,7 +21,7 @@
 #'   * `pr_html_url`: the URL to the PR HTML branch
 #'   * `diff_url`: the diff URL
 #'
-#' @keywords internal
+#' @dev
 #'
 #' @examples
 #' \dontrun{
@@ -85,7 +85,7 @@ get_pr_details <- function(
 #' @returns a named list where the names are file names and the content of each
 #' element is the patch for the specific file.
 #'
-#' @keywords internal
+#' @dev
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details("<owner>/<repo>", 2)
@@ -160,7 +160,7 @@ extract_added_lines <- function(diff_text) {
 #'   * lines_added: total number of lines that would be added by merging the PR
 #'   * lines_covered: number of added lines covered by unit tests
 #'
-#' @keywords internal
+#' @dev
 get_diff_line_coverage <- function(
     pr_details,
     head_coverage

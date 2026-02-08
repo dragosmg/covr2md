@@ -12,7 +12,7 @@
 #'
 #' @returns a numeric scalar representing the comment id or `NULL`
 #'
-#' @keywords internal
+#' @dev
 #' @examples
 #' \dontrun{
 #' get_comment_id("<owner>/<repo>", 3)
@@ -149,7 +149,7 @@ post_comment <- function(
 #'
 #' @returns a `gh_response` object
 #'
-#' @keywords internal
+#' @dev
 #' @examples
 #' \dontrun{
 #' delete_comment("<owner>/<repo>", 4553)

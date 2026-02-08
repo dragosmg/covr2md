@@ -10,7 +10,7 @@
 #'
 #' Each `tibble` has 2 columns: `line` and `source``
 #'
-#' @keywords internal
+#' @dev
 diff_split <- function(diff_text) {
     raw_diff_df <- diff_text |>
         stringr::str_split(
@@ -114,7 +114,7 @@ diff_split <- function(diff_text) {
 #'   * merge: present neither in head nor in base
 #'   * context: present both in head and in base
 #'
-#' @keywords internal
+#' @dev
 classify_lines <- function(raw_diff_df) {
     #   * hunk = starts with "@@"
     #   * base = starts with "-"
@@ -158,7 +158,7 @@ classify_lines <- function(raw_diff_df) {
 #' @returns a tibble with an extra integer column, `line` representing
 #'   the line number in "head"
 #'
-#' @keywords internal
+#' @dev
 add_line_num_head <- function(head_df) {
     output <- head_df |>
         dplyr::mutate(

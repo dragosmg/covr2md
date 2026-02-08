@@ -8,7 +8,7 @@
 #'
 #' @returns a glue string, a sentence summarising the diff coverage.
 #'
-#' @keywords internal
+#' @dev
 compose_line_coverage_summary <- function(
     diff_line_coverage,
     target = 80,
@@ -18,7 +18,7 @@ compose_line_coverage_summary <- function(
 
     if (is.null(diff_line_coverage)) {
         return(
-            ":heavy_equals_sign: Diff coverage: No new lines in tracked files."
+            ":heavy_equals_sign: Diff coverage: No new lines in source files."
         )
     }
 
@@ -84,7 +84,7 @@ compose_line_coverage_summary <- function(
 #'
 #' @returns a `glue` string
 #'
-#' @keywords internal
+#' @dev
 compose_line_coverage_details <- function(diff_line_coverage) {
     diff_line_md_table <- line_cov_to_md(diff_line_coverage)
 

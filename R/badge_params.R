@@ -14,7 +14,7 @@
 #'   * `num`: the value as numeric
 #'   * `char`: the value as character
 #'
-#' @keywords internal
+#' @dev
 #' @examples
 #' \dontrun{
 #' badge_value(26.78)
@@ -74,7 +74,7 @@ badge_value <- function(value, verbose = FALSE, call = rlang::caller_env()) {
 #' @returns numeric representing the with of the box in which the value will
 #' appear
 #'
-#' @keywords internal
+#' @dev
 estimate_width_value <- function(
     badge_value,
     width_label = 60
@@ -101,7 +101,7 @@ estimate_width_value <- function(
 #'
 #' @returns numeric representing the length of the label text
 #'
-#' @keywords internal
+#' @dev
 estimate_text_length_value <- function(badge_value, text_length_label = 50) {
     if (!is_badge_value(badge_value)) {
         cli::cli_abort(
@@ -149,7 +149,7 @@ estimate_text_length_value <- function(badge_value, text_length_label = 50) {
 #'   * text_start_value: point along the x-axis where the *value* text should
 #'   start
 #'
-#' @keywords internal
+#' @dev
 badge_params <- function(value) {
     badge_value <- badge_value(value)
 
@@ -212,7 +212,7 @@ coverage_thresholds <- tibble::tibble(
 #'
 #' @returns a colour hexcode as string
 #'
-#' @keywords internal
+#' @dev
 #' @examples
 #' \dontrun{
 #' derive_badge_colour(5)
