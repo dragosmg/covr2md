@@ -58,4 +58,11 @@ test_that("compose_line_coverage_summary works", {
             target = 40
         )
     )
+
+    expect_snapshot(
+        compose_line_coverage_summary(
+            line_cov,
+            our_target = TRUE
+        )
+    )
 })

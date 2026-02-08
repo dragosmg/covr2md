@@ -62,6 +62,8 @@ compose_comment <- function(
     pr_number,
     diff_cov_target = NULL
 ) {
+    our_target <- FALSE
+
     # TODO add some checks on inputs
     pr_details <- get_pr_details(
         repo = repo,
@@ -73,11 +75,12 @@ compose_comment <- function(
 
     if (is.null(diff_cov_target)) {
         diff_cov_target <- total_base_coverage
+        our_target <- TRUE
     }
 
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
-        2
+        1
     )
 
     coverage_summary <- compose_coverage_summary(
@@ -97,7 +100,8 @@ compose_comment <- function(
 
     line_coverage_summary <- compose_line_coverage_summary(
         diff_line_coverage,
-        target = diff_cov_target
+        target = diff_cov_target,
+        our_target = our_target
     )
 
     details_section <- ""

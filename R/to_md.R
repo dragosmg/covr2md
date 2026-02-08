@@ -105,7 +105,7 @@ line_cov_to_md <- function(
         dplyr::mutate(
             coverage = round(
                 (.data$lines_covered / .data$lines_added) * 100,
-                2
+                1
             ),
             coverage = paste0(
                 .data$coverage,

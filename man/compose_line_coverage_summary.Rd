@@ -4,13 +4,17 @@
 \alias{compose_line_coverage_summary}
 \title{Compose the line coverage summary}
 \usage{
-compose_line_coverage_summary(diff_line_coverage, target = 80)
+compose_line_coverage_summary(
+  diff_line_coverage,
+  target = 80,
+  our_target = FALSE
+)
 }
 \arguments{
 \item{diff_line_coverage}{a \code{tibble} the output of \code{\link[=get_diff_line_coverage]{get_diff_line_coverage()}}}
 
-\item{target}{(numeric) the target coverage for the diff. Default to 80, but
-most often the base total coverage should be used.}
+\item{target}{(numeric) the target coverage for the diff. Defaults to 80, but
+\code{compose_comment()} uses the total coverage for base.}
 }
 \value{
 a glue string, a sentence summarising the diff coverage.

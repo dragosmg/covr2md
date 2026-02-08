@@ -21,4 +21,15 @@ test_that("compose_comment works", {
         ),
         transform = remove_date_sha_pkg_ver
     )
+
+    expect_snapshot(
+        compose_comment(
+            head_coverage,
+            base_coverage,
+            repo = "dragosmg/covr2ghdemo", # nolint
+            pr_number = 3,
+            diff_cov_target = 40
+        ),
+        transform = remove_date_sha_pkg_ver
+    )
 })

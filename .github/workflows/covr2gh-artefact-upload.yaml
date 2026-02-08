@@ -1,10 +1,7 @@
 name: Cov summary w upload
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
+  workflow_dispatch
 
 # multiple workflows might try to write to covr2gh-storage at the same time
 concurrency:
