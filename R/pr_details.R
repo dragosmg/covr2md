@@ -72,56 +72,6 @@ get_pr_details <- function(
     output
 }
 
-#' Get changed files
-#'
-#' Sends a GET request to the GitHub API and retrieves the files modified by
-#' the PR. It then subsets these to only includes the "relevant" files - i.e.
-#' those under `R/` or `src/`.
-#'
-#' @inheritParams get_pr_details
-#'
-#' @returns a character vector containing the names of the changed files.
-#'
-#' @keywords internal
-#' @examples
-#' \dontrun{
-#' get_changed_files("<owner>/<repo>", 2)
-#' }
-get_changed_files <- function(
-    repo,
-    pr_number,
-    call = rlang::caller_env()
-) {
-    if (!rlang::is_scalar_character(repo)) {
-        cli::cli_abort(
-            "`repo` must be a character scalar.",
-            call = call
-        )
-    }
-
-    if (!rlang::is_scalar_integerish(pr_number)) {
-        cli::cli_abort(
-            "`pr_number` must be an integer-like scalar.",
-            call = call
-        )
-    }
-
-    files_api_url <- glue::glue(
-        "https://api.github.com/repos/{repo}/pulls/{pr_number}/files"
-    )
-
-    files_info <- glue::glue("GET {files_api_url}") |>
-        gh::gh()
-
-    all_files <- purrr::map_chr(files_info, "filename")
-
-    r_src_changed_files <- stringr::str_subset(
-        all_files,
-        pattern = "^R/|^src"
-    )
-
-    r_src_changed_files
-}
 
 #' Get the PR diff
 #'
@@ -130,8 +80,7 @@ get_changed_files <- function(
 #' head (the endpoint). The diff is then filtered to only include the "relevant
 #' files".
 #'
-#' @inheritParams get_pr_details
-#' @inheritParams get_diff_line_coverage
+#' @param pr_details a `pr_details` object.
 #'
 #' @returns a named list where the names are file names and the content of each
 #' element is the patch for the specific file.
@@ -140,17 +89,15 @@ get_changed_files <- function(
 #' @examples
 #' \dontrun{
 #' pr_details <- get_pr_details("<owner>/<repo>", 2)
-#' relevant_files <- c("R/foo.R", "R/bar.R")
-#' diff_text <- get_diff_text(pr_details, relevant_files)
+#'
+#' diff_text <- get_diff_text(pr_details)
 #' }
-get_diff_text <- function(
-    pr_details,
-    relevant_files,
-    call = rlang::caller_env()
-) {
-    if (rlang::is_empty(relevant_files)) {
-        return(NULL)
-    }
+get_diff_text <- function(pr_details) {
+    # browser()
+
+    # if (rlang::is_empty(relevant_files)) {
+    #     return(NULL)
+    # }
     # TODO add inputs checks
     # TODO standalone rlang?
 
@@ -167,24 +114,20 @@ get_diff_text <- function(
         "https://api.github.com/repos/{repo}/compare/{base}...{head}"
     )
 
+    # TODO tryCatch
     reply <- glue::glue("GET {req_url}") |>
         gh::gh()
 
+    # get the patch element and use filename as name
+    pull_patch <- function(x) {
+        output <- list(x$patch)
+        names(output) <- x$filename
+        output
+    }
+
     output <- reply$files |>
-        # we focus on `relevant_files` to get to the added lines
-        purrr::keep(
-            \(x) x$filename %in% relevant_files
-        ) |>
-        purrr::map(
-            \(x) purrr::keep_at(x, c("filename", "patch"))
-        ) |>
-        purrr::map(
-            \(x) {
-                output <- list(x$patch)
-                names(output) <- x$filename
-                output
-            }
-        ) |>
+        purrr::keep(\(x) stringr::str_starts(x$filename, "R/|src/")) |>
+        purrr::map(pull_patch) |>
         purrr::list_flatten()
 
     output
@@ -215,9 +158,6 @@ extract_added_lines <- function(diff_text) {
 #'
 #' @inheritParams get_pr_details
 #' @inheritParams compose_coverage_summary
-#' @param relevant_files (character) files we are interested in. These are
-#'   either being changed by the PR, their coverage has changed or new files
-#'   (for which test coverage in base should be `NA`).
 #' @inheritParams compose_comment
 #'
 #' @returns a `tibble` with 3 columns:
@@ -227,14 +167,12 @@ extract_added_lines <- function(diff_text) {
 #'
 #' @keywords internal
 get_diff_line_coverage <- function(
-    repo,
     pr_details,
-    relevant_files,
     head_coverage
 ) {
+    # browser()
     diff_text <- get_diff_text(
-        pr_details = pr_details,
-        relevant_files = relevant_files
+        pr_details = pr_details
     )
 
     if (rlang::is_empty(diff_text)) {
@@ -250,7 +188,7 @@ get_diff_line_coverage <- function(
         )
 
     line_coverage <- head_coverage |>
-        covr::tally_coverage() |>
+        covr::tally_coverage(by = "line") |>
         tibble::as_tibble()
 
     diff_line_coverage <- added_lines |>
