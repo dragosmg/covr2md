@@ -33,13 +33,6 @@
       attr(,"class")
       [1] "pr_details"
 
-# get_changed_files() works
-
-    Code
-      get_changed_files(repo = "dragosmg/covr2ghdemo", pr_number = 2)
-    Output
-      [1] "R/add_one.R"   "R/add_three.R" "R/add_two.R"  
-
 # extract_added_lines works
 
     Code
@@ -89,7 +82,7 @@
 # get_diff_text works
 
     Code
-      get_diff_text(pr_details = pr_details, relevant_files = relevant_files)
+      get_diff_text(pr_details = pr_details)
     Output
       $`R/add_one.R`
       [1] "@@ -9,9 +9,10 @@\n #' add_one(2)\n #' add_one(4)\n add_one <- function(x) {\n-  if (!rlang::is_double(x)) {\n+  if (!is.numeric(x)) {\n     cli::cli_abort(\n-      \"`x` must be numeric. You supplied a {.class {class(x)}}\"\n+      \"`x` must be numeric. You supplied a {.class {class(x)}}\",\n+      call = rlang::caller_env()\n     )\n   }\n   x + 1"

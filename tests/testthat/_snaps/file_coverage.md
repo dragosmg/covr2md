@@ -19,27 +19,25 @@
       file_coverage(mtcars)
     Condition
       Error in `file_coverage()`:
-      ! `x` must be a coverage object
+      ! `x` must be a `coverage` object
 
 # combine_file_coverage works
 
     Code
-      combine_file_coverage(head_coverage, base_coverage, changed_files)
+      combine_file_coverage(head_coverage, base_coverage)
     Output
-      # A tibble: 4 x 4
-        file_name     coverage_head coverage_base delta
-        <chr>                 <dbl>         <dbl> <dbl>
-      1 R/add_one.R            33.3          40   -6.67
-      2 R/add_three.R           0             0    0   
-      3 R/add_two.R            57.1          57.1  0   
-      4 Overall                28.6          31.6 -3.01
+      # A tibble: 2 x 4
+        file_name   coverage_head coverage_base delta
+        <chr>               <dbl>         <dbl> <dbl>
+      1 R/add_one.R          33.3          40   -6.67
+      2 Overall              28.6          31.6 -3.01
 
 # compose_file_coverage_details works
 
     Code
       compose_file_coverage_details(file_cov)
     Output
-      ### Files with code or coverage changes
+      ### Files with changes in coverage
       
       |File name | Coverage head| Coverage base| &Delta; |              |
       |:---------|-------------:|-------------:|:-------:|:------------:|
