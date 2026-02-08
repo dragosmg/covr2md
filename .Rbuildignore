@@ -31,3 +31,6 @@
 ^man/get_diff_line_coverage\.Rd$
 ^man/file_cov_to_md\.Rd$
 ^man/line_cov_to_md\.Rd$
+^vignettes/articles/\.quarto$
+^vignettes/articles/*_files$
+^vignettes/articles$

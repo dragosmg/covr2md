@@ -27,6 +27,7 @@ Imports:
     tidyr,
     usethis
 Suggests:
+    quarto,
     testthat (>= 3.0.0)
 Config/Needs/build: moodymudskipper/devtag
 Config/testthat/edition: 3
@@ -34,3 +35,4 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace",
     "devtag::dev_roclet"))
 RoxygenNote: 7.3.3
+Config/Needs/website: quarto

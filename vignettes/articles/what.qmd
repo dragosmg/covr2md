@@ -1,0 +1,12 @@
+---
+title: "What does {covr2gh} do?"
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+---
+
+```{r}
+#| label: setup
+library(covr2gh)
+```
