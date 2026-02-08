@@ -30,3 +30,27 @@
       attr(,"class")
       [1] "badge_value"
 
+# estimate_width_value complains
+
+    Code
+      estimate_width_value("foo")
+    Condition
+      Error in `estimate_width_value()`:
+      ! `badge_value` must be created with `badge_value()`.
+
+# estimate_text_length_value complains
+
+    Code
+      estimate_text_length_value("foo")
+    Condition
+      Error in `estimate_text_length_value()`:
+      ! `badge_value` must be created with `badge_value()`.
+
+# derive_badge_colour complains
+
+    Code
+      derive_badge_colour("foo")
+    Condition
+      Error in `derive_badge_colour()`:
+      ! `badge_value` must be created with `badge_value()`.
+

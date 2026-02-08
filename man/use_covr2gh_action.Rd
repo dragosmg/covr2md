@@ -22,15 +22,14 @@ calculates and reports test coverage:
 \item switches to base branch and calculates test coverage.
 \item compares coverage for head and base and posts a comment with the main
 findings.
-\item uploads base coverage and badge as artifacts.
+\item uploads base coverage and badge as artefacts.
 \item posts a workflow \href{https://github.blog/news-insights/product-news/supercharging-github-actions-with-job-summaries/}{summary}.
 }
 \item on a \emph{push to main}:
 \itemize{
 \item calculates test coverage for head and creates a badge.
 \item switches to or creates the \code{covr2gh-storage} branch.
-\item commits badge (which is referenced in the README).
-\item uploads coverage as an artefact.
+\item commits badge (referenced in the README).
 }
 }
 }

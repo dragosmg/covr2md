@@ -268,6 +268,13 @@ get_diff_line_coverage <- function(
         dplyr::mutate(
             covered = .data$value != 0
         )
+
+    # if we're left with 0 rows by this point -> all lines changed are
+    # non-runnable -> return NULL
+    if (nrow(diff_line_coverage) == 0) {
+        return(NULL)
+    }
+
     missing_cov <- diff_line_coverage |>
         dplyr::filter(
             !.data$covered

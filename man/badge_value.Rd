@@ -2,7 +2,7 @@
 % Please edit documentation in R/badge_params.R
 \name{badge_value}
 \alias{badge_value}
-\title{Transform a coverage value into char}
+\title{Transform a coverage value into character}
 \usage{
 badge_value(value, verbose = FALSE, call = rlang::caller_env())
 }
@@ -25,7 +25,7 @@ a list with 2 element:
 Outputs both values as both are used downstream by various other helpers.
 If the input values are \code{NA} or \code{NULL} it converts them to \code{"unknown"}.
 If the values are greater than 100 or less than 0 it adjusts them to these
-values
+values.
 }
 \examples{
 \dontrun{

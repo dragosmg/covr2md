@@ -100,6 +100,12 @@ compose_comment <- function(
     # changed_files = files that are being changed by the PR
     # relevant_files = files that are being changed by the PR or their coverage
     # has changed or they have not existed before (their coverage in base is NA)
+    # TODO I think relevant_files is confusing as another refinement / exclusion
+    # would be needed (files that have seen changes, but only to runnable lines)
+    # as it's confusing to see in the table a file with no changes in coverage,
+    # no changes to runnable code, only a couple of comments added or some extra
+    # documentation. The second table should be focused only on changes in
+    # coverage in head
     relevant_files <- setdiff(file_cov_df$file_name, "Overall")
 
     diff_line_coverage <- get_diff_line_coverage(

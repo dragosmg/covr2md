@@ -169,6 +169,13 @@ test_that("estimate_width_value()", {
     )
 })
 
+test_that("estimate_width_value complains", {
+    expect_snapshot(
+        error = TRUE,
+        estimate_width_value("foo")
+    )
+})
+
 test_that("estimate_text_length_value()", {
     expect_identical(
         estimate_text_length_value(
@@ -209,6 +216,13 @@ test_that("estimate_text_length_value()", {
             badge_value(7)
         ),
         20
+    )
+})
+
+test_that("estimate_text_length_value complains", {
+    expect_snapshot(
+        error = TRUE,
+        estimate_text_length_value("foo")
     )
 })
 
@@ -447,5 +461,12 @@ test_that("derive_badge_colour() with NULL and NA", {
             )
         ),
         "#9f9f9f"
+    )
+})
+
+test_that("derive_badge_colour complains", {
+    expect_snapshot(
+        error = TRUE,
+        derive_badge_colour("foo")
     )
 })

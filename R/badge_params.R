@@ -1,9 +1,9 @@
-#' Transform a coverage value into char
+#' Transform a coverage value into character
 #'
 #' Outputs both values as both are used downstream by various other helpers.
 #' If the input values are `NA` or `NULL` it converts them to `"unknown"`.
 #' If the values are greater than 100 or less than 0 it adjusts them to these
-#' values
+#' values.
 #'
 #' @param value (numeric) coverage value. Can also be `NA` or `NULL`
 #' @param verbose (logical) if we want messages around the clamping. Default is
