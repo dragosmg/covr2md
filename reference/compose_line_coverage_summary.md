@@ -6,7 +6,11 @@ patch.
 ## Usage
 
 ``` r
-compose_line_coverage_summary(diff_line_coverage, target = 80)
+compose_line_coverage_summary(
+  diff_line_coverage,
+  target = 80,
+  our_target = FALSE
+)
 ```
 
 ## Arguments
@@ -18,8 +22,9 @@ compose_line_coverage_summary(diff_line_coverage, target = 80)
 
 - target:
 
-  (numeric) the target coverage for the diff. Default to 80, but most
-  often the base total coverage should be used.
+  (numeric) the target coverage for the diff. Defaults to 80, but
+  [`compose_comment()`](https://dragosmg.github.io/covr2gh/reference/compose_comment.md)
+  uses the total coverage for base.
 
 ## Value
 

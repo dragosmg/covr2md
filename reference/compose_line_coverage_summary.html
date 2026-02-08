@@ -45,7 +45,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compose_line_coverage_summary</span><span class="op">(</span><span class="va">diff_line_coverage</span>, target <span class="op">=</span> <span class="fl">80</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">compose_line_coverage_summary</span><span class="op">(</span></span>
+<span>  <span class="va">diff_line_coverage</span>,</span>
+<span>  target <span class="op">=</span> <span class="fl">80</span>,</span>
+<span>  our_target <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -57,8 +61,8 @@
 
 
 <dt id="arg-target">target<a class="anchor" aria-label="anchor" href="#arg-target"></a></dt>
-<dd><p>(numeric) the target coverage for the diff. Default to 80, but
-most often the base total coverage should be used.</p></dd>
+<dd><p>(numeric) the target coverage for the diff. Defaults to 80, but
+<code><a href="compose_comment.html">compose_comment()</a></code> uses the total coverage for base.</p></dd>
 
 </dl></div>
     <div class="section level2">
