@@ -63,7 +63,7 @@ compose_comment <- function(
     diff_cov_target = NULL
 ) {
     # TODO add some checks on inputs
-
+    # browser()
     pr_details <- get_pr_details(
         repo = repo,
         pr_number = pr_number
@@ -86,33 +86,14 @@ compose_comment <- function(
         delta_total_coverage
     )
 
-    changed_files <- get_changed_files(
-        repo = repo,
-        pr_number = pr_number
-    )
-
     file_cov_df <- combine_file_coverage(
         head_coverage = head_coverage,
-        base_coverage = base_coverage,
-        changed_files = changed_files
+        base_coverage = base_coverage
     )
 
-    # changed_files = files that are being changed by the PR
-    # relevant_files = files that are being changed by the PR or their coverage
-    # has changed or they have not existed before (their coverage in base is NA)
-    # TODO I think relevant_files is confusing as another refinement / exclusion
-    # would be needed (files that have seen changes, but only to runnable lines)
-    # as it's confusing to see in the table a file with no changes in coverage,
-    # no changes to runnable code, only a couple of comments added or some extra
-    # documentation. The second table should be focused only on changes in
-    # coverage in head
-    relevant_files <- setdiff(file_cov_df$file_name, "Overall")
-
     diff_line_coverage <- get_diff_line_coverage(
-        head_coverage = head_coverage,
-        relevant_files = relevant_files,
-        repo = repo,
-        pr_details = pr_details
+        pr_details = pr_details,
+        head_coverage = head_coverage
     )
 
     line_coverage_summary <- compose_line_coverage_summary(
@@ -122,21 +103,22 @@ compose_comment <- function(
 
     details_section <- ""
 
-    if (!rlang::is_empty(relevant_files)) {
-        # we compose the details section only when relevant files is not empty
-        file_coverage_details <- compose_file_coverage_details(
-            file_cov_df
-        )
+    # TODO we no longer have relevant_files, need to figure out something else
+    # if (!rlang::is_empty(relevant_files)) {
+    # we compose the details section only when relevant files is not empty
+    file_coverage_details <- compose_file_coverage_details(
+        file_cov_df
+    )
 
-        line_coverage_details <- compose_line_coverage_details(
-            diff_line_coverage
-        )
+    line_coverage_details <- compose_line_coverage_details(
+        diff_line_coverage
+    )
 
-        details_section <- compose_details_section(
-            file_coverage_details = file_coverage_details,
-            line_coverage_details = line_coverage_details
-        )
-    }
+    details_section <- compose_details_section(
+        file_coverage_details = file_coverage_details,
+        line_coverage_details = line_coverage_details
+    )
+    # }
 
     glue::glue_data(
         list(
