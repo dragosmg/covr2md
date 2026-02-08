@@ -72,33 +72,6 @@ use_covr2gh_badge <- function() {
     invisible(TRUE)
 }
 
-# helpers mostly copied from usethis, but simpler as the use case is not as
-# complex
-# TODO check attribution - both for this and the unexported covr function
-is_package <- function(base_path = usethis::proj_get()) {
-    result <- tryCatch(
-        rprojroot::find_package_root_file(
-            path = base_path
-        ),
-        error = function(e) NULL
-    )
-    !is.null(result)
-}
+is_package <- getFromNamespace("is_package", "usethis")
 
-check_is_package <- function(call = rlang::caller_env()) {
-    if (is_package()) {
-        return(invisible())
-    }
-
-    # nolint start: keyword_quote_linter, object_usage_linter
-    project_name <- usethis::proj_get() |>
-        fs::path_file()
-
-    cli::cli_abort(
-        c(
-            "i" = "{.fn use_covr2gh_badge} is designed to work with packages.",
-            "x" = "Project {.val {project_name}} is not an R package."
-        )
-    )
-    # nolint end
-}
+check_is_package <- getFromNamespace("check_is_package", "usethis")
