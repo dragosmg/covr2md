@@ -80,7 +80,7 @@ compose_comment <- function(
 
     delta_total_coverage <- round(
         total_head_coverage - total_base_coverage,
-        2
+        1
     )
 
     coverage_summary <- compose_coverage_summary(

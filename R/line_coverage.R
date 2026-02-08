@@ -14,7 +14,7 @@ compose_line_coverage_summary <- function(
     target = 80,
     our_target = FALSE
 ) {
-    target <- round(target, 2)
+    target <- round(target, 1)
 
     if (is.null(diff_line_coverage)) {
         return(
@@ -32,7 +32,7 @@ compose_line_coverage_summary <- function(
         diff_coverage$total_lines_covered /
             diff_coverage$total_lines_added *
             100,
-        2
+        1
     )
 
     # TODO diff coverage is 100%
