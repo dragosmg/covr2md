@@ -10,6 +10,18 @@ test_that("file_coverage() works", {
         file_coverage(cov)
     )
 
+    expect_identical(
+        file_coverage(cov)[["file_name"]],
+        c(
+            "R/augment_cnp.R",
+            "R/cnp.R",
+            "R/decompose_cnp.R",
+            "R/extract.R",
+            "R/validate_cnp.R",
+            "Overall"
+        )
+    )
+
     expect_s3_class(
         file_coverage(cov),
         "tbl_df"
@@ -37,27 +49,17 @@ test_that("combine_file_coverage works", {
         )
     )
 
-    # nolint start: nonportable_path_linter
-    changed_files <- c(
-        "R/add_one.R",
-        "R/add_three.R",
-        "R/add_two.R"
-    )
-    # nolint end
-
     expect_snapshot(
         combine_file_coverage(
             head_coverage,
-            base_coverage,
-            changed_files
+            base_coverage
         )
     )
 
     expect_s3_class(
         combine_file_coverage(
             head_coverage,
-            base_coverage,
-            changed_files
+            base_coverage
         ),
         "tbl_df"
     )
