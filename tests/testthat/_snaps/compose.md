@@ -25,10 +25,10 @@
       
       ### Coverage for added lines
       
-      |File name     | Lines added| Lines tested| Coverage|    Missing|
-      |:-------------|-----------:|------------:|--------:|----------:|
-      |R/add_one.R   |           3|            1|   33.33%|     14, 15|
-      |R/add_three.R |           3|            0|       0%| 12, 19, 20|
+      |File name     | Lines added| Lines tested| Coverage|Missing    |
+      |:-------------|-----------:|------------:|--------:|:----------|
+      |R/add_one.R   |           3|            1|   33.33%|14, 15     |
+      |R/add_three.R |           3|            0|       0%|12, 19, 20 |
       |R/add_two.R   |           1|            1|     100%|           |
       |Total         |           7|            2|   28.57%|           |
       </details>

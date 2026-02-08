@@ -82,7 +82,7 @@ file_cov_to_md <- function(file_cov_df, align = "lrrcc") {
 #' @keywords internal
 line_cov_to_md <- function(
     diff_line_coverage,
-    align = "lrrrr"
+    align = "lrrrl"
 ) {
     if (is.null(diff_line_coverage)) {
         return("")
