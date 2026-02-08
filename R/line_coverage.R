@@ -31,6 +31,7 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         2
     )
 
+    # TODO diff coverage is 100%
     emoji <- dplyr::if_else(
         line_coverage >= target,
         ":white_check_mark: ",
