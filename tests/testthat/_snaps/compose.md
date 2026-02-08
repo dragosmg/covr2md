@@ -37,3 +37,42 @@
       
       <sup>Created on <removed-date> with [covr2gh v<x.y.z>](https://dragosmg.github.io/covr2gh).</sup>
 
+---
+
+    Code
+      compose_comment(head_coverage, base_coverage, repo = "dragosmg/covr2ghdemo",
+        pr_number = 3, diff_cov_target = 40)
+    Output
+      <!-- covr2gh-do-not-delete -->
+      
+      ## :safety_vest: Coverage summary
+      
+      ![badge](https://img.shields.io/badge/coverage-29%25-E4804E.svg)
+      
+      :x:  Merging PR [#3](https://github.com/dragosmg/covr2ghdemo/pull/3) ([`<removed-commit-sha>`](head_sha_url)) into _main_ ([`<removed-commit-sha>`](base_sha_url)) - will **decrease** overall coverage by `3.01` percentage points.
+      :x:  Diff coverage is `28.57%` (`2` out of `7` added lines are covered by tests). The minimum accepted coverage is `40%`.
+      
+      <details>
+      <summary>Details</summary>
+      
+      ### Files with changes in coverage
+      
+      |File name   | Coverage head| Coverage base| &Delta; |              |
+      |:-----------|-------------:|-------------:|:-------:|:------------:|
+      |R/add_one.R |        33.33%|           40%|  -6.67  | :arrow_down: |
+      |Overall     |        28.57%|        31.58%|  -3.01  | :arrow_down: |
+      
+      ### Coverage for added lines
+      
+      |File name     | Lines added| Lines tested| Coverage|Missing    |
+      |:-------------|-----------:|------------:|--------:|:----------|
+      |R/add_one.R   |           3|            1|   33.33%|14, 15     |
+      |R/add_three.R |           3|            0|       0%|12, 19, 20 |
+      |R/add_two.R   |           1|            1|     100%|           |
+      |Total         |           7|            2|   28.57%|           |
+      </details>
+      
+      :recycle: Comment updated with the latest results.
+      
+      <sup>Created on <removed-date> with [covr2gh v<x.y.z>](https://dragosmg.github.io/covr2gh).</sup>
+

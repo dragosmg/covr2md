@@ -3,13 +3,17 @@
 #' Builds the high-level sentence summarising the line coverage of the patch.
 #'
 #' @param diff_line_coverage a `tibble` the output of [get_diff_line_coverage()]
-#' @param target (numeric) the target coverage for the diff. Default to 80, but
-#' most often the base total coverage should be used.
+#' @param target (numeric) the target coverage for the diff. Defaults to 80, but
+#' `compose_comment()` uses the total coverage for base.
 #'
 #' @returns a glue string, a sentence summarising the diff coverage.
 #'
 #' @keywords internal
-compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
+compose_line_coverage_summary <- function(
+    diff_line_coverage,
+    target = 80,
+    our_target = FALSE
+) {
     target <- round(target, 2)
 
     if (is.null(diff_line_coverage)) {
@@ -38,14 +42,19 @@ compose_line_coverage_summary <- function(diff_line_coverage, target = 80) {
         ":x: "
     )
 
-    # TODO check if the target value was supplied by the user or by us
-    advice <- glue::glue(
-        "It's good practice to aim for at least `{target}%` (the base branch \\
-        test coverage)."
+    advice <- dplyr::if_else(
+        our_target,
+        glue::glue(
+            "It's good practice to aim for at least `{target}%` (the base \\
+            branch test coverage)."
+        ),
+        glue::glue(
+            "The minimum accepted coverage is `{target}%`."
+        )
     )
 
     advice <- dplyr::if_else(
-        line_coverage >= target,
+        line_coverage >= target | line_coverage == 100,
         "",
         advice
     )
