@@ -18,8 +18,7 @@ coverage](/../covr2gh-storage/badges/main/coverage_badge.svg)](https://github.co
 request (PR) on test coverage directly within GitHub.
 
 It is designed to be used with GitHub Actions: once configured, coverage
-feedback is posted as a comment on the pull request describing the
-impact of merging the PR on the test coverage.
+insight is posted as a comment on the pull request.
 
 The goal is to make test coverage feedback visible, concise, and
 actionable, without requiring reviewers to leave GitHub or inspect full
@@ -37,17 +36,16 @@ pak::pak("dragosmg/covr2gh")
 
 ## Usage
 
-The package includes a helper function that adds a GitHub Actions
-workflow to your package. This workflow is responsible for running the
-necessary checks and posting coverage feedback when pull requests are
-opened or updated.
+{covr2gh} includes a helper function that adds a GitHub Actions workflow
+to your package. This workflow runs the necessary checks and posts
+coverage feedback when pull requests are opened or updated.
 
 ``` r
 covr2gh::use_covr2gh_action()
 ```
 
 The helper function also adds a badge to your README, in the {usethis}
-badge “block”, if it can find one.
+badge “block”, if present.
 
 ``` md
 <!-- badges: start -->

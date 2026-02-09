@@ -15,50 +15,35 @@ When the workflow runs, {covr2gh} posts a comment on the pull request summarisin
 
 The comment is made up of two parts:
 
-1. A short summary that is immediately visible.
-2. A collapsible *Details* section containing additional information.
+1. A short summary.
+2. A collapsible *Details* section with additional information.
 
-This integrates smoothly into the pull request discussion without adding unnecessary noise.
 
-## Summary section
+## Summary
 
-Two sentences summarise the impact on test coverage, by answering two common test coverage questions often raised during code review.
+Two sentences summarise the impact on test coverage, answering questions often raised during code review.
 
-The first sentence indicates whether merging the pull request will change the overall test coverage. It reports an increase, decrease, or no measurable change.
+The first sentence indicates whether merging the pull request will change the overall test coverage.
 
 The second sentence focuses on the changes introduced by the pull request, indicating whether the newly added or modified lines are covered by tests.
 
 ![](../man/figures/comment_summary.png){fig-alt="A screen capture showing an example of summary sentences."}
 
-As the summary is always visible, reviewers can quickly factor coverage changes into their review without expanding the full report.
+The summary is always visible so reviewers can quickly factor coverage changes into their review.
 
-## Details section
+## Details
 
-The *Details* appears in a collapsible block and provides additional context for the summary. It is made up of two tables.
+The *Details* section appears in a collapsible block and provides additional context for the summary, in the form of two tables.
 
-The first table reports files with changes in coverage. For each file affected by the pull request, the table shows package line coverage on the head branch and the base branch, along with the absolute difference. An overall row summarizes the net change in package coverage across all files.
+The first table reports files with changes in coverage.
 
 ![](../man/figures/comment_file_cov_details.png){fig-alt="A screen capture showing the first table - focused on changes in coverage by file - from the Details section."}
 
-The second table reports coverage for lines added or modified by the pull request. For each file, the table shows the number of lines introduced, the number of those lines covered by tests, and the resulting diff coverage. When available, line numbers of uncovered code are listed to help identify untested changes.
-
+The second table reports coverage for lines added or modified by the pull request.
 ![](../man/figures/comment_line_cov_details.png){fig-alt="A screen capture showing the second table - focused on diff coverage (coverage of lines added or modified) - from the Details section."}
 
-Together, these tables allow reviewers to inspect coverage changes at the file level and to locate newly introduced code that is not exercised by tests, while keeping this information hidden by default to avoid cluttering the pull request discussion.
+These tables allow reviewers to inspect coverage changes in a bit more depth should they need to. This information is hidden by default to avoid cluttering the pull request discussion.
 
-
-## The workflow
-
-The workflow is triggered by a PR (pull request) or a push to main (after a merged PR).
-
-1. Runs `covr::package_coverage()` on the HEAD commit (the most recent commit in the active branch). It captures the output and creates a badge.
-2. Uploads the badge to a storage branch - `covr2gh-storage`. If the branch does not exist, it creates it. The badge is added to `badges/<active branch>`.
-3. (PR only) When the trigger is a PR, it calculates the test coverage for the target / base branch.
-4. (PR only) It writes a comment and posts it. If a comment already exists, it is updated.
-5. (PR only) At the end posts a step summary (identical content with the comment).
-
-The workflow is not designed to fail if the coverage falls below a given threshold.
-
-
+Empty tables are not rendered. If both tables are empty, the entire *Details* section is automatically suppressed.
 
 ![](../man/figures/comment_with_details.png){fig-alt="A screen capture showing a full comment example."}
