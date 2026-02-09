@@ -25,8 +25,8 @@ pak::pak("dragosmg/covr2gh")
 ## Usage
 
 {covr2gh} includes a helper function that adds a GitHub Actions workflow
-to your package. This workflow runs the necessary checks and posts
-coverage feedback when pull requests are opened or updated.
+to your package. This workflow calculates coverage and posts feedback
+when pull requests are opened or updated.
 
 ``` r
 covr2gh::use_covr2gh_action()

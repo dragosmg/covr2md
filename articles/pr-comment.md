@@ -10,8 +10,8 @@ The comment is made up of two parts:
 
 ## Summary
 
-Two sentences summarise the impact on test coverage, answering questions
-often raised during code review.
+Made up of two sentences, the *Summary* answers questions often raised
+during code review.
 
 The first sentence indicates whether merging the pull request will
 change the overall test coverage.
@@ -43,8 +43,8 @@ diff coverage (coverage of lines added or modified) - from the Details
 section.](../reference/figures/comment_line_cov_details.png)
 
 These tables allow reviewers to inspect coverage changes in a bit more
-depth should they need to. This information is hidden by default to
-avoid cluttering the pull request discussion.
+depth should they need to. They are hidden by default to avoid
+cluttering the pull request discussion.
 
 Empty tables are not rendered. If both tables are empty, the entire
 *Details* section is automatically suppressed.

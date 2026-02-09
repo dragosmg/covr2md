@@ -25,8 +25,8 @@ pak::pak("dragosmg/covr2gh")
 ## Usage
 
 {covr2gh} includes a helper function that adds a GitHub Actions workflow
-to your package. This workflow runs the necessary checks and posts
-coverage feedback when pull requests are opened or updated.
+to your package. This workflow calculates coverage and posts feedback
+when pull requests are opened or updated.
 
 ``` r
 covr2gh::use_covr2gh_action()
@@ -47,14 +47,20 @@ automatically whenever the workflow is triggered on GitHub.
 
 # Package index
 
-## All functions
+## Comment
 
 - [`compose_comment()`](https://dragosmg.github.io/covr2gh/reference/compose_comment.md)
   : Compose a coverage comment
-- [`generate_badge()`](https://dragosmg.github.io/covr2gh/reference/generate_badge.md)
-  : Generate a coverage badge
 - [`post_comment()`](https://dragosmg.github.io/covr2gh/reference/post_comment.md)
   : Post or update comment
+
+## Badge
+
+- [`generate_badge()`](https://dragosmg.github.io/covr2gh/reference/generate_badge.md)
+  : Generate a coverage badge
+
+## Helpers
+
 - [`use_covr2gh_action()`](https://dragosmg.github.io/covr2gh/reference/use_covr2gh_action.md)
   : Set up a covr2gh GitHub Action workflow
 - [`use_covr2gh_badge()`](https://dragosmg.github.io/covr2gh/reference/use_covr2gh_badge.md)
