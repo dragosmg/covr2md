@@ -29,8 +29,8 @@
       # A tibble: 2 x 4
         file_name   coverage_head coverage_base delta
         <chr>               <dbl>         <dbl> <dbl>
-      1 R/add_one.R          33.3          40   -6.67
-      2 Overall              28.6          31.6 -3.01
+      1 R/add_one.R          33.3          40    -6.7
+      2 Overall              28.6          31.6  -3  
 
 # compose_file_coverage_details works
 

@@ -20,8 +20,8 @@
       
       |File name   | Coverage head| Coverage base| &Delta; |              |
       |:-----------|-------------:|-------------:|:-------:|:------------:|
-      |R/add_one.R |        33.33%|           40%|  -6.67  | :arrow_down: |
-      |Overall     |        28.57%|        31.58%|  -3.01  | :arrow_down: |
+      |R/add_one.R |         33.3%|           40%|  -6.7   | :arrow_down: |
+      |Overall     |         28.6%|         31.6%|  -3.0   | :arrow_down: |
       
       ### Coverage for added lines
       
@@ -59,8 +59,8 @@
       
       |File name   | Coverage head| Coverage base| &Delta; |              |
       |:-----------|-------------:|-------------:|:-------:|:------------:|
-      |R/add_one.R |        33.33%|           40%|  -6.67  | :arrow_down: |
-      |Overall     |        28.57%|        31.58%|  -3.01  | :arrow_down: |
+      |R/add_one.R |         33.3%|           40%|  -6.7   | :arrow_down: |
+      |Overall     |         28.6%|         31.6%|  -3.0   | :arrow_down: |
       
       ### Coverage for added lines
       
