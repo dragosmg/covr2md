@@ -37,4 +37,4 @@ Roxygen: list(markdown = TRUE, roclets = c("collate", "rd", "namespace",
     "devtag::dev_roclet"))
 RoxygenNote: 7.3.3
 Config/Needs/website: rmarkdown, quarto
-VignetteBuilder: knitr
+VignetteBuilder: knitr, quarto
