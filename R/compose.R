@@ -1,30 +1,3 @@
-# the GitHub comment should contain:
-#   * the overall percentage (as badge) at the top
-#   * a topline summary statement:
-#     * "merging this PR (PR number & commit hash) into $destination_branch
-#     will **increase** / **decrease** / **not change** coverage. The change in
-#     coverage is."
-#     * it would be great to somehow capture if the added lines are covered by
-#     unit tests (or what percentage is)
-#   * the H2 (?) title - Summary (or something like Codecov - "Additional
-#   details and impacted files").
-#   * a summary table for the all files or just those modified by the PR
-#     * maybe just those modified by the PR as those would be more relevant.
-#     * table could have these columns File, This branch, Destination branch,
-#     delta + an indication at file level if coverage is increasing or
-#     decreasing
-#   * capture the commit hash somehow
-#   * maybe something about the target coverage figure
-#   * in the future something about direct vs indirect testing
-#   * a notice about the fact this is a "sticky" comment that will be updated
-#    by subsequent runs
-#
-# args:
-#   * head_coverage (coverage object)
-#   * base_coverage (coverage object)
-#   * z - pr number
-#
-
 # used to identify a comment posted with covr2gh
 covr2gh_comment <- "<!-- covr2gh-do-not-delete -->"
 
